@@ -1,0 +1,108 @@
+//图片路径
+@image_path: "../img";
+
+
+//font-family
+@font-face{
+	font-family: myFont;
+	src: url('../font/number.TTF')  format('truetype');
+}
+
+@f_family: "微软雅黑";
+@f_family1: myFont;
+
+//body
+@body-font-family: @f_family;
+
+//device
+@temperature-now-number-font-family: @f_family1;
+@temperatureTargetPanel-number-font-family: @f_family1;
+
+
+//colors
+@c_white:#ffffff;
+@c_black:#000000;
+@c_red:#f46652;
+@c_red1:#f34f36;
+@c_red2:#c1272d;
+@c_red3:#fae1d1;
+@c_red4:#e69377;
+@c_red5:#FFBDBD;
+@c_blue:#8fb9df;
+@c_gray:#f5f5f5;
+@c_gray1:#808080;
+@c_gray2:#CDCBCC;
+@c_gray3:#e7eaed;
+@c_gray4:#E1E1E1;
+@c_gray5:#DADADA;
+@c_gray6:#B9B9B9;
+@c_gray7:#666666;
+@c_gray8:#999999;
+@c_gray9:#5d5d5d;
+@opacity:transparent;
+@black_opacity:rgba(0,0,0,0.5);
+
+//body
+@body-bg-color: @c_gray;
+
+//device
+@jumbotron-text-color: @c_white;
+@jumbotron-bg-color: @c_red;
+@moreThan-tmpTarget-bg-color: @c_blue;
+@temperatureTargetBox-text-color: @c_gray1;
+@temperatureTargetPanel-gradient-startColor: @c_white;
+@temperatureTargetPanel-gradient-endColor: @c_gray4;
+@temperatureTargetPanel-shadow: @c_gray5;
+@temperatureTargetPanel-text-color: @c_red;
+@temperatureTargetProgressbar-gradient-startColor: @opacity;
+@temperatureTargetProgressbar-gradient-endColor: @c_gray3;
+@temperatureTargetProgressbar-round-bg: @c_red1;
+@temperatureTargetProgressbar-round-border: @c_red2;
+@time-input-border: @opacity;
+@time-input-shadow: @c_gray2;
+
+//index
+@list-row-border: @c_black;
+@list-row-bg: @c_white;
+@list-row-color: @c_gray8;
+@list-row-round-bg: @c_gray8;
+@list-row-btn-color: @c_gray9;
+@list-row-btn-gradient-startColor: @c_red3;
+@list-row-btn-gradient-endColor: @c_red4;
+@list-row-btn-border: @c_gray1;
+@list-row-btn-shadow: @c_gray8;
+@list-row-btn-active-shadow: @c_red5;
+@list-row-state-color: @c_gray1;
+@list-row-online-color: @c_red;
+@list-row-online-round-bg: @c_red;
+@list-row-online-state-color: @c_red;
+
+//footer
+@footer-border-color: @c_gray1;
+@footer-gradient-startColor: @c_white;
+@footer-gradient-endColor: @c_gray6;
+@footer-link-color: @c_gray7;
+
+//loading
+@loading-bg-color: @black_opacity;
+@loading-round-bg: @c_white;
+
+
+//font-sizes
+@default_f_size: 14px;
+@default_fps_size: 100%;
+
+//device
+@temperature-now-font-size: @default_f_size + 4;
+@temperature-now-number-font-size: @default_fps_size * 6;
+@temperatureTargetPanel-title-font-size: @default_f_size + 8;
+@temperatureTargetPanel-number-font-size: @default_fps_size * 5;
+
+//index
+@list-row-title-font-size: @default_f_size + 8;
+@list-row-state-font-size: @default_f_size + 1;
+
+//footer
+@footer-link-font-size: @default_f_size + 2;
+
+@f_w_bold:bold;

@@ -1,0 +1,99 @@
+@import "public/variables.less";
+@import "public/public.less";
+@import "public/mixins.less";
+@import "public/core.less";
+
+.container-fluid{
+	padding: 0 10px 40px;
+	div{
+		margin: 10px 0;
+		border: 1px solid @list-row-border;
+		background-color: @list-row-bg;
+		.border-radius(6px);
+		color: @list-row-color;
+		.bgimgSize(100%,90px,"gray_arrow_icon.png",35px 35px);
+		background-position: 97% center;
+		ul{
+			height: 100%;
+			margin-bottom: 0;	
+			li{
+				padding-left: 10px;
+				&:nth-child(1){
+					margin: 12px 0 0 0;
+					line-height: 16px;
+					font-size: @list-row-title-font-size;
+					&:before{
+						content:"";
+						width: 5px;
+						height: 5px;
+						.border-radius(50%);
+						background-color: @list-row-round-bg;
+						position: absolute;
+						top: 18px;
+						left: 12px;
+					}
+				}
+				&:nth-child(3){
+					margin: 6px 0 0 0;
+					.btn{
+						color: @list-row-btn-color;
+						font-weight: @f_w_bold;
+						.linear-gradient(top,@list-row-btn-gradient-startColor,@list-row-btn-gradient-endColor);
+						border-color: @list-row-btn-border;
+						padding: 0 8px; 
+						.box-shadow(0,2px,4px,1px,@list-row-btn-shadow);
+						&:nth-child(1){
+							margin-right: 25px;
+						}
+						&:active{
+							.box-shadow(0,2px,4px,1px,@list-row-btn-active-shadow);
+						}
+					}
+				}
+			}		
+		}
+		p{
+			height: 100%;
+			line-height: 90px;
+			margin-bottom: 0;
+			padding: 0;
+			color: @list-row-state-color;
+			font-weight: @f_w_bold;
+			font-size: @list-row-state-font-size;
+		}
+		&.row-online-state{
+			color: @list-row-online-color;
+			ul{
+				li{
+					&:nth-child(1){
+						&:before{
+							background-color: @list-row-online-round-bg;
+						}
+					}
+				}
+			}
+			p{
+				color: @list-row-online-state-color;
+			}
+			&:active{
+				.box-shadow(0,0,4px,2px);
+			}
+		}
+	}
+}
+
+
+.footer{
+	height: 40px;
+	line-height: 40px;
+    border: 1px solid @footer-border-color;
+	.linear-gradient(top,@footer-gradient-startColor,@footer-gradient-endColor 65%);
+	a{
+		display: block;
+		color: @footer-link-color;
+		font-size: @footer-link-font-size;
+		&:hover{
+			text-decoration: none;
+		}
+	}
+}

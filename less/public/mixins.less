@@ -1,0 +1,41 @@
+.border-radius(@radius){
+    border-top-left-radius: @radius;    
+    border-top-right-radius: @radius;
+    border-bottom-left-radius: @radius;     
+    border-bottom-right-radius: @radius;
+    -webkit-border-top-left-radius: @radius;
+    -webkit-border-top-right-radius: @radius;    
+    -webkit-border-bottom-left-radius: @radius;
+    -webkit-border-bottom-right-radius: @radius;
+}
+
+.background-size(@bgSize){
+    background-size: @bgSize;
+    -webkit-background-size: @bgSize;
+}
+
+.box-shadow(@x:0,@y:0,@blur:1px,@spread:1px,@color:rgba(0,0,0,0.5),...){
+    box-shadow: @arguments;
+    -webkit-box-shadow: @arguments;
+}
+
+.linear-gradient(@point,@color,@color1){
+    background:linear-gradient(@point,@color,@color1);
+    background:-webkit-linear-gradient(@point,@color,@color1);
+}
+
+.radial-gradient(@color,@color1){
+    background: radial-gradient(@color,@color1);    
+    background: -webkit-radial-gradient(@color,@color1);
+}
+
+//动画开始的时间
+.animation-delay(@time){
+    animation-delay: @time;
+    -webkit-animation-delay: @time;
+}
+
+.transform(@transform){
+    transform: @transform;
+    -webkit-transform: @transform;
+}

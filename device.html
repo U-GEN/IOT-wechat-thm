@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>     
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/device.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/underscore-min.js"></script>
+    <script type="text/javascript" src="http://api.easylink.io/assets/js/mqttws31.js"></script>
+    <script type="text/javascript" src="js/device.js"></script>   
+</head>
+<body>
+
+<div id="jumbotron" class="jumbotron">
+    <ul class="list-unstyled text-center pull-left">
+        <li><span id="ct"></span>℃</li>
+        <li id="lt"></li>
+        <li id="err"></li>
+    </ul>
+    <!-- 设备开关 -->
+    <p data-power='0' class="pull-right onOff_Power">
+        <span></span>
+    </p>
+</div>
+
+<div class="container-fluid">
+    <ul class="list-unstyled btn-group-justified">
+        <!-- 防冻开关 -->
+        <li class="btn-group">
+            <p data-antifreeze='0' class="onOff_antifreeze">
+                <span></span>
+            </p>
+        </li>
+        <!-- 睡眠开关 -->
+        <li class="btn-group">     
+            <p data-sleep='0' class="center-block onOff_sleep">
+                <span></span>
+            </p>
+        </li>
+        <!--精细睡眠 -->
+        <li class="btn-group">
+            <p class="pull-right onOff_finesleep">
+                <span></span>
+            </p>
+        </li>
+    </ul>
+
+    <!-- 设定水温 -->
+    <div id="bars" class="center-block tmpTargetBox">
+        <ul class="list-unstyled text-center tmpTargetPanel">
+            <li>水温设置</li>
+            <li>
+                <p id="tmpLeft" class="col-xs-3 text-right">
+                    <span></span>
+                </p>
+                <p id="st" class="col-xs-6"></p>
+                <p id="tmpRight" class="col-xs-3 text-left">
+                    <span></span>
+                </p>
+            </li>
+        </ul> 
+        <!-- 圆形进度条 -->
+        <ul id="progressBars" class="list-unstyled tmpTargetProgressbar">
+            <li><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+        </ul> 
+        <!-- /圆形进度条 -->        
+    </div>
+    <!-- /设定水温 -->
+
+    <!-- 定时 -->
+    <p class="input-group">
+        <span class="input-group-addon"></span>
+        <select class="form-control">
+        	<option>---请选择---</option>
+            <option>1小时后关机</option>
+            <option>2小时后关机</option>
+            <option>3小时后关机</option>
+        </select>
+    </p>
+    <!-- /定时 -->
+</div>
+
+<!-- loading -->
+<div class="loading">
+    <ul class="list-unstyled">
+        <li>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+        </li>
+        <li>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+        </li>
+        <li>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+        </li>
+    </ul>
+</div>
+<!-- /loading -->
+
+</body>
+</html>

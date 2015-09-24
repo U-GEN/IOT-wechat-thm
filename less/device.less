@@ -1,0 +1,236 @@
+@import "public/variables.less";
+@import "public/public.less";
+@import "public/mixins.less";
+@import "public/core.less";
+
+.jumbotron{
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-bottom: 6%;
+	min-height: 175px;
+	color: @jumbotron-text-color;
+	background-color: @jumbotron-bg-color;
+	overflow: hidden;
+	ul{
+		margin-bottom: 0;
+		li{
+			&:nth-child(1){
+				font-size: @temperature-now-font-size;
+				span{
+					font-size: @temperature-now-number-font-size;
+					font-family: @temperature-now-number-font-family;
+					line-height: 75px;
+				}
+			}
+		}
+	}
+	//设备开关
+	.switch_state("red_power_icon.png");	
+	//当前水温大于设置水温
+	&.moreThan_tmpTarget{
+		background-color: @moreThan-tmpTarget-bg-color;
+	}
+}
+
+.container-fluid{
+	.btn-group-justified{
+		li{
+			//防冻开关
+			&:nth-child(1){				
+				.switch_state("blue_antifreeze_icon.png");				
+			}
+			//睡眠开关
+			&:nth-child(2){
+				.switch_state("blue_sleep_icon.png");
+			}
+			//精细睡眠
+			&:nth-child(3){
+				.switch_state("blue_finesleep_icon.png");
+			}
+		}
+	}
+	//设定水温
+	.tmpTargetBox{
+		.bgimgSize(240px,203px,"temperature_target_bg.png",cover);
+		position: relative;
+		margin-bottom: 6%;
+		padding: 35px 35px 6px;
+		overflow: hidden;
+		color: @temperatureTargetBox-text-color;
+		&:before{
+			content:"10℃";
+			position: absolute;
+			bottom: -4px;
+			left: 0;
+		}
+		&:after{
+			content:"60℃";
+			position: absolute;
+			bottom: -4px;
+			right: 0;
+		}
+		.tmpTargetPanel{
+			color: @temperatureTargetPanel-text-color;
+			width: 100%;
+			height: 100%;
+			.linear-gradient(top,@temperatureTargetPanel-gradient-startColor,@temperatureTargetPanel-gradient-endColor);
+			.box-shadow(0,4px,4px,0,@temperatureTargetPanel-shadow);			
+			.border-radius(50%);
+			li{
+				&:nth-child(1){
+					font-size: @temperatureTargetPanel-title-font-size;
+					font-weight: @f_w_bold;
+					padding-top: 35px;
+					line-height: 25px;
+				}
+				p{
+					margin-bottom: 0;
+					padding: 0;
+					&:nth-child(1){
+						height: 100px;
+						line-height: 100px;
+						z-index: 1;
+						span{
+							width: 0;
+							height: 0;
+							border-top: 10px solid @opacity;
+							border-bottom: 10px solid @opacity;
+							border-right: 10px solid;
+							display: inline-block;
+						}
+					}
+					&:nth-child(2){
+						font-size: @temperatureTargetPanel-number-font-size;
+						font-family: @temperatureTargetPanel-number-font-family;
+					}
+					&:nth-child(3){
+						height: 100px;
+						line-height: 100px;
+						z-index: 1;
+						span{
+							width: 0;
+							height: 0;
+							border-top: 10px solid @opacity;
+							border-bottom: 10px solid @opacity;
+							border-left: 10px solid;
+							display: inline-block;
+						}
+					}
+				}
+			}
+		}
+		//圆形进度条
+		.tmpTargetProgressbar{
+			li{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 140px;
+				height: 140px;
+				margin: -20px 0 0 -20px;
+				transform-origin: 100% 100%;
+				-webkit-transform-origin: 100% 100%;
+				overflow: hidden;
+  				&:nth-child(1){
+  					.transform(rotate(-34deg) skew(66deg));
+  				}
+  				&:nth-child(2){
+  					.transform(rotate(-9deg) skew(66deg));
+  				}
+  				&:nth-child(3){
+  					.transform(rotate(16deg) skew(66deg));
+  				}
+  				&:nth-child(4){
+  					.transform(rotate(41deg) skew(66deg));
+  				}
+  				&:nth-child(5){
+  					.transform(rotate(66deg) skew(66deg));
+  				}
+  				&:nth-child(6){
+  					.transform(rotate(91deg) skew(66deg));		
+  				}
+  				&:nth-child(7){
+  					.transform(rotate(116deg) skew(66deg));
+  				}
+  				&:nth-child(8){
+  					.transform(rotate(141deg) skew(66deg));
+  				}
+  				&:nth-child(9){
+  					.transform(rotate(166deg) skew(66deg));
+  				}
+  				&:nth-child(10){
+  					.transform(rotate(191deg) skew(66deg));
+  				}			
+  				span{ 
+					position: absolute;
+					bottom: -97px;
+					right: -97px;
+					width: 200px;
+					height: 200px;
+					display: block;
+					.border-radius(50%);
+	  				.transform(skew(-66deg));										
+					.radial-gradient(@temperatureTargetProgressbar-gradient-startColor 60%,@temperatureTargetProgressbar-gradient-endColor 35%);
+  				}
+  				//圆点
+  				&:after{
+					content:"";
+					position: absolute;
+					bottom: 12px;
+					right: 34px;
+					width: 6px;
+					height: 6px;
+					background-color: @temperatureTargetProgressbar-round-bg;
+					border: 1px solid @temperatureTargetProgressbar-round-border;
+					.border-radius(50%);
+	  				.transform(skew(-66deg));
+					display: none;														
+  				}
+  				&.showRound{
+  					&:after{
+  						display: block;
+  					}
+  				}
+			}
+		}
+	}
+	//定时
+	.input-group{
+		width: 170px;
+		margin: 0 auto;
+		border-spacing: 10px 0;
+		.input-group-addon{
+			.bgimgSize(25px,25px,"red_time_icon.png",cover);
+			border: 0;
+		}
+		.form-control{
+			//去除 input shadow
+			-webkit-appearance: none;
+			height: 25px;
+			font-weight: @f_w_bold;
+			padding: 3px 12px;
+			.border-radius(4px);
+			border-color: @time-input-border;
+			.box-shadow(0,2px,2px,0,@time-input-shadow);
+		}
+	}
+}
+
+
+
+//开关状态
+.switch_state(@iconImg){
+	p{
+		text-align: center;
+		margin-bottom: 0;
+		.bgimgSize(40px,40px,"switch_off_bg.png",cover);
+		span{
+			display: inline-block;
+			margin-top: 7px;
+			.bgimgSize(25px,25px,@iconImg,cover);
+		}
+		&.switch_on_state{
+			.bgimgSize(40px,40px,"switch_on_bg.png",cover);
+		}
+	}
+}

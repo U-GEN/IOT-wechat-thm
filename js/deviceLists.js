@@ -147,18 +147,19 @@ $(document).ready(function () {
         }    
     }
     function addDeviceListsData(divName,state, alias, bssid, url){
+    	var equipmentName;
     	$(divName).on('click',function(e){
 			if($(e.target).attr('id')!="selectDevice"&&$(e.target).attr('id')!="removeDevice")
 			{
 				$(e.target).parents('.fade').addClass('row-online-state-shadow');
-				console.log($(e.target).parents('.fade').find('ul #alias'));
+				equipmentName=$(e.target).parents('.fade').find('ul #alias').text();
+				console.log(equipmentName);
 				setTimeout(function(){
 					$(e.target).parents('.fade').removeClass('row-online-state-shadow');
 				},200);
 				setTimeout(function(){
-//					alert(url);
-					window.location.href=url;
-//					console.log(url);
+					var equipmentUrl = url.split("alias=")[0];
+					window.location.href=equipmentUrl+"alias="+equipmentName;
 				},300);			
 			}
     	});

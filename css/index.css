@@ -165,9 +165,9 @@ body {
   padding: 0 10px 40px;
 }
 .container-fluid div {
+  color: #999999;
   margin: 10px 0;
-  border: 1px solid #000000;
-  background-color: #ffffff;
+  border-color: #000000;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   border-bottom-left-radius: 6px;
@@ -176,24 +176,27 @@ body {
   -webkit-border-top-right-radius: 6px;
   -webkit-border-bottom-left-radius: 6px;
   -webkit-border-bottom-right-radius: 6px;
-  color: #999999;
   width: 100%;
-  height: 90px;
-  background: url("../img/gray_arrow_icon.png") no-repeat;
+  height: 95px;
+  background-image: url("../img/gray_arrow_icon.png");
+  background-repeat: no-repeat;
   background-size: 35px 35px;
   -webkit-background-size: 35px 35px;
-  background-position: 97% center;
+  background-position: 95% center;
+  background-color: #ffffff;
 }
 .container-fluid div ul {
   height: 100%;
-  margin-bottom: 0;
+  padding: 0;
 }
 .container-fluid div ul li {
   padding-left: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .container-fluid div ul li:nth-child(1) {
-  margin: 12px 0 0 0;
-  line-height: 16px;
+  line-height: 22px;
   font-size: 22px;
 }
 .container-fluid div ul li:nth-child(1):before {
@@ -210,11 +213,12 @@ body {
   -webkit-border-bottom-right-radius: 50%;
   background-color: #999999;
   position: absolute;
-  top: 18px;
-  left: 12px;
+  top: 8px;
+  left: -2px;
 }
 .container-fluid div ul li:nth-child(3) {
-  margin: 6px 0 0 0;
+  line-height: 32px;
+  margin-top: -2px;
 }
 .container-fluid div ul li:nth-child(3) .btn {
   color: #5d5d5d;
@@ -223,27 +227,25 @@ body {
   background: -webkit-linear-gradient(top, #fae1d1, #e69377);
   border-color: #808080;
   padding: 0 8px;
-  box-shadow: 0 2px 4px 1px #999999;
-  -webkit-box-shadow: 0 2px 4px 1px #999999;
-}
-.container-fluid div ul li:nth-child(3) .btn:nth-child(1) {
+  box-shadow: 0 2px 4px 0 #666666;
+  -webkit-box-shadow: 0 2px 4px 0 #666666;
   margin-right: 25px;
 }
 .container-fluid div ul li:nth-child(3) .btn:active {
-  box-shadow: 0 2px 4px 1px #ffbdbd;
-  -webkit-box-shadow: 0 2px 4px 1px #ffbdbd;
+  box-shadow: 0 2px 4px 0 #ffb9b9;
+  -webkit-box-shadow: 0 2px 4px 0 #ffb9b9;
 }
 .container-fluid div p {
   height: 100%;
-  line-height: 90px;
-  margin-bottom: 0;
+  line-height: 63px;
   padding: 0;
   color: #808080;
-  font-weight: bold;
   font-size: 15px;
+  font-weight: bold;
 }
 .container-fluid div.row-online-state {
   color: #f46652;
+  background-image: url("../img/red_arrow_icon.png");
 }
 .container-fluid div.row-online-state ul li:nth-child(1):before {
   background-color: #f46652;
@@ -251,7 +253,7 @@ body {
 .container-fluid div.row-online-state p {
   color: #f46652;
 }
-.container-fluid div.row-online-state:active {
+.container-fluid div.row-online-state.row-online-state-shadow {
   box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.5);
 }

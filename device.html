@@ -17,10 +17,12 @@
 <body>
 
 <div id="jumbotron" class="jumbotron">
-    <ul class="list-unstyled text-center pull-left">
-        <li><span id="ct"></span>℃</li>
+    <ul class="list-unstyled pull-left">
+        <li id="ct"></li>
         <li id="lt"></li>
-        <li id="err"></li>
+        <li id="err">
+        	<!--<span></span>水位低-->
+        </li>
     </ul>
     <!-- 设备开关 -->
     <p data-power='0' class="pull-right onOff_Power">
@@ -55,11 +57,11 @@
         <ul class="list-unstyled text-center tmpTargetPanel">
             <li>水温设置</li>
             <li>
-                <p id="tmpLeft" class="col-xs-3 text-right">
+                <p id="tmpLeft">
                     <span></span>
                 </p>
-                <p id="st" class="col-xs-6"></p>
-                <p id="tmpRight" class="col-xs-3 text-left">
+                <p id="st"></p>
+                <p id="tmpRight">
                     <span></span>
                 </p>
             </li>
@@ -84,7 +86,7 @@
     <!-- 定时 -->
     <p class="input-group">
         <span class="input-group-addon"></span>
-        <select class="form-control">
+        <select id="finalTime" class="form-control">
         	<option>---请选择---</option>
             <option>1小时后关机</option>
             <option>2小时后关机</option>

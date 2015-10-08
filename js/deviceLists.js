@@ -3,6 +3,7 @@
  */
 $(document).ready(function () {
     var thisDeviceId;
+//  var equipmentName;
     var access_token = getParameterByName('access_token');
     //初始化设备列表
     var deviceLists = getParameterByName('device_list');
@@ -14,12 +15,18 @@ $(document).ready(function () {
                 if (device[0] === null) continue;
                 var device_id = device[0];
                 var bssid = device_id.split('/')[1];
-                var alias = device[3] ? device[3] : device[0];
+                var alias = device[3] ? device[3] : 'TH-1507';
                 var product_id = device_id.split('/')[0];
                 //var time = new Date(parseInt(device[1])*1000).toLocaleString();
                 //var url = product_id + '.html?device_id=' + device_id + '&access_token=' + access_token + '&alias=' + alias;
                 var url = 'device.html?device_id=' + device_id + '&access_token=' + access_token + '&alias=' + alias;
+                var createTime = device[1];
+                var now = Math.round(new Date().getTime()/1000);
+                console.log(now);
                 var state = device[2];
+                if((now - createTime)<60){
+                    state = 1;
+                }
                 //渲染设备列表
                 addDeviceLists(device_id, state, alias, bssid, url);
             }
@@ -63,14 +70,16 @@ $(document).ready(function () {
             }
         });
     });
-
+	
+	
+	
     /* 修改名称 */
     onModifyName();
     $("#confirm").on("click", function () {
         var modifyContent = $("#modifyContent").val();
         if (!modifyContent) {
             alert('写点什么吧');
-        } else if (getByteLen(modifyContent) > 10) {
+        } else if (getByteLen(modifyContent) > 16) {
             alert('超过字数咯');
         } else {
 //      	alert(thisDeviceId);
@@ -101,10 +110,11 @@ $(document).ready(function () {
 
     /* 添加修改名称的click事件 */
     function onModifyName() {
-        $(".modifyName").on("click", function () {
+        $(".modifyName").on("click", function (e) {
             //模态框显示
             $("#inputModal").modal("show");
             thisDeviceId = $(this).parents()[2].id;
+            
         });
     }
 
@@ -124,29 +134,38 @@ $(document).ready(function () {
     function addDeviceLists(device_id, state, alias, bssid, url) {
         //填充列表
         var template = $("#listTemp").html();
-        var list = $("<div id='" + device_id + "'>");
+        var list = $("<div id='" + device_id + "'class='alert fade in'>");
         list.html(template);
         if (state == 0) {
             state = "离线";
-            addDeviceListsData(list,"#list","",state, alias, bssid, "javascript:void(0);");
+            $(list).removeClass("row-online-state");
+       		addDeviceListsData(list,state, alias, bssid, url);
         } else {
             state = "在线";
-            addDeviceListsData(list,"#list","row-online-state",state, alias, bssid, url);
+            $(list).addClass("row-online-state");
+            addDeviceListsData(list,state, alias, bssid, url);
         }    
     }
-    function addDeviceListsData(divName,FName,className,state, alias, bssid, url){
-    	$(divName).addClass(className);
-    	$(divName).on('touchstart click',function(e){
-			if($(e.target).attr('id')!="selectDevice")
+    function addDeviceListsData(divName,state, alias, bssid, url){
+    	$(divName).on('click',function(e){
+			if($(e.target).attr('id')!="selectDevice"&&$(e.target).attr('id')!="removeDevice")
 			{
-				window.location.href=url;
+				$(e.target).parents('.fade').addClass('row-online-state-shadow');
+				console.log($(e.target).parents('.fade').find('ul #alias'));
+				setTimeout(function(){
+					$(e.target).parents('.fade').removeClass('row-online-state-shadow');
+				},200);
+				setTimeout(function(){
+//					alert(url);
+					window.location.href=url;
+//					console.log(url);
+				},300);			
 			}
     	});
-//      $(divName).find("a").attr("href", url);
         $(divName).find("#state").text(state);
         $(divName).find("#alias").text(alias);
         $(divName).find("#bssid").text(bssid);
-        $(FName).append(divName);
+        $("#list").append(divName);
     }
 
     /**

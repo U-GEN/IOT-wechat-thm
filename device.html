@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-    <meta name="format-detection" content="telephone=no"/>     
+    <meta name="format-detection" content="telephone=no"/>
     <title></title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/device.css">
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/underscore-min.js"></script>
     <script type="text/javascript" src="http://api.easylink.io/assets/js/mqttws31.js"></script>
-    <script type="text/javascript" src="js/device.js"></script>   
+    <script type="text/javascript" src="js/device.js"></script>
 </head>
 <body>
 
@@ -21,7 +21,7 @@
         <li id="ct"></li>
         <li id="lt"></li>
         <li id="err">
-        	<!--<span></span>水位低-->
+            <!--<span></span>水位低-->
         </li>
     </ul>
     <!-- 设备开关 -->
@@ -39,7 +39,7 @@
             </p>
         </li>
         <!-- 睡眠开关 -->
-        <li class="btn-group">     
+        <li class="btn-group">
             <p data-sleep='0' class="center-block onOff_sleep">
                 <span></span>
             </p>
@@ -60,12 +60,14 @@
                 <p id="tmpLeft">
                     <span></span>
                 </p>
+
                 <p id="st"></p>
+
                 <p id="tmpRight">
                     <span></span>
                 </p>
             </li>
-        </ul> 
+        </ul>
         <!-- 圆形进度条 -->
         <ul id="progressBars" class="list-unstyled tmpTargetProgressbar">
             <li><span></span></li>
@@ -78,8 +80,8 @@
             <li><span></span></li>
             <li><span></span></li>
             <li><span></span></li>
-        </ul> 
-        <!-- /圆形进度条 -->        
+        </ul>
+        <!-- /圆形进度条 -->
     </div>
     <!-- /设定水温 -->
 
@@ -87,7 +89,7 @@
     <p class="input-group">
         <span class="input-group-addon"></span>
         <select id="finalTime" class="form-control">
-        	<option>---请选择---</option>
+            <option>---请选择---</option>
             <option>1小时后关机</option>
             <option>2小时后关机</option>
             <option>3小时后关机</option>
@@ -101,20 +103,29 @@
     <ul class="list-unstyled">
         <li>
             <p></p>
+
             <p></p>
+
             <p></p>
-            <p></p>
-        </li>
-        <li>
-            <p></p>
-            <p></p>
-            <p></p>
+
             <p></p>
         </li>
         <li>
             <p></p>
+
             <p></p>
+
             <p></p>
+
+            <p></p>
+        </li>
+        <li>
+            <p></p>
+
+            <p></p>
+
+            <p></p>
+
             <p></p>
         </li>
     </ul>

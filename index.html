@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-    <meta name="format-detection" content="telephone=no"/>  
+    <meta name="format-detection" content="telephone=no"/>
     <title>我的设备</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
@@ -17,49 +17,50 @@
 
 <!-- 设备list -->
 <div class="container-fluid" id="list">
-	
+
 </div>
 <!-- /设备list -->
 
 <!-- 固定于底部 -->
 <footer class="footer navbar-fixed-bottom">
     <!--<a href="http://97256c69-6723-43fb-87dc-167eaf9dc501.app.easylink.io/redirect.php?wxappid=wxb4ee08c8823d1555&airkiss=1" class="text-center">添加新设备</a>-->
- <a href="http://f31b460a-8a8d-4ffc-97c1-054a8c4b27cf.app.easylink.io/redirect.php?wxappid=wxdf2a57ea9717b5ad&airkiss=1" class="text-center">添加新设备</a> 
+    <a href="http://f31b460a-8a8d-4ffc-97c1-054a8c4b27cf.app.easylink.io/redirect.php?wxappid=wxdf2a57ea9717b5ad&airkiss=1"
+       class="text-center">设备配网</a>
 </footer>
 <!-- /固定于底部 -->
 
 <!-- modal -->
 <div class="modal fade" id="inputModal">
     <div class="modal-dialog">
-    	<div class="modal-v-center"> 
-	        <div class="modal-content center-block">
-	            <div class="modal-header">
-	                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-	                        aria-hidden="true">&times;</span></button>
-	                <h4 class="modal-title">修改名称</h4>
-	            </div>
-	            <div class="modal-body">
-	                <input type="text" class="form-control" id="modifyContent">
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-	                <button type="button" class="btn btn-primary" id="confirm">确认修改</button>
-	            </div>
-	        </div>
+        <div class="modal-v-center">
+            <div class="modal-content center-block">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">修改名称</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="modifyContent">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="confirm">确认修改</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <!-- /modal -->
-    <div id="listTemp" class="alert fade in" style="display: none;">
-        <ul class="list-unstyled col-xs-9">
-            <li id="alias"></li>
-            <li id="bssid"></li>
-            <li>
-                <button type="button" class="btn btn-xs" id="removeDevice">解除设备</button>
-                <button type="button" class="btn btn-xs modifyName" id="selectDevice">修改名称</button>
-            </li>
-        </ul>
-        <p class="col-xs-3" id="state"></p>
-    </div>
+<div id="listTemp" class="alert fade in" style="display: none;">
+    <ul class="list-unstyled col-xs-9">
+        <li id="alias"></li>
+        <li id="bssid"></li>
+        <li>
+            <button type="button" class="btn btn-xs" id="removeDevice">解除设备</button>
+            <button type="button" class="btn btn-xs modifyName" id="selectDevice">修改名称</button>
+        </li>
+    </ul>
+    <p class="col-xs-3" id="state"></p>
+</div>
 </body>
 </html>

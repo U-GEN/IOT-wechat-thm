@@ -21,10 +21,10 @@ $(document).ready(function () {
                 //var url = product_id + '.html?device_id=' + device_id + '&access_token=' + access_token + '&alias=' + alias;
                 var url = 'device.html?device_id=' + device_id + '&access_token=' + access_token + '&alias=' + alias;
                 var createTime = device[1];
-                var now = Math.round(new Date().getTime()/1000);
+                var now = Math.round(new Date().getTime() / 1000);
                 console.log(now);
                 var state = device[2];
-                if((now - createTime)<60){
+                if ((now - createTime) < 60) {
                     state = 1;
                 }
                 //渲染设备列表
@@ -70,9 +70,8 @@ $(document).ready(function () {
             }
         });
     });
-	
-	
-	
+
+
     /* 修改名称 */
     onModifyName();
     $("#confirm").on("click", function () {
@@ -94,7 +93,8 @@ $(document).ready(function () {
                     "AUTHORIZATION": "token " + access_token
                 },
                 success: function () {
-                    $("#alias").html(modifyContent);
+                    thisDeviceId = thisDeviceId.replace(/\//g,"\\\/");
+                    $("#"+ thisDeviceId + " #alias").html(modifyContent);
                 },
                 error: function (data) {
                     alert("修改名称失败");
@@ -114,7 +114,7 @@ $(document).ready(function () {
             //模态框显示
             $("#inputModal").modal("show");
             thisDeviceId = $(this).parents()[2].id;
-            
+
         });
     }
 
@@ -139,30 +139,30 @@ $(document).ready(function () {
         if (state == 0) {
             state = "离线";
             $(list).removeClass("row-online-state");
-       		addDeviceListsData(list,state, alias, bssid, url);
+            addDeviceListsData(list, state, alias, bssid, url);
         } else {
             state = "在线";
             $(list).addClass("row-online-state");
-            addDeviceListsData(list,state, alias, bssid, url);
-        }    
+            addDeviceListsData(list, state, alias, bssid, url);
+        }
     }
-    function addDeviceListsData(divName,state, alias, bssid, url){
-    	var equipmentName;
-    	$(divName).on('click',function(e){
-			if($(e.target).attr('id')!="selectDevice"&&$(e.target).attr('id')!="removeDevice")
-			{
-				$(e.target).parents('.fade').addClass('row-online-state-shadow');
-				equipmentName=$(e.target).parents('.fade').find('ul #alias').text();
-				console.log(equipmentName);
-				setTimeout(function(){
-					$(e.target).parents('.fade').removeClass('row-online-state-shadow');
-				},200);
-				setTimeout(function(){
-					var equipmentUrl = url.split("alias=")[0];
-					window.location.href=equipmentUrl+"alias="+equipmentName;
-				},300);			
-			}
-    	});
+
+    function addDeviceListsData(divName, state, alias, bssid, url) {
+        var equipmentName;
+        $(divName).on('click', function (e) {
+            if ($(e.target).attr('id') != "selectDevice" && $(e.target).attr('id') != "removeDevice") {
+                $(e.target).parents('.fade').addClass('row-online-state-shadow');
+                equipmentName = $(e.target).parents('.fade').find('ul #alias').text();
+                console.log(equipmentName);
+                setTimeout(function () {
+                    $(e.target).parents('.fade').removeClass('row-online-state-shadow');
+                }, 200);
+                setTimeout(function () {
+                    var equipmentUrl = url.split("alias=")[0];
+                    window.location.href = equipmentUrl + "alias=" + equipmentName;
+                }, 300);
+            }
+        });
         $(divName).find("#state").text(state);
         $(divName).find("#alias").text(alias);
         $(divName).find("#bssid").text(bssid);

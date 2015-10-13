@@ -15,7 +15,7 @@ $(document).ready(function () {
                 if (device[0] === null) continue;
                 var device_id = device[0];
                 var bssid = device_id.split('/')[1];
-                var alias = device[3] ? device[3] : 'TH-1507';
+                var alias = device[3] ? device[3] : device[0];
                 var product_id = device_id.split('/')[0];
                 //var time = new Date(parseInt(device[1])*1000).toLocaleString();
                 //var url = product_id + '.html?device_id=' + device_id + '&access_token=' + access_token + '&alias=' + alias;

@@ -183,153 +183,164 @@ body {
 .jumbotron ul li:nth-child(3) span {
   width: 25px;
   height: 25px;
-  background-image: url("../img/red_error_icon.png");
-  background-repeat: no-repeat;
+  background: url("../img/red_error_icon.png") no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
   display: inline-block;
   vertical-align: bottom;
 }
-.jumbotron p {
-  text-align: center;
-  margin-bottom: 0;
+.jumbotron div p:nth-child(1) {
+  margin: 0 auto;
   width: 40px;
   height: 40px;
-  background-image: url("../img/switch_off_bg.png");
-  background-repeat: no-repeat;
+  background: url("../img/switch_off_bg.png") no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
 }
-.jumbotron p span {
+.jumbotron div p:nth-child(1) span {
   display: inline-block;
   margin-top: 7px;
   width: 25px;
   height: 25px;
-  background-image: url("../img/power_icon.png");
-  background-repeat: no-repeat;
-  background-size: 53px 27px;
-  -webkit-background-size: 53px 27px;
+  background: url("../img/power_icon.png") no-repeat;
+  background-size: 79px 27px;
+  -webkit-background-size: 79px 27px;
   background-position: -1px -1px;
 }
-.jumbotron p.switch_on_state {
-  width: 40px;
-  height: 40px;
+.jumbotron div.switch_on_state p:nth-child(1) {
   background-image: url("../img/switch_on_bg.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  -webkit-background-size: cover;
 }
-.jumbotron p.switch_on_state span {
-  background-position: -27px -1px;
+.jumbotron div.switch_on_state p:nth-child(1) span {
+  background-position: -53px -1px;
 }
 .jumbotron.moreThan_tmpTarget {
   background-color: #8fb9df;
 }
-.container-fluid .btn-group-justified li:nth-child(1) p {
+.jumbotron.offline_state {
+  background-color: #999999;
+}
+.container-fluid {
+  padding: 0;
+}
+.container-fluid .btn-group-justified .btn-group {
   text-align: center;
-  margin-bottom: 0;
+  color: #808080;
+}
+.container-fluid .btn-group-justified .btn-group:nth-child(1) {
+  position: relative;
+  z-index: 3;
+}
+.container-fluid .btn-group-justified .btn-group:nth-child(1) p:nth-child(1) {
+  margin: 0 auto;
   width: 40px;
   height: 40px;
-  background-image: url("../img/switch_off_bg.png");
-  background-repeat: no-repeat;
+  background: url("../img/switch_off_bg.png") no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
 }
-.container-fluid .btn-group-justified li:nth-child(1) p span {
+.container-fluid .btn-group-justified .btn-group:nth-child(1) p:nth-child(1) span {
   display: inline-block;
   margin-top: 7px;
   width: 25px;
   height: 25px;
-  background-image: url("../img/antifreeze_icon.png");
-  background-repeat: no-repeat;
-  background-size: 53px 27px;
-  -webkit-background-size: 53px 27px;
+  background: url("../img/antifreeze_icon.png") no-repeat;
+  background-size: 79px 27px;
+  -webkit-background-size: 79px 27px;
   background-position: -1px -1px;
 }
-.container-fluid .btn-group-justified li:nth-child(1) p.switch_on_state {
-  width: 40px;
-  height: 40px;
+.container-fluid .btn-group-justified .btn-group:nth-child(1).switch_on_state p:nth-child(1) {
   background-image: url("../img/switch_on_bg.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  -webkit-background-size: cover;
 }
-.container-fluid .btn-group-justified li:nth-child(1) p.switch_on_state span {
-  background-position: -27px -1px;
+.container-fluid .btn-group-justified .btn-group:nth-child(1).switch_on_state p:nth-child(1) span {
+  background-position: -53px -1px;
 }
-.container-fluid .btn-group-justified li:nth-child(2) p {
-  text-align: center;
-  margin-bottom: 0;
+.container-fluid .btn-group-justified .btn-group:nth-child(2) p:nth-child(1) {
+  margin: 0 auto;
   width: 40px;
   height: 40px;
-  background-image: url("../img/switch_off_bg.png");
-  background-repeat: no-repeat;
+  background: url("../img/switch_off_bg.png") no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
 }
-.container-fluid .btn-group-justified li:nth-child(2) p span {
+.container-fluid .btn-group-justified .btn-group:nth-child(2) p:nth-child(1) span {
   display: inline-block;
   margin-top: 7px;
   width: 25px;
   height: 25px;
-  background-image: url("../img/sleep_icon.png");
-  background-repeat: no-repeat;
-  background-size: 53px 27px;
-  -webkit-background-size: 53px 27px;
+  background: url("../img/time_icon.png") no-repeat;
+  background-size: 79px 27px;
+  -webkit-background-size: 79px 27px;
   background-position: -1px -1px;
 }
-.container-fluid .btn-group-justified li:nth-child(2) p.switch_on_state {
-  width: 40px;
-  height: 40px;
+.container-fluid .btn-group-justified .btn-group:nth-child(2).switch_on_state p:nth-child(1) {
   background-image: url("../img/switch_on_bg.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  -webkit-background-size: cover;
 }
-.container-fluid .btn-group-justified li:nth-child(2) p.switch_on_state span {
-  background-position: -27px -1px;
+.container-fluid .btn-group-justified .btn-group:nth-child(2).switch_on_state p:nth-child(1) span {
+  background-position: -53px -1px;
 }
-.container-fluid .btn-group-justified li:nth-child(3) p {
-  text-align: center;
-  margin-bottom: 0;
+.container-fluid .btn-group-justified .btn-group:nth-child(3) p:nth-child(1) {
+  margin: 0 auto;
   width: 40px;
   height: 40px;
-  background-image: url("../img/switch_off_bg.png");
-  background-repeat: no-repeat;
+  background: url("../img/switch_off_bg.png") no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
 }
-.container-fluid .btn-group-justified li:nth-child(3) p span {
+.container-fluid .btn-group-justified .btn-group:nth-child(3) p:nth-child(1) span {
   display: inline-block;
   margin-top: 7px;
   width: 25px;
   height: 25px;
-  background-image: url("../img/finesleep_icon.png");
-  background-repeat: no-repeat;
-  background-size: 53px 27px;
-  -webkit-background-size: 53px 27px;
+  background: url("../img/sleep_icon.png") no-repeat;
+  background-size: 79px 27px;
+  -webkit-background-size: 79px 27px;
   background-position: -1px -1px;
 }
-.container-fluid .btn-group-justified li:nth-child(3) p.switch_on_state {
+.container-fluid .btn-group-justified .btn-group:nth-child(3).switch_on_state p:nth-child(1) {
+  background-image: url("../img/switch_on_bg.png");
+}
+.container-fluid .btn-group-justified .btn-group:nth-child(3).switch_on_state p:nth-child(1) span {
+  background-position: -53px -1px;
+}
+.container-fluid .btn-group-justified .btn-group:nth-child(4) p:nth-child(1) {
+  margin: 0 auto;
   width: 40px;
   height: 40px;
-  background-image: url("../img/switch_on_bg.png");
-  background-repeat: no-repeat;
+  background: url("../img/switch_off_bg.png") no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
 }
-.container-fluid .btn-group-justified li:nth-child(3) p.switch_on_state span {
-  background-position: -27px -1px;
+.container-fluid .btn-group-justified .btn-group:nth-child(4) p:nth-child(1) span {
+  display: inline-block;
+  margin-top: 7px;
+  width: 25px;
+  height: 25px;
+  background: url("../img/finesleep_icon.png") no-repeat;
+  background-size: 79px 27px;
+  -webkit-background-size: 79px 27px;
+  background-position: -1px -1px;
+}
+.container-fluid .btn-group-justified .btn-group:nth-child(4).switch_on_state p:nth-child(1) {
+  background-image: url("../img/switch_on_bg.png");
+}
+.container-fluid .btn-group-justified .btn-group:nth-child(4).switch_on_state p:nth-child(1) span {
+  background-position: -53px -1px;
+}
+.container-fluid .btn-group-justified .btn-group select {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 }
 .container-fluid .tmpTargetBox {
   width: 240px;
   height: 203px;
-  background-image: url("../img/temperature_target_bg.png");
-  background-repeat: no-repeat;
+  background: url("../img/temperature_target_bg.png") no-repeat;
   background-size: cover;
   -webkit-background-size: cover;
   position: relative;
-  margin-bottom: 5%;
   padding: 35px 35px 6px;
   overflow: hidden;
   color: #808080;
@@ -504,35 +515,29 @@ body {
 .container-fluid .tmpTargetBox .tmpTargetProgressbar li.showRound:after {
   display: block;
 }
-.container-fluid .input-group {
-  width: 170px;
-  margin: 0 auto;
-  border-spacing: 10px 0;
-}
-.container-fluid .input-group .input-group-addon {
-  width: 25px;
-  height: 25px;
-  background-image: url("../img/red_time_icon.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  -webkit-background-size: cover;
+.container-fluid .mask {
+  position: absolute;
+  top: 190px;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background-color: transparent;
-  border: 0;
+  z-index: 2;
+  display: none;
 }
-.container-fluid .input-group .form-control {
-  -webkit-appearance: none;
-  height: 25px;
-  font-weight: bold;
-  padding: 3px 12px;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-  -webkit-border-top-left-radius: 4px;
-  -webkit-border-top-right-radius: 4px;
-  -webkit-border-bottom-left-radius: 4px;
-  -webkit-border-bottom-right-radius: 4px;
-  border-color: transparent;
-  box-shadow: 0 2px 2px 0 #b9b9b9;
-  -webkit-box-shadow: 0 2px 2px 0 #b9b9b9;
+.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(2),
+.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(3),
+.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(4) {
+  color: #b9b9b9;
+}
+.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(2) p:nth-child(1) span,
+.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(3) p:nth-child(1) span,
+.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(4) p:nth-child(1) span {
+  background-position: -27px -1px;
+}
+.container-fluid.powerSwitch_off_state .tmpTargetBox .tmpTargetPanel li:nth-child(2) {
+  color: #b9b9b9;
+}
+.container-fluid.powerSwitch_off_state .mask {
+  display: block;
 }

@@ -7,6 +7,8 @@ $(document).ready(function () {
     var access_token = getParameterByName('access_token');
     //初始化设备列表
     var deviceLists = getParameterByName('device_list');
+    //自动刷新列表间隔时间
+    var reloadInterval = 2500;
     if (deviceLists !== null) {
         try {
             deviceLists = JSON.parse(deviceLists);
@@ -34,9 +36,19 @@ $(document).ready(function () {
             alert(e);
         }
     }
+    var reloadTimers = 0;
+    var reloadTimer = setInterval(function () {
+        reloadTimers++;
+        reloadPage();
+        if(reloadTimers == 10){
+            clearInterval(reloadTimer);
+        }
+    }, reloadInterval);
 
-    /* 刷新列表 */
-    $("#reloadPage").click(function () {
+    /**
+     * 刷新列表
+     */
+    function reloadPage() {
         $.ajax({
             type: "POST",
             url: "http://api.easylink.io/v1/device/devices",
@@ -46,6 +58,8 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.log(data);
+                //移除设备列表
+                $("#list").children().remove();
                 $.each(data, function (i, _data) {
                     var device_id = _data.id;
                     var product_id = device_id.split('/')[0];
@@ -54,8 +68,7 @@ $(document).ready(function () {
                     //var url = product_id + '.html?device_id=' + device_id + '&access_token=' + access_token + '&alias=' + alias;
                     var url = 'device.html?device_id=' + device_id + '&access_token=' + access_token + '&alias=' + alias;
                     var state = _data.online;
-                    //移除设备列表
-                    $("#list").children().remove();
+
                     //渲染设备列表
                     addDeviceLists(device_id, state, alias, bssid, url);
                     //移除修改名称click事件
@@ -69,7 +82,7 @@ $(document).ready(function () {
                 console.log(data);
             }
         });
-    });
+    }
 
 
     /* 修改名称 */
@@ -93,8 +106,8 @@ $(document).ready(function () {
                     "AUTHORIZATION": "token " + access_token
                 },
                 success: function () {
-                    thisDeviceId = thisDeviceId.replace(/\//g,"\\\/");
-                    $("#"+ thisDeviceId + " #alias").html(modifyContent);
+                    thisDeviceId = thisDeviceId.replace(/\//g, "\\\/");
+                    $("#" + thisDeviceId + " #alias").html(modifyContent);
                 },
                 error: function (data) {
                     alert("修改名称失败");

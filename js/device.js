@@ -35,22 +35,30 @@ $(document).ready(function () {
         var access_token = getParameterByName('access_token');
         getDeviceInfo(access_token, device_id);
 
-//      clearInterval(loadingTime);
-
-        document.title = "泰和美" + alias;
+        document.title = "泰和美 " + alias;
         // websocket连接
         var wsbroker = "api.easylink.io";  //mqtt websocket enabled broker
         var wsport = 1983 // port for above
         var client = new Paho.MQTT.Client(wsbroker, wsport, "v1-web-" + parseInt(Math.random() * 1000000, 12));
-        // 基本参数配置
-        // 连接丢失所对应的callback函数
-        client.onConnectionLost = onConnectionLost;
-        // 消息到达所对应的callback函数
-        client.onMessageArrived = onMessageArrived;
-        // 连接成功所对应的callback函数
-        client.connect({onSuccess: onConnect});
+        var connect = false;
+        init();
+        function init(){
+			// 基本参数配置
+			// 连接丢失所对应的callback函数
+			client.onConnectionLost = onConnectionLost;
+			// 消息到达所对应的callback函数
+			client.onMessageArrived = onMessageArrived;
+			// 连接成功所对应的callback函数
+			client.connect({onSuccess: onConnect});
+		}
 
+        /**
+         * 云端获取设备信息
+         * @param access_token
+         * @param device_id
+         */
         function getDeviceInfo(access_token, device_id) {
+        	$("#jumbotron").removeClass('offline_state');//移除设备状态灰色背景
             $.ajax({
                 type: "POST",
                 url: "http://api.easylink.io/v1/device/property/list",
@@ -66,7 +74,6 @@ $(document).ready(function () {
                         info[_data.name] = _data.value;
                     });
                     if (info) {
-                        console.log(info);
                         displayInfo(info);
                     }
                 },
@@ -77,6 +84,7 @@ $(document).ready(function () {
         };
         // 连接成功
         function onConnect() {
+			connect = true;
             var subtopic = device_id + '/out/#';
             client.publish = function (topic, commond) {
                 console.log("现在执行-->:" + commond);
@@ -93,9 +101,25 @@ $(document).ready(function () {
         function onConnectionLost(responseObject) {
             if (responseObject.errorCode !== 0)
                 console.log("onConnectionLost:" + responseObject.errorMessage);
-            alert("连接丢失，请重新连接...");
-//              var alias = device[3] ? device[3] : "TH-1507";
-//               console.log(alias);
+
+			connect = false;
+            var reconnectNum = 0;
+            var connectTimer = setInterval(function(){
+                console.log(reconnectNum);
+                if(connect == false){
+                    client = new Paho.MQTT.Client(wsbroker, wsport, "v1-web-" + parseInt(Math.random() * 1000000, 12));
+                    init();
+                }else{
+                    clearInterval(connectTimer);
+                }
+                if(reconnectNum >100){
+                    clearInterval(connectTimer);
+                    alert("连接丢失，请重新连接...");
+                    client = new Paho.MQTT.Client(wsbroker, wsport, "v1-web-" + parseInt(Math.random() * 1000000, 12));
+                    init();
+                }
+                reconnectNum++;
+            },6000);
         }
 
         // 消息到达
@@ -105,6 +129,8 @@ $(document).ready(function () {
                 if (message.payloadString == '0') {
                     //设备离线
                     displayOffline();
+                }else{
+                    getDeviceInfo(access_token, device_id);
                 }
             } else {
                 try {
@@ -117,33 +143,42 @@ $(document).ready(function () {
                 displayInfo(info);
             }
         }
-
+        /**
+         * 设备离线样式 （上半部分显示成灰色）
+         */
         function displayOffline() {
             $("#err").html('<span></span>' + "设备已离线");
+            $("#jumbotron").addClass('offline_state');
         }
 
         var onOffPower = $(".onOff_Power");
         var onOffSleep = $(".onOff_sleep");
         var onOffAntifreeze = $(".onOff_antifreeze");
+        var onOffTime = $(".onOff_time");
+        var onFinesleep = $(".onOff_finesleep");
         //显示
         function displayInfo(info) {
             //设备开关
             if (_.has(info, "POW")) {
+            	var intPOW = parseInt(info.POW);
                 console.log(((info.POW == '1') ? "开机" : "关机"));
-                console.log("aaasdd" + info.POW);
-                onOffPower.attr("data-power", info.POW);
-                console.log("$('.onOff_Power').data('power')=" + $(".onOff_Power").data("power"));
-                onOffSwitch(info.POW, onOffPower);
+				onOffPower.data("power",intPOW);				
+                mask(intPOW);
+                onOffSwitch(intPOW, onOffPower);
             }
-            //定时
+            //定时 (同设备开关处理 0为关闭蓝色，其他红色)
             if (_.has(info, "FT")) {
-                console.log(info.FT);
+				console.log(((info.FT == '0') ? "无定时设定" : info.FT+"小时后关机"));
+				var intFT = parseInt(info.FT);
+				onOffTime.data('time', intFT);
+				onOffSwitch(intFT, onOffTime);
             }
             //设定水温
             if (_.has(info, "ST")) {
                 console.log(info.ST);
-                if (count && info.ST <= 60 && info.ST >= 10) {
-                    setTemperature = info.ST;
+                var intST = parseInt(info.ST);
+                if (count && intST <= 60 && intST >= 10) {
+                    setTemperature = intST;
                     temperature.text(setTemperature);
                 } else {
                 }
@@ -154,23 +189,24 @@ $(document).ready(function () {
                     $(".loading").hide();
                 }
                 console.log(info.CT);
+                var intCT = parseInt(info.CT);
                 $("#ct").empty().children().remove();
-                $("#ct").append('<span>' + info.CT + '</span>℃');
-                currentTemperature = info.CT;
+                $("#ct").append('<span>' + intCT + '</span>℃');
+                currentTemperature = intCT;
             }
             //睡眠模式
             if (_.has(info, "SM")) {
-                console.log(((info.SM == 1) ? "睡眠" : "正常"));
-                onOffSleep.attr("data-sleep", info.SM);
-                console.log("$('.onOff_sleep').data('sleep')=" + $(".onOff_sleep").data("sleep"));
-                onOffSwitch(info.SM, onOffSleep);
+                console.log(((info.SM == '1') ? "睡眠" : "正常"));
+                var intSM = parseInt(info.SM);
+                onOffSleep.data("sleep", intSM);
+                onOffSwitch(intSM, onOffSleep);
             }
             //防冻模式
             if (_.has(info, "FM")) {
-                console.log(((info.FM == 1) ? "防冻开启" : "防冻关闭"));
-                onOffAntifreeze.attr("data-antifreeze", info.FM);
-                console.log("$('.onOff_antifreeze').data('antifreeze')=" + $(".onOff_antifreeze").data("antifreeze"));
-                onOffSwitch(info.FM, onOffAntifreeze);
+                console.log(((info.FM == '1') ? "防冻开启" : "防冻关闭"));
+                var intFM = parseInt(info.FM);
+                onOffAntifreeze.data("antifreeze", intFM);
+                onOffSwitch(intFM, onOffAntifreeze);
             }
             //剩余关机时间
             if (_.has(info, "LT")) {
@@ -180,31 +216,34 @@ $(document).ready(function () {
             //错误报警
             if (_.has(info, "ERR")) {
                 var msg = ["设备正常", "水泵或电磁阀故障", "温度传感器故障", "水位低", "水温超65度", "水温低于5度"];
-
-                if (info.ERR == 0) {
+				var intERR = parseInt(info.ERR);
+                if (intERR == 0) {
                     $("#err").text(msg[info.ERR]);
                 } else {
-                    $("#err").html('<span></span>' + msg[info.ERR]);
+                    $("#err").html('<span></span>' + msg[intERR]);
                 }
-
 
             }
             temperatureChange();
         }
 
-        $(".onOff_Power").on("click", setPow);
-        $(".onOff_sleep").on("click", setSleepMode);
-        $(".onOff_antifreeze").on("click", setFreezeMode);
+        onOffPower.on("click", setPow);
+        onOffSleep.on("click", setSleepMode);
+        onOffAntifreeze.on("click", setFreezeMode);
         /*监听温度值数字变化*/
         temperature.bind('DOMNodeInserted', function () {
             temperatureChange();
         });
         $("#tmpLeft").on("touchstart", setTmpLeft);
         $("#tmpRight").on("touchstart", setTmpRight);
-//	    $('#finalTime').change(function(){ 
-//			setFinalTime();
-//		})
-//	    $('#finalTime').on('change',setFinalTime);
+        
+        $("#finalTime").get(0).selectedIndex=-1;//设置预约定时下拉框默认为无选择
+	    $('#finalTime').change(function(){
+	    	var r = confirm("确定"+$("#finalTime").children('option:selected').val()+"?")
+	    	if(r==true){
+	    		setTimeMode();
+	    	}
+		});
 
         /* 设置电源开关 */
         function setPow() {
@@ -215,20 +254,10 @@ $(document).ready(function () {
             var topic = device_id + '/in/';
             var commond = '{"POW":"' + state + '"}';
             client.publish(topic, commond);
+            mask(state);
             onOffSwitch(state, onOffPower);
         }
-
-        /**控制开关状态*/
-        function onOffSwitch(state, switchName) {
-            if (state == '1') {
-//      		console.log("state=开");
-                switchName.addClass('switch_on_state');
-            } else {
-//				console.log("state=关");
-                switchName.removeClass('switch_on_state');
-            }
-        }
-
+        
         /*设置温度减少*/
         function setTmpLeft() {
             if (setTemperature <= 10) {
@@ -241,7 +270,6 @@ $(document).ready(function () {
 
         /*设置温度增加*/
         function setTmpRight() {
-//			$("#tmpLeft span").show();
             if (setTemperature >= 60) {//温度大于60度则返回无法继续点击
                 return;
             }
@@ -254,7 +282,6 @@ $(document).ready(function () {
         function setSendingTime() {
             if (!!timer) {
                 clearTimeout(timer);
-                console.log("asdfg");
                 count = false;
             }
             timer = setTimeout(function () {
@@ -271,19 +298,21 @@ $(document).ready(function () {
             client.publish(topic, commond);
         }
 
-        /* 设置定时关机 */
-        function setFinalTime() {
-            var finalTime = $("#finalTime");
-            var time = $('#finalTime').children('option:selected').val();
-            if (time != finalTime.find('option:first').val()) {
+		/* 设置定时模式 */
+		function setTimeMode(){
+			var showTime=onOffTime.data("time");//定时时间（小时）
+            showTime = $("#finalTime").children('option:selected').val().split('小')[0];
+			onOffTime.data('time', showTime);
+            if (showTime != 0) {
                 //下发定时关机
                 var topic = device_id + '/in/';
-                var commond = '{"FT":"' + time.charAt(0) + '"}';
+                var commond = '{"FT":"' + showTime + '"}';
                 client.publish(topic, commond);
             }
-
-        }
-
+            onOffSwitch(showTime, onOffTime);
+ 
+		}
+		
         /* 设置睡眠模式 */
         function setSleepMode() {
             var state = onOffSleep.data("sleep");
@@ -306,6 +335,24 @@ $(document).ready(function () {
             var commond = '{"FM":"' + state + '"}';
             client.publish(topic, commond);
             onOffSwitch(state, onOffAntifreeze);
+        }
+        
+        /**控制开关状态*/
+        function onOffSwitch(state, switchName) {
+            if (state == '0') {
+                switchName.parent().removeClass('switch_on_state');
+            } else {
+                switchName.parent().addClass('switch_on_state');
+            }
+        } 
+        
+        /* 电源关闭后的蒙版*/
+        function mask(power){
+        	if(power==0){
+				$("#control_panel").addClass('powerSwitch_off_state');
+        	}else{
+				$("#control_panel").removeClass('powerSwitch_off_state');
+        	}
         }
     }
 
@@ -350,7 +397,6 @@ $(document).ready(function () {
         ];
         //设置温度数值初始值
         temperature.text(setTemperature);
-
         colorBars = $("#progressBars li span");
         circle = $("#progressBars li");
         temperatureChange();

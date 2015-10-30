@@ -8,11 +8,15 @@
     <meta name="format-detection" content="telephone=no"/>
     <title></title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/device.css?version=0.0.3">
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/underscore-min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/device.css?version=0.0.4">
     <script type="text/javascript" src="http://api.easylink.io/assets/js/mqttws31.js"></script>
-    <script type="text/javascript" src="js/device.js?version=0.0.3"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.md5.js"></script>
+    <script type="text/javascript" src="js/underscore-min.js"></script>
+    <script type="text/javascript" src="js/config.js?version=0.0.4"></script>
+    <script type="text/javascript" src="js/public.js?version=0.0.4"></script>
+    <script type="text/javascript" src="js/device.js?version=0.0.4"></script>
 </head>
 <body>
 
@@ -48,18 +52,19 @@
             </p>
             <p>定时</p> 
             <select id="finalTime">
-                <option>1小时后关机</option>
-                <option>2小时后关机</option>
-                <option>3小时后关机</option>
-                <option>4小时后关机</option>
-                <option>5小时后关机</option>
-                <option>6小时后关机</option>
-                <option>7小时后关机</option>
-                <option>8小时后关机</option>
-                <option>9小时后关机</option>
-                <option>10小时后关机</option>
-                <option>11小时后关机</option>
-                <option>12小时后关机</option>
+            	<option>0小时</option>
+                <option>1小时</option>
+                <option>2小时</option>
+                <option>3小时</option>
+                <option>4小时</option>
+                <option>5小时</option>
+                <option>6小时</option>
+                <option>7小时</option>
+                <option>8小时</option>
+                <option>9小时</option>
+                <option>10小时</option>
+                <option>11小时</option>
+                <option>12小时</option>
             </select>           
         </li>
         <!-- 睡眠开关 -->
@@ -115,6 +120,26 @@
     <div id="mask" class="mask"></div>
 </div>
 
+<!-- 确定modal -->
+<div class="modal fade" id="confirmModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <p id="confirmTxt" class="text-center"></p>
+            <p class="btn-group btn-group-justified">
+                <a id="cancelButton" href="#" class="btn btn-lg" role="button" data-dismiss="modal">取消</a> 
+                <a id="confirmButton" href="#" class="btn btn-lg" role="button">确定</a>
+            </p>
+        </div>
+    </div>
+</div>
+<!-- /确定modal -->
+
+<!--无权限时的蒙版-->
+<div class="role">
+	<div class="">
+		当前为访客模式，没有控制权限 
+	</div>
+</div>
 <!-- loading -->
 <div class="loading">
     <ul class="list-unstyled">

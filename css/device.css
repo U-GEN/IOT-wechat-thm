@@ -1,20 +1,16 @@
 @font-face {
+  font-family: 'iconfont';
+  src: url('//at.alicdn.com/t/font_1445415139_5233579.eot');
+  src: url('//at.alicdn.com/t/font_1445415139_5233579.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1445415139_5233579.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1445415139_5233579.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1445415139_5233579.svg#iconfont') format('svg');
+  
+  /* IE9*/
+  /* iOS 4.1- */
+}
+@font-face {
   font-family: myFont;
   src: url('../font/number.TTF') format('truetype');
 }
-.modal .modal-dialog {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  display: table;
-}
-.modal .modal-dialog .modal-v-center {
-  display: table-cell;
-  vertical-align: middle;
-}
-.modal .modal-dialog .modal-v-center .modal-content {
-  width: 300px;
-}
+/* loading */
 .loading {
   position: fixed;
   top: 0;
@@ -26,7 +22,7 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 .loading ul {
-  position: fixed;
+  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
@@ -149,6 +145,48 @@
     -webkit-transform: scale(1);
   }
 }
+/* /loading */
+/* 确定modal */
+.modal-dialog {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 280px;
+  height: 100px;
+}
+.modal-dialog p {
+  color: #000000;
+  font-size: 16px;
+  margin-bottom: 0;
+}
+.modal-dialog p:nth-child(1) {
+  padding: 15px 20px;
+}
+.modal-dialog .btn-group-justified {
+  border-top: 1px solid #dadada;
+}
+.modal-dialog .btn-group-justified .btn {
+  color: #000000;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -webkit-border-top-right-radius: 0;
+}
+.modal-dialog .btn-group-justified .btn:nth-child(2) {
+  border-left-color: #dadada;
+}
+.modal-dialog .btn-group-justified .btn:active {
+  background-color: #e7eaed;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+.modal-dialog .btn-group-justified .btn:focus {
+  outline: 0;
+}
+/* /确定modal */
 html,
 body {
   width: 100%;
@@ -160,6 +198,14 @@ body {
   tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   background-color: #f5f5f5;
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
 }
 .jumbotron {
   padding-left: 15px;
@@ -222,15 +268,32 @@ body {
 .container-fluid {
   padding: 0;
 }
-.container-fluid .btn-group-justified .btn-group {
+.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(2),
+.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(3),
+.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(4) {
+  color: #b9b9b9;
+}
+.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(2) p:nth-child(1) span,
+.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(3) p:nth-child(1) span,
+.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(4) p:nth-child(1) span {
+  background-position: -27px -1px;
+}
+.container-fluid.powerSwitch_off_state .tmpTargetBox .tmpTargetPanel li:nth-child(2) {
+  color: #b9b9b9;
+}
+.container-fluid.powerSwitch_off_state .mask {
+  display: block;
+}
+/* switch group */
+.btn-group-justified .btn-group {
   text-align: center;
   color: #808080;
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(1) {
+.btn-group-justified .btn-group:nth-child(1) {
   position: relative;
   z-index: 3;
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(1) p:nth-child(1) {
+.btn-group-justified .btn-group:nth-child(1) p:nth-child(1) {
   margin: 0 auto;
   width: 40px;
   height: 40px;
@@ -238,7 +301,7 @@ body {
   background-size: cover;
   -webkit-background-size: cover;
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(1) p:nth-child(1) span {
+.btn-group-justified .btn-group:nth-child(1) p:nth-child(1) span {
   display: inline-block;
   margin-top: 7px;
   width: 25px;
@@ -248,13 +311,13 @@ body {
   -webkit-background-size: 79px 27px;
   background-position: -1px -1px;
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(1).switch_on_state p:nth-child(1) {
+.btn-group-justified .btn-group:nth-child(1).switch_on_state p:nth-child(1) {
   background-image: url("../img/switch_on_bg.png");
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(1).switch_on_state p:nth-child(1) span {
+.btn-group-justified .btn-group:nth-child(1).switch_on_state p:nth-child(1) span {
   background-position: -53px -1px;
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(2) p:nth-child(1) {
+.btn-group-justified .btn-group:nth-child(2) p:nth-child(1) {
   margin: 0 auto;
   width: 40px;
   height: 40px;
@@ -262,7 +325,7 @@ body {
   background-size: cover;
   -webkit-background-size: cover;
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(2) p:nth-child(1) span {
+.btn-group-justified .btn-group:nth-child(2) p:nth-child(1) span {
   display: inline-block;
   margin-top: 7px;
   width: 25px;
@@ -272,13 +335,13 @@ body {
   -webkit-background-size: 79px 27px;
   background-position: -1px -1px;
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(2).switch_on_state p:nth-child(1) {
+.btn-group-justified .btn-group:nth-child(2).switch_on_state p:nth-child(1) {
   background-image: url("../img/switch_on_bg.png");
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(2).switch_on_state p:nth-child(1) span {
+.btn-group-justified .btn-group:nth-child(2).switch_on_state p:nth-child(1) span {
   background-position: -53px -1px;
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(3) p:nth-child(1) {
+.btn-group-justified .btn-group:nth-child(3) p:nth-child(1) {
   margin: 0 auto;
   width: 40px;
   height: 40px;
@@ -286,7 +349,7 @@ body {
   background-size: cover;
   -webkit-background-size: cover;
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(3) p:nth-child(1) span {
+.btn-group-justified .btn-group:nth-child(3) p:nth-child(1) span {
   display: inline-block;
   margin-top: 7px;
   width: 25px;
@@ -296,13 +359,13 @@ body {
   -webkit-background-size: 79px 27px;
   background-position: -1px -1px;
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(3).switch_on_state p:nth-child(1) {
+.btn-group-justified .btn-group:nth-child(3).switch_on_state p:nth-child(1) {
   background-image: url("../img/switch_on_bg.png");
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(3).switch_on_state p:nth-child(1) span {
+.btn-group-justified .btn-group:nth-child(3).switch_on_state p:nth-child(1) span {
   background-position: -53px -1px;
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(4) p:nth-child(1) {
+.btn-group-justified .btn-group:nth-child(4) p:nth-child(1) {
   margin: 0 auto;
   width: 40px;
   height: 40px;
@@ -310,7 +373,7 @@ body {
   background-size: cover;
   -webkit-background-size: cover;
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(4) p:nth-child(1) span {
+.btn-group-justified .btn-group:nth-child(4) p:nth-child(1) span {
   display: inline-block;
   margin-top: 7px;
   width: 25px;
@@ -320,13 +383,13 @@ body {
   -webkit-background-size: 79px 27px;
   background-position: -1px -1px;
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(4).switch_on_state p:nth-child(1) {
+.btn-group-justified .btn-group:nth-child(4).switch_on_state p:nth-child(1) {
   background-image: url("../img/switch_on_bg.png");
 }
-.container-fluid .btn-group-justified .btn-group:nth-child(4).switch_on_state p:nth-child(1) span {
+.btn-group-justified .btn-group:nth-child(4).switch_on_state p:nth-child(1) span {
   background-position: -53px -1px;
 }
-.container-fluid .btn-group-justified .btn-group select {
+.btn-group-justified .btn-group select {
   position: absolute;
   top: 0;
   left: 0;
@@ -334,7 +397,9 @@ body {
   height: 100%;
   opacity: 0;
 }
-.container-fluid .tmpTargetBox {
+/* /switch group */
+/* 设定水温 */
+.tmpTargetBox {
   width: 240px;
   height: 203px;
   background: url("../img/temperature_target_bg.png") no-repeat;
@@ -345,19 +410,19 @@ body {
   overflow: hidden;
   color: #808080;
 }
-.container-fluid .tmpTargetBox:before {
+.tmpTargetBox:before {
   content: "10℃";
   position: absolute;
   bottom: -4px;
   left: 0;
 }
-.container-fluid .tmpTargetBox:after {
+.tmpTargetBox:after {
   content: "60℃";
   position: absolute;
   bottom: -4px;
   right: 0;
 }
-.container-fluid .tmpTargetBox .tmpTargetPanel {
+.tmpTargetBox .tmpTargetPanel {
   color: #f46652;
   width: 100%;
   height: 100%;
@@ -375,16 +440,16 @@ body {
   -webkit-border-bottom-right-radius: 50%;
   position: relative;
 }
-.container-fluid .tmpTargetBox .tmpTargetPanel li:nth-child(1) {
+.tmpTargetBox .tmpTargetPanel li:nth-child(1) {
   font-size: 22px;
   font-weight: bold;
   padding-top: 35px;
   line-height: 25px;
 }
-.container-fluid .tmpTargetBox .tmpTargetPanel li p {
+.tmpTargetBox .tmpTargetPanel li p {
   margin-bottom: 0;
 }
-.container-fluid .tmpTargetBox .tmpTargetPanel li p span {
+.tmpTargetBox .tmpTargetPanel li p span {
   width: 0;
   height: 0;
   border-top: 10px solid transparent;
@@ -392,7 +457,7 @@ body {
   display: inline-block;
   margin-top: 35px;
 }
-.container-fluid .tmpTargetBox .tmpTargetPanel li p:nth-child(1) {
+.tmpTargetBox .tmpTargetPanel li p:nth-child(1) {
   width: 70px;
   height: 100px;
   z-index: 1;
@@ -400,16 +465,16 @@ body {
   top: 60px;
   left: 0;
 }
-.container-fluid .tmpTargetBox .tmpTargetPanel li p:nth-child(1) span {
+.tmpTargetBox .tmpTargetPanel li p:nth-child(1) span {
   border-right: 10px solid;
 }
-.container-fluid .tmpTargetBox .tmpTargetPanel li p:nth-child(2) {
+.tmpTargetBox .tmpTargetPanel li p:nth-child(2) {
   font-size: 500%;
   font-family: myFont;
   margin-top: 15px;
   line-height: 55px;
 }
-.container-fluid .tmpTargetBox .tmpTargetPanel li p:nth-child(3) {
+.tmpTargetBox .tmpTargetPanel li p:nth-child(3) {
   width: 70px;
   height: 100px;
   z-index: 1;
@@ -417,10 +482,10 @@ body {
   top: 60px;
   right: 0;
 }
-.container-fluid .tmpTargetBox .tmpTargetPanel li p:nth-child(3) span {
+.tmpTargetBox .tmpTargetPanel li p:nth-child(3) span {
   border-left: 10px solid;
 }
-.container-fluid .tmpTargetBox .tmpTargetProgressbar li {
+.tmpTargetBox .tmpTargetProgressbar li {
   position: absolute;
   top: 0;
   left: 0;
@@ -431,47 +496,47 @@ body {
   -webkit-transform-origin: 100% 100%;
   overflow: hidden;
 }
-.container-fluid .tmpTargetBox .tmpTargetProgressbar li:nth-child(1) {
+.tmpTargetBox .tmpTargetProgressbar li:nth-child(1) {
   transform: rotate(-34deg) skew(66deg);
   -webkit-transform: rotate(-34deg) skew(66deg);
 }
-.container-fluid .tmpTargetBox .tmpTargetProgressbar li:nth-child(2) {
+.tmpTargetBox .tmpTargetProgressbar li:nth-child(2) {
   transform: rotate(-9deg) skew(66deg);
   -webkit-transform: rotate(-9deg) skew(66deg);
 }
-.container-fluid .tmpTargetBox .tmpTargetProgressbar li:nth-child(3) {
+.tmpTargetBox .tmpTargetProgressbar li:nth-child(3) {
   transform: rotate(16deg) skew(66deg);
   -webkit-transform: rotate(16deg) skew(66deg);
 }
-.container-fluid .tmpTargetBox .tmpTargetProgressbar li:nth-child(4) {
+.tmpTargetBox .tmpTargetProgressbar li:nth-child(4) {
   transform: rotate(41deg) skew(66deg);
   -webkit-transform: rotate(41deg) skew(66deg);
 }
-.container-fluid .tmpTargetBox .tmpTargetProgressbar li:nth-child(5) {
+.tmpTargetBox .tmpTargetProgressbar li:nth-child(5) {
   transform: rotate(66deg) skew(66deg);
   -webkit-transform: rotate(66deg) skew(66deg);
 }
-.container-fluid .tmpTargetBox .tmpTargetProgressbar li:nth-child(6) {
+.tmpTargetBox .tmpTargetProgressbar li:nth-child(6) {
   transform: rotate(91deg) skew(66deg);
   -webkit-transform: rotate(91deg) skew(66deg);
 }
-.container-fluid .tmpTargetBox .tmpTargetProgressbar li:nth-child(7) {
+.tmpTargetBox .tmpTargetProgressbar li:nth-child(7) {
   transform: rotate(116deg) skew(66deg);
   -webkit-transform: rotate(116deg) skew(66deg);
 }
-.container-fluid .tmpTargetBox .tmpTargetProgressbar li:nth-child(8) {
+.tmpTargetBox .tmpTargetProgressbar li:nth-child(8) {
   transform: rotate(141deg) skew(66deg);
   -webkit-transform: rotate(141deg) skew(66deg);
 }
-.container-fluid .tmpTargetBox .tmpTargetProgressbar li:nth-child(9) {
+.tmpTargetBox .tmpTargetProgressbar li:nth-child(9) {
   transform: rotate(166deg) skew(66deg);
   -webkit-transform: rotate(166deg) skew(66deg);
 }
-.container-fluid .tmpTargetBox .tmpTargetProgressbar li:nth-child(10) {
+.tmpTargetBox .tmpTargetProgressbar li:nth-child(10) {
   transform: rotate(191deg) skew(66deg);
   -webkit-transform: rotate(191deg) skew(66deg);
 }
-.container-fluid .tmpTargetBox .tmpTargetProgressbar li span {
+.tmpTargetBox .tmpTargetProgressbar li span {
   position: absolute;
   bottom: -97px;
   right: -97px;
@@ -491,7 +556,7 @@ body {
   background: radial-gradient(transparent 60%, #e7eaed 35%);
   background: -webkit-radial-gradient(transparent 60%, #e7eaed 35%);
 }
-.container-fluid .tmpTargetBox .tmpTargetProgressbar li:after {
+.tmpTargetBox .tmpTargetProgressbar li:after {
   content: "";
   position: absolute;
   bottom: 12px;
@@ -512,10 +577,12 @@ body {
   -webkit-transform: skew(-66deg);
   display: none;
 }
-.container-fluid .tmpTargetBox .tmpTargetProgressbar li.showRound:after {
+.tmpTargetBox .tmpTargetProgressbar li.showRound:after {
   display: block;
 }
-.container-fluid .mask {
+/* /设定水温 */
+/* 电源关闭蒙版 */
+.mask {
   position: absolute;
   top: 190px;
   bottom: 0;
@@ -525,19 +592,22 @@ body {
   z-index: 2;
   display: none;
 }
-.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(2),
-.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(3),
-.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(4) {
-  color: #b9b9b9;
+
+/*权限蒙版*/
+.role{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1040;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.3);
 }
-.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(2) p:nth-child(1) span,
-.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(3) p:nth-child(1) span,
-.container-fluid.powerSwitch_off_state .btn-group-justified .btn-group:nth-child(4) p:nth-child(1) span {
-  background-position: -27px -1px;
-}
-.container-fluid.powerSwitch_off_state .tmpTargetBox .tmpTargetPanel li:nth-child(2) {
-  color: #b9b9b9;
-}
-.container-fluid.powerSwitch_off_state .mask {
-  display: block;
+.role div{
+    top: 110px;
+    position: relative;
+    float: right;
+    color: #fff;
+    margin-right: 20px;
 }

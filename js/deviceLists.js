@@ -26,13 +26,25 @@ wx.ready(function () {
        jsApiList: [
            'openWXDeviceLib',
            'getWXDeviceTicket',
-           'onMenuShareAppMessage'
+           'onMenuShareAppMessage',
+           'onMenuShareTimeline',
+           'onMenuShareQQ'
        ],
        success: function (res) {
            $(".loading").hide();
-       }
+           var content = {
+               title: '泰和美商城',
+               desc: '去商城逛逛吧',
+               link: 'http://wap.koudaitong.com/v2/showcase/homepage?alias=9c8qy9px',
+               imgUrl: 'http://' + document.domain + '/img/share.jpg'
+           }
+           shareAppMessage(content);
+           shareTimeline(content);
+           shareQQ(content)
+      	}
    });
-   openWXDeviceLib();
+    openWXDeviceLib();
+
 });
 
     // 得到庆科返回的deviceLists
@@ -228,7 +240,14 @@ wx.ready(function () {
                 $("#shareModal").modal('hide')
             };
             shareAppMessage(content, showGuide, hideGuide);
-
+            var content = {
+                title: '泰和美商城',
+                desc: '去商城逛逛吧',
+                link: 'http://wap.koudaitong.com/v2/showcase/homepage?alias=9c8qy9px',
+                imgUrl: 'http://' + document.domain + '/img/share.jpg'
+            }
+            shareTimeline(content, hideGuide);
+            shareQQ(content, hideGuide);
         })
     }
 

@@ -320,11 +320,12 @@ function wechatConfig(signInfo, wechatSign) {
             // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
             'openWXDeviceLib',
             'getWXDeviceTicket',
-            'onMenuShareAppMessage'
+            'onMenuShareAppMessage',
+            'onMenuShareTimeline',
+            'onMenuShareQQ'
         ]
     });
 }
-
 /**
  * 通过wxJsapi初始化设备库
  */
@@ -366,7 +367,9 @@ function shareAppMessage(content, showGuide, hideGuide) {
         link: content.link,
         imgUrl: content.imgUrl,
         trigger: function (res) {
-            hideGuide();
+            if(!!hideGuide){
+                hideGuide();
+            }
             // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
             //alert('用户点击发送给朋友:' + JSON.stringify(res));
         },
@@ -380,7 +383,102 @@ function shareAppMessage(content, showGuide, hideGuide) {
             alert(JSON.stringify(res));
         }
     });
-    showGuide();
+    if(!!showGuide){
+        showGuide();
+    }
+}
+
+/**
+ * 获取“分享朋友圈”按钮点击状态及自定义分享内容接口
+ * @param ticket
+ */
+function shareTimeline(content, hideGuide){
+    wx.onMenuShareTimeline({
+        title: content.title,
+        link: content.link,
+        imgUrl: content.imgUrl,
+        success: function () {
+            // 用户确认分享后执行的回调函数
+            if(!!hideGuide){
+                hideGuide();
+            }
+        },
+        cancel: function () {
+            // 用户取消分享后执行的回调函数
+            if(!!hideGuide){
+                hideGuide();
+            }
+        }
+    });
+}
+
+/**
+ * 获取“分享给QQ”按钮点击状态及自定义分享内容接口
+ * @param ticket
+ */
+function shareQQ (content, hideGuide){
+    wx.onMenuShareQQ({
+        title: content.title,
+        desc: content.desc,
+        link: content.link,
+        imgUrl: content.imgUrl,
+        success: function () { 
+            if(!!hideGuide){
+                hideGuide();
+            }
+        },
+        cancel: function () { 
+            if(!!hideGuide){
+                hideGuide();
+            }
+        }
+    });
+}
+
+/**
+ * 获取“分享腾讯微博”按钮点击状态及自定义分享内容接口
+ * @param ticket
+ */
+function shareWeibo(){
+    wx.onMenuShareWeibo({
+        title: content.title,
+        desc: content.desc,
+        link: content.link,
+        imgUrl: content.imgUrl,
+        success: function () { 
+            if(!!hideGuide){
+                hideGuide();
+            }
+        },
+        cancel: function () { 
+            if(!!hideGuide){
+                hideGuide();
+            }
+        }
+    });
+}
+
+/**
+ * 获取“分享给QQ空间”按钮点击状态及自定义分享内容接口
+ * @param ticket
+ */
+function shareQZone(){
+    wx.onMenuShareQZone({
+        title: content.title,
+        desc: content.desc,
+        link: content.link,
+        imgUrl: content.imgUrl,
+        success: function () { 
+            if(!!hideGuide){
+                hideGuide();
+            }
+        },
+        cancel: function () { 
+            if(!!hideGuide){
+                hideGuide();
+            }
+        }
+    });
 }
 
 /**

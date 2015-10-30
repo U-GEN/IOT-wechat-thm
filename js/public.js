@@ -367,7 +367,7 @@ function shareAppMessage(content, showGuide, hideGuide) {
         link: content.link,
         imgUrl: content.imgUrl,
         trigger: function (res) {
-            if(!!hideGuide){
+            if (!!hideGuide) {
                 hideGuide();
             }
             // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
@@ -383,7 +383,7 @@ function shareAppMessage(content, showGuide, hideGuide) {
             alert(JSON.stringify(res));
         }
     });
-    if(!!showGuide){
+    if (!!showGuide) {
         showGuide();
     }
 }
@@ -392,22 +392,21 @@ function shareAppMessage(content, showGuide, hideGuide) {
  * 获取“分享朋友圈”按钮点击状态及自定义分享内容接口
  * @param ticket
  */
-function shareTimeline(content, hideGuide){
+function shareTimeline(content, hideGuide) {
     wx.onMenuShareTimeline({
         title: content.title,
         link: content.link,
         imgUrl: content.imgUrl,
-        success: function () {
-            // 用户确认分享后执行的回调函数
-            if(!!hideGuide){
+        trigger: function (res) {
+            if (!!hideGuide) {
                 hideGuide();
             }
         },
+        success: function () {
+
+        },
         cancel: function () {
-            // 用户取消分享后执行的回调函数
-            if(!!hideGuide){
-                hideGuide();
-            }
+
         }
     });
 }
@@ -416,21 +415,22 @@ function shareTimeline(content, hideGuide){
  * 获取“分享给QQ”按钮点击状态及自定义分享内容接口
  * @param ticket
  */
-function shareQQ (content, hideGuide){
+function shareQQ(content, hideGuide) {
     wx.onMenuShareQQ({
         title: content.title,
         desc: content.desc,
         link: content.link,
         imgUrl: content.imgUrl,
-        success: function () { 
-            if(!!hideGuide){
+        trigger: function (res) {
+            if (!!hideGuide) {
                 hideGuide();
             }
         },
-        cancel: function () { 
-            if(!!hideGuide){
-                hideGuide();
-            }
+        success: function () {
+
+        },
+        cancel: function () {
+
         }
     });
 }
@@ -439,19 +439,19 @@ function shareQQ (content, hideGuide){
  * 获取“分享腾讯微博”按钮点击状态及自定义分享内容接口
  * @param ticket
  */
-function shareWeibo(){
+function shareWeibo() {
     wx.onMenuShareWeibo({
         title: content.title,
         desc: content.desc,
         link: content.link,
         imgUrl: content.imgUrl,
-        success: function () { 
-            if(!!hideGuide){
+        success: function () {
+            if (!!hideGuide) {
                 hideGuide();
             }
         },
-        cancel: function () { 
-            if(!!hideGuide){
+        cancel: function () {
+            if (!!hideGuide) {
                 hideGuide();
             }
         }
@@ -462,19 +462,19 @@ function shareWeibo(){
  * 获取“分享给QQ空间”按钮点击状态及自定义分享内容接口
  * @param ticket
  */
-function shareQZone(){
+function shareQZone() {
     wx.onMenuShareQZone({
         title: content.title,
         desc: content.desc,
         link: content.link,
         imgUrl: content.imgUrl,
-        success: function () { 
-            if(!!hideGuide){
+        success: function () {
+            if (!!hideGuide) {
                 hideGuide();
             }
         },
-        cancel: function () { 
-            if(!!hideGuide){
+        cancel: function () {
+            if (!!hideGuide) {
                 hideGuide();
             }
         }
@@ -537,19 +537,19 @@ function formatMinutes(value) {
 }
 
 /* 弹出框双选择初始化*/
-function modalInitializationTwo(confirmTxt){
+function modalInitializationTwo(confirmTxt) {
     $("#confirmTxt").html(confirmTxt);
     $("#cancelButton").show();
     $("#confirmButton").off();//移除所有绑定事件
     $("#confirmModal").modal('show');
 }
 /* 弹出框单选择初始化*/
-function modalInitializationOne(confirmTxt){
+function modalInitializationOne(confirmTxt) {
     $("#confirmTxt").html(confirmTxt);
     $("#cancelButton").hide();
     $("#confirmButton").off();//移除所有绑定事件
     $("#confirmModal").modal('show');
-    $("#confirmButton").on('click',function(){
+    $("#confirmButton").on('click', function () {
         $("#confirmModal").modal('hide');
     });
 }

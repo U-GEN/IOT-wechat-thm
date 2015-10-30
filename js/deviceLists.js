@@ -2,7 +2,7 @@
  * Created by CJLIU on 2015/9/19.
  */
 $(document).ready(function () {
-$(".loading").show();
+    $(".loading").show();
     //当前设备ID
     var thisDeviceId;
     // 得到请求的sign
@@ -17,35 +17,37 @@ $(".loading").show();
     };
     // 得到微信openID
     var userName = getUserName(access_token, requestHeader);
-//  //微信jssdk配置 正式需打开
-var signInfo = getWechatSignInfo();
-var wechatSign = getWechatSign(signInfo);
-wechatConfig(signInfo, wechatSign);
-wx.ready(function () {
-   wx.checkJsApi({
-       jsApiList: [
-           'openWXDeviceLib',
-           'getWXDeviceTicket',
-           'onMenuShareAppMessage',
-           'onMenuShareTimeline',
-           'onMenuShareQQ'
-       ],
-       success: function (res) {
-           $(".loading").hide();
-           var content = {
-               title: '泰和美商城',
-               desc: '去商城逛逛吧',
-               link: 'http://wap.koudaitong.com/v2/showcase/homepage?alias=9c8qy9px',
-               imgUrl: 'http://' + document.domain + '/img/share.jpg'
-           }
-           shareAppMessage(content);
-           shareTimeline(content);
-           shareQQ(content)
-      	}
-   });
-    openWXDeviceLib();
 
-});
+    //微信jssdk配置 正式需打开
+    var signInfo = getWechatSignInfo();
+    var wechatSign = getWechatSign(signInfo);
+    wechatConfig(signInfo, wechatSign);
+    wx.ready(function () {
+        //禁止分享功能
+        //WeixinJSBridge.call('hideOptionMenu');
+        wx.checkJsApi({
+            jsApiList: [
+                'openWXDeviceLib',
+                'getWXDeviceTicket',
+                'onMenuShareAppMessage',
+                'onMenuShareTimeline',
+                'onMenuShareQQ'
+            ],
+            success: function (res) {
+                $(".loading").hide();
+                var content = {
+                    title: '泰和美商城',
+                    desc: '去商城逛逛吧',
+                    link: 'http://wap.koudaitong.com/v2/showcase/homepage?alias=9c8qy9px',
+                    imgUrl: 'http://' + document.domain + '/img/share.jpg'
+                }
+                shareAppMessage(content);
+                shareTimeline(content);
+                shareQQ(content)
+            }
+        });
+        openWXDeviceLib();
+    });
 
     // 得到庆科返回的deviceLists
     var deviceLists = getParameterByName('device_list');
@@ -56,8 +58,8 @@ wx.ready(function () {
         autoReloadPage();
     } else {
 //      alert('设备未找到页面');
-		$("#noDevice").show();
-		$("#footer").hide();
+        $("#noDevice").show();
+        $("#footer").hide();
     }
 
     /* 初始化列表 */
@@ -67,9 +69,9 @@ wx.ready(function () {
                 console.error(data);
                 return;
             }
-            if(_.size(data)==0){
-            	$("#noDevice").show();
-				$("#footer").hide();
+            if (_.size(data) == 0) {
+                $("#noDevice").show();
+                $("#footer").hide();
             }
             $.each(data, function (i, _data) {
                 var device_id = _data.id;
@@ -191,9 +193,9 @@ wx.ready(function () {
     /* 移除设备 */
     function onRemoveDevice() {
         $(".removeDevice").on("click", function () {
-        	thisDeviceId = $(this).parents('.alert')[0].id;
-        	modalInitializationTwo('真的要移除设备吗？');
-        	$("#confirmButton").on('click',function(){
+            thisDeviceId = $(this).parents('.alert')[0].id;
+            modalInitializationTwo('真的要移除设备吗？');
+            $("#confirmButton").on('click', function () {
                 var deviceId = thisDeviceId.replace(/\//g, "\\\/");
                 var wxDeviceId = $("#" + deviceId).data('wxdeviceid');
                 $("#confirmModal").modal('hide');
@@ -201,17 +203,17 @@ wx.ready(function () {
                     if (!!err) return;
                     unbindDevice(requestHeader, thisDeviceId, ticket, function (err, res) {
                         if (!err && res.result == "success") {
-			        		modalInitializationOne('移除设备成功');
+                            modalInitializationOne('移除设备成功');
                             $("#" + deviceId).remove();
                         } else {
                             modalInitializationOne('移除设备失败');
                         }
                     });
                 });
-        	});
+            });
         })
     }
-	
+
     /* 设备分享 */
     function onShareDevice() {
         $(".share").on("click", function () {
@@ -219,7 +221,7 @@ wx.ready(function () {
             thisDeviceId = $(this).parents('.alert')[0].id;
             var name = $(this).parents('.alert').find("#alias").text();
             var MAC = $(this).parents('.alert').find("#bssid").text();
-            var desc = "("+name+"/"+MAC+")"+"已被分享，快来点击";
+            var desc = "(" + name + "/" + MAC + ")" + "已被分享，快来点击";
             var requestHeader = {
                 'Authorization': 'token ' + devAccessToken
             };
@@ -245,7 +247,7 @@ wx.ready(function () {
                 desc: '去商城逛逛吧',
                 link: 'http://wap.koudaitong.com/v2/showcase/homepage?alias=9c8qy9px',
                 imgUrl: 'http://' + document.domain + '/img/share.jpg'
-            }
+            };
             shareTimeline(content, hideGuide);
             shareQQ(content, hideGuide);
         })
@@ -307,7 +309,7 @@ wx.ready(function () {
     function addDeviceListsData(divName, state, alias, bssid, url) {
         var equipmentName;
         $(divName).on('click', function (e) {
-            if ($(e.target).attr('id') == "alias"||$(e.target).attr('id') == "bssid") {
+            if ($(e.target).attr('id') == "alias" || $(e.target).attr('id') == "bssid") {
                 $(e.target).parents('.alert').addClass('row-online-state-bg');
                 equipmentName = $(e.target).parents('.alert').find('ul #alias').text();
                 console.log($(e.target));

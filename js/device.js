@@ -3,6 +3,16 @@
  */
 $(document).ready(function () {
 
+    /* 页面不允许分享设置，需要即打开
+     //微信jssdk配置 正式需打开
+     var signInfo = getWechatSignInfo();
+     var wechatSign = getWechatSign(signInfo);
+     wechatConfig(signInfo, wechatSign);
+     wx.ready(function () {
+     //禁止分享功能
+     WeixinJSBridge.call('hideOptionMenu');
+     });
+     */
     var colors;//保存温度色码的数组
     var bars;//温度条件面板总div
     var colorBars;//色彩温度条的选择器
@@ -311,22 +321,22 @@ $(document).ready(function () {
         $('#finalTime').change(function () {
 //			var showTime = onOffTime.data("time");//定时时间（小时）
 //          showTime = $("#finalTime").children('option:selected').val().split('小')[0];
-			var showTime=$("#finalTime").get(0).selectedIndex
-            if(showTime=="0"){
-            	modalInitializationTwo("确定取消定时?");
-            }else{
-				modalInitializationTwo("确定" + $("#finalTime").children('option:selected').val() + "后关机?");
+            var showTime = $("#finalTime").get(0).selectedIndex
+            if (showTime == "0") {
+                modalInitializationTwo("确定取消定时?");
+            } else {
+                modalInitializationTwo("确定" + $("#finalTime").children('option:selected').val() + "后关机?");
             }
-			$("#confirmButton").on('click',function(){
+            $("#confirmButton").on('click', function () {
                 onOffTime.data('time', showTime);
-                    //下发定时关机
+                //下发定时关机
                 var topic = device_id + '/in/';
                 var commond = '{"FT":"' + showTime + '"}';
                 client.publish(topic, commond);
 //              }
                 onOffSwitch(showTime, onOffTime);
                 $("#confirmModal").modal('hide');
-			});
+            });
         });
     }
 
@@ -428,5 +438,5 @@ $(document).ready(function () {
 
         });
     }
-    
+
 })

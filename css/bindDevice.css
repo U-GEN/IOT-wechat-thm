@@ -1,13 +1,11 @@
 @font-face {
   font-family: 'iconfont';
-  src: url('//at.alicdn.com/t/font_1445415139_5233579.eot');
-  src: url('//at.alicdn.com/t/font_1445415139_5233579.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1445415139_5233579.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1445415139_5233579.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1445415139_5233579.svg#iconfont') format('svg');
+  src: url('../font/iconfont.ttf') format('truetype');
   
-  /* IE9*/
-  /* iOS 4.1- */
+  /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
 }
 @font-face {
-  font-family: myFont;
+  font-family: 'myFont';
   src: url('../font/number.TTF') format('truetype');
 }
 /* loading */
@@ -155,39 +153,39 @@
   right: 0;
   margin: auto;
   width: 280px;
-  height: 100px;
+  height: 105px;
 }
-.modal-dialog p {
+.modal-dialog .modal-content {
   color: #000000;
-  font-size: 16px;
+  font-size: 18px;
+  border: 0;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.75);
+}
+.modal-dialog .modal-content p {
   margin-bottom: 0;
 }
-.modal-dialog p:nth-child(1) {
-  padding: 15px 20px;
-}
-.modal-dialog .btn-group-justified {
-  border-top: 1px solid #dadada;
+.modal-dialog .modal-content .btn-group-justified {
   padding-top: 0;
 }
-.modal-dialog .btn-group-justified .btn {
+.modal-dialog .modal-content .btn-group-justified .btn {
   color: #000000;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   -webkit-border-top-left-radius: 0;
   -webkit-border-top-right-radius: 0;
 }
-.modal-dialog .btn-group-justified .btn:nth-child(2) {
+.modal-dialog .modal-content .btn-group-justified .btn:nth-child(2) {
   border-left-color: #dadada;
 }
-.modal-dialog .btn-group-justified .btn:active {
+.modal-dialog .modal-content .btn-group-justified .btn:active {
   background-color: #e7eaed;
   box-shadow: none;
   -webkit-box-shadow: none;
 }
-.modal-dialog .btn-group-justified .btn:focus {
-  outline: 0;
-}
 /* /确定modal */
+/* switch */
+/* /switch */
 html,
 body {
   width: 100%;
@@ -206,7 +204,11 @@ body {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
-  -moz-osx-font-smoothing: grayscale;
+}
+input[type=checkbox]:focus,
+.btn:active:focus,
+.btn:focus {
+  outline: 0;
 }
 .bindDevice {
   width: 100%;

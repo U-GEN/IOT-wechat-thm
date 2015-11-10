@@ -8,20 +8,29 @@
     <meta name="format-detection" content="telephone=no"/>
     <title></title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/device.css?version=0.0.4">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
+    <link rel="stylesheet" type="text/css" href="css/mobiscroll.animation.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mobiscroll.frame.css"/>
+    <link rel="stylesheet" type="text/css" href="css/mobiscroll.scroller.css"/>
+    <link rel="stylesheet" type="text/css" href="css/device.css?version=0.0.5">
     <script type="text/javascript" src="http://api.easylink.io/assets/js/mqttws31.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.md5.js"></script>
     <script type="text/javascript" src="js/sha1.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/jquery.md5.js"></script>
+    <script type="text/javascript" src="js/bootstrap-slider.js"></script>
+    <script type="text/javascript" src="js/iscroll.js"></script>
     <script type="text/javascript" src="js/underscore-min.js"></script>
+    <script type="text/javascript" src="js/mobiscroll.core.js"></script>
+    <script type="text/javascript" src="js/mobiscroll.frame.js"></script>
+    <script type="text/javascript" src="js/mobiscroll.scroller.js"></script>
+    <script type="text/javascript" src="js/mobiscroll.select.js"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <script type="text/javascript" src="js/config.js?version=0.0.4"></script>
-    <script type="text/javascript" src="js/public.js?version=0.0.4"></script>
-    <script type="text/javascript" src="js/device.js?version=0.0.1"></script>
+    <script type="text/javascript" src="js/config.js?version=0.0.5"></script>
+    <script type="text/javascript" src="js/public.js?version=0.0.5"></script>
+    <script type="text/javascript" src="js/device.js?version=0.0.5"></script>
 </head>
-<body>
+<body ontouchstart="">
 
 <div id="jumbotron" class="jumbotron">
     <ul class="list-unstyled pull-left">
@@ -79,7 +88,7 @@
         </li>
         <!--精细睡眠 -->
         <li class="btn-group">
-            <p class="onOff_finesleep">
+            <p data-finesleep=0 class="onOff_finesleep">
                 <span></span>
             </p>
             <p>优睡</p>
@@ -127,7 +136,7 @@
 <div class="modal fade" id="confirmModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <p id="confirmTxt" class="text-center"></p>
+            <p id="confirmTxt" class="text-center modal-header"></p>
             <p class="btn-group btn-group-justified">
                 <a id="cancelButton" href="#" class="btn btn-lg" role="button" data-dismiss="modal">取消</a> 
                 <a id="confirmButton" href="#" class="btn btn-lg" role="button">确定</a>
@@ -177,5 +186,352 @@
 </div>
 <!-- /loading -->
 
+<!-- 优质睡眠modal -->
+<div class="modal modal-finesleep fade" id="finesleepModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="wrapper">
+                <div id="scroller">
+		            <div class="modal-header">
+		                <input class="switch" type="checkbox">
+		                <h4 class="modal-title">优质睡眠</h4>
+		                <h5 id="stateTitle" class="state-title"></h5>
+		            </div>
+		            <div class="panel-group" id="accordion">
+		                <!-- 设定1 -->
+		                <div id="collapseTitleOne" class="panel">
+		                    <a href="#collapseOne" data-toggle="collapse" data-parent="#accordion" class="collapsed">
+		                        <ul class="list-unstyled">
+                                    <li class="col-xs-10">
+                                        <p id="timeFirst" class="col-xs-7"><span></span>小时<span></span>分后</p>
+                                        <p id="temperatureFirst" class="col-xs-5">温度：<span></span>℃</p>
+                                    </li>
+                                    <li class="col-xs-2">
+                                        <span></span>
+                                    </li>
+                                </ul>
+		                    </a>
+		                    <div id="collapseOne" class="collapse">
+		                        <div class="panel-body">
+		                        	<div class="tmpSliderBox">
+			                            <p>温度</p>
+			                            <div class="tmpSlider">
+			                                <input id="sliderOne" type="text"/>
+			                            </div>
+		                            </div>
+		                            <div class="selectTimeBox">
+			                            <p>时间</p>
+			                            <div class="selectTime">
+			                                <select id="select_hour_one">
+			                                    <option>00</option>
+			                                    <option>01</option>
+			                                    <option>02</option>
+			                                    <option>03</option>
+			                                    <option>04</option>
+			                                    <option>05</option>
+			                                    <option>06</option>
+			                                    <option>07</option>
+			                                    <option>08</option>
+			                                    <option>09</option>
+			                                    <option>10</option>
+			                                    <option>11</option>
+			                                </select>  
+			                                <select id="select_minute_one">
+			                                    <option>00</option>
+			                                    <option>01</option>
+			                                    <option>02</option>
+			                                    <option>03</option>
+			                                    <option>04</option>
+			                                    <option>05</option>
+			                                    <option>06</option>
+			                                    <option>07</option>
+			                                    <option>08</option>
+			                                    <option>09</option>
+			                                    <option>10</option>
+			                                    <option>11</option>
+			                                    <option>12</option>
+			                                    <option>13</option>
+			                                    <option>14</option>
+			                                    <option>15</option>
+			                                    <option>16</option>
+			                                    <option>17</option>
+			                                    <option>18</option>
+			                                    <option>19</option>
+			                                    <option>20</option>
+			                                    <option>21</option>
+			                                    <option>22</option>
+			                                    <option>23</option>
+			                                    <option>24</option>
+			                                    <option>25</option>
+			                                    <option>26</option>
+			                                    <option>27</option>
+			                                    <option>28</option>
+			                                    <option>29</option>
+			                                    <option>30</option>
+			                                    <option>31</option>
+			                                    <option>32</option>
+			                                    <option>33</option>
+			                                    <option>34</option>
+			                                    <option>35</option>
+			                                    <option>36</option>
+			                                    <option>37</option>
+			                                    <option>38</option>
+			                                    <option>39</option>
+			                                    <option>40</option>
+			                                    <option>41</option>
+			                                    <option>42</option>
+			                                    <option>43</option>
+			                                    <option>44</option>
+			                                    <option>45</option>
+			                                    <option>46</option>
+			                                    <option>47</option>
+			                                    <option>48</option>
+			                                    <option>49</option>
+			                                    <option>50</option>
+			                                    <option>51</option>
+			                                    <option>52</option>
+			                                    <option>53</option>
+			                                    <option>54</option>
+			                                    <option>55</option>
+			                                    <option>56</option>
+			                                    <option>57</option>
+			                                    <option>58</option>
+			                                    <option>59</option>
+		                                	</select>
+                                            <p>时</p>
+                                            <p>分</p>
+		                            	</div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		                <!-- /设定1 -->
+		                <!-- 设定2 -->
+		                <div id="collapseTitleTwo" class="panel">
+		                    <a href="#collapseTwo" data-toggle="collapse" data-parent="#accordion" class="collapsed">
+		                        <ul class="list-unstyled">
+                                    <li class="col-xs-10">
+                                        <p id="timeSecond" class="col-xs-7"><span></span>小时<span></span>分后</p>
+                                        <p id="temperatureSecond" class="col-xs-5">温度：<span></span>℃</p>
+                                    </li>
+                                    <li class="col-xs-2">
+                                        <span></span>
+                                    </li>
+                                </ul>
+		                    </a>
+		                    <div id="collapseTwo" class="collapse">
+		                        <div class="panel-body">
+		                        	<div class="tmpSliderBox">
+		                        		<p>温度</p>
+			                            <div class="tmpSlider">
+			                                <input id="sliderTwo" type="text"/>
+			                            </div>
+		                        	</div>
+		                            <div class="selectTimeBox">
+		                            	<p>时间</p>
+		                            	<div class="selectTime">
+			                                <select id="select_hour_two">
+			                                   	<option>00</option>
+			                                    <option>01</option>
+			                                    <option>02</option>
+			                                    <option>03</option>
+			                                    <option>04</option>
+			                                    <option>05</option>
+			                                    <option>06</option>
+			                                    <option>07</option>
+			                                    <option>08</option>
+			                                    <option>09</option>
+			                                    <option>10</option>
+			                                    <option>11</option>
+			                                </select>  
+			                                <select id="select_minute_two">
+			                                    <option>00</option>
+			                                    <option>01</option>
+			                                    <option>02</option>
+			                                    <option>03</option>
+			                                    <option>04</option>
+			                                    <option>05</option>
+			                                    <option>06</option>
+			                                    <option>07</option>
+			                                    <option>08</option>
+			                                    <option>09</option>
+			                                    <option>10</option>
+			                                    <option>11</option>
+			                                    <option>12</option>
+			                                    <option>13</option>
+			                                    <option>14</option>
+			                                    <option>15</option>
+			                                    <option>16</option>
+			                                    <option>17</option>
+			                                    <option>18</option>
+			                                    <option>19</option>
+			                                    <option>20</option>
+			                                    <option>21</option>
+			                                    <option>22</option>
+			                                    <option>23</option>
+			                                    <option>24</option>
+			                                    <option>25</option>
+			                                    <option>26</option>
+			                                    <option>27</option>
+			                                    <option>28</option>
+			                                    <option>29</option>
+			                                    <option>30</option>
+			                                    <option>31</option>
+			                                    <option>32</option>
+			                                    <option>33</option>
+			                                    <option>34</option>
+			                                    <option>35</option>
+			                                    <option>36</option>
+			                                    <option>37</option>
+			                                    <option>38</option>
+			                                    <option>39</option>
+			                                    <option>40</option>
+			                                    <option>41</option>
+			                                    <option>42</option>
+			                                    <option>43</option>
+			                                    <option>44</option>
+			                                    <option>45</option>
+			                                    <option>46</option>
+			                                    <option>47</option>
+			                                    <option>48</option>
+			                                    <option>49</option>
+			                                    <option>50</option>
+			                                    <option>51</option>
+			                                    <option>52</option>
+			                                    <option>53</option>
+			                                    <option>54</option>
+			                                    <option>55</option>
+			                                    <option>56</option>
+			                                    <option>57</option>
+			                                    <option>58</option>
+			                                    <option>59</option>
+			                                </select>
+                                            <p>时</p>
+                                            <p>分</p>		                                
+		                            	</div>
+		                            </div>
+		                        </div>
+		                    </div>                  
+		                </div>
+		                <!-- /设定2 -->
+		                <!-- 设定3 -->
+		                <div id="collapseTitleThree" class="panel">
+		                    <a href="#collapseThree" data-toggle="collapse" data-parent="#accordion" class="collapsed">
+		                        <ul class="list-unstyled">
+                                    <li class="col-xs-10">
+                                        <p id="timeThird" class="col-xs-7"><span></span>小时<span></span>分后</p>
+                                        <p id="temperatureThird" class="col-xs-5">温度：<span></span>℃</p>
+                                    </li>
+                                    <li class="col-xs-2">
+                                        <span></span>
+                                    </li>
+                                </ul>
+		                    </a>
+		                    <div id="collapseThree" class="collapse">
+		                        <div class="panel-body">
+		                        	<div class="tmpSliderBox">
+			                            <p>温度</p>
+			                            <div class="tmpSlider">
+			                                <input id="sliderThree" type="text"/>
+			                            </div>
+		                        	</div>
+		                        	<div class="selectTimeBox">
+			                            <p>时间</p>
+			                            <div class="selectTime">
+			                                <select id="select_hour_three">
+			                                    <option>00</option>
+			                                    <option>01</option>
+			                                    <option>02</option>
+			                                    <option>03</option>
+			                                    <option>04</option>
+			                                    <option>05</option>
+			                                    <option>06</option>
+			                                    <option>07</option>
+			                                    <option>08</option>
+			                                    <option>09</option>
+			                                    <option>10</option>
+			                                    <option>11</option>
+			                                </select>  
+			                                <select id="select_minute_three">
+			                                    <option>00</option>
+			                                    <option>01</option>
+			                                    <option>02</option>
+			                                    <option>03</option>
+			                                    <option>04</option>
+			                                    <option>05</option>
+			                                    <option>06</option>
+			                                    <option>07</option>
+			                                    <option>08</option>
+			                                    <option>09</option>
+			                                    <option>10</option>
+			                                    <option>11</option>
+			                                    <option>12</option>
+			                                    <option>13</option>
+			                                    <option>14</option>
+			                                    <option>15</option>
+			                                    <option>16</option>
+			                                    <option>17</option>
+			                                    <option>18</option>
+			                                    <option>19</option>
+			                                    <option>20</option>
+			                                    <option>21</option>
+			                                    <option>22</option>
+			                                    <option>23</option>
+			                                    <option>24</option>
+			                                    <option>25</option>
+			                                    <option>26</option>
+			                                    <option>27</option>
+			                                    <option>28</option>
+			                                    <option>29</option>
+			                                    <option>30</option>
+			                                    <option>31</option>
+			                                    <option>32</option>
+			                                    <option>33</option>
+			                                    <option>34</option>
+			                                    <option>35</option>
+			                                    <option>36</option>
+			                                    <option>37</option>
+			                                    <option>38</option>
+			                                    <option>39</option>
+			                                    <option>40</option>
+			                                    <option>41</option>
+			                                    <option>42</option>
+			                                    <option>43</option>
+			                                    <option>44</option>
+			                                    <option>45</option>
+			                                    <option>46</option>
+			                                    <option>47</option>
+			                                    <option>48</option>
+			                                    <option>49</option>
+			                                    <option>50</option>
+			                                    <option>51</option>
+			                                    <option>52</option>
+			                                    <option>53</option>
+			                                    <option>54</option>
+			                                    <option>55</option>
+			                                    <option>56</option>
+			                                    <option>57</option>
+			                                    <option>58</option>
+			                                    <option>59</option>
+			                                </select>
+			                            	<p>时</p>
+	                                        <p>分</p>	
+			                            </div>
+		                            </div>
+		                        </div>
+		                    </div>                      
+		                </div>
+		                <!-- /设定3 -->
+		            </div>
+                    <p class="modal-footer">
+                        <button id="outBtn" type="button" class="btn">确定</button>
+                        <button type="button" class="btn" data-dismiss="modal">取消</button>
+                    </p>            		
+        		</div>
+        	</div>
+        </div>
+    </div>
+</div>
+<!-- /优质睡眠modal -->
 </body>
 </html>

@@ -2,7 +2,7 @@
  * Created by CJLIU on 2015/9/19.
  */
 $(document).ready(function () {
-    $(".loading").show();
+  $(".loading").show();
     //当前设备ID
     var thisDeviceId;
     // 得到请求的sign
@@ -19,35 +19,35 @@ $(document).ready(function () {
     var userName = getUserName(access_token, requestHeader);
 
     //微信jssdk配置 正式需打开
-    var signInfo = getWechatSignInfo();
-    var wechatSign = getWechatSign(signInfo);
-    wechatConfig(signInfo, wechatSign);
-    wx.ready(function () {
-        //禁止分享功能
-        //WeixinJSBridge.call('hideOptionMenu');
-        wx.checkJsApi({
-            jsApiList: [
-                'openWXDeviceLib',
-                'getWXDeviceTicket',
-                'onMenuShareAppMessage',
-                'onMenuShareTimeline',
-                'onMenuShareQQ'
-            ],
-            success: function (res) {
-                $(".loading").hide();
-                var content = {
-                    title: '泰和美商城',
-                    desc: '去商城逛逛吧',
-                    link: 'http://wap.koudaitong.com/v2/showcase/homepage?alias=9c8qy9px',
-                    imgUrl: 'http://' + document.domain + '/img/share.jpg'
-                }
-                shareAppMessage(content);
-                shareTimeline(content);
-                shareQQ(content)
-            }
-        });
-        openWXDeviceLib();
-    });
+ var signInfo = getWechatSignInfo();
+ var wechatSign = getWechatSign(signInfo);
+ wechatConfig(signInfo, wechatSign);
+ wx.ready(function () {
+     //禁止分享功能
+     //WeixinJSBridge.call('hideOptionMenu');
+     wx.checkJsApi({
+         jsApiList: [
+             'openWXDeviceLib',
+             'getWXDeviceTicket',
+             'onMenuShareAppMessage',
+             'onMenuShareTimeline',
+             'onMenuShareQQ'
+         ],
+         success: function (res) {
+             $(".loading").hide();
+             var content = {
+                 title: '泰和美商城',
+                 desc: '去商城逛逛吧',
+                 link: 'http://wap.koudaitong.com/v2/showcase/homepage?alias=9c8qy9px',
+                 imgUrl: 'http://' + document.domain + '/img/webshare.jpg'
+             }
+             shareAppMessage(content);
+             shareTimeline(content);
+             shareQQ(content)
+         }
+     });
+     openWXDeviceLib();
+ });
 
     // 得到庆科返回的deviceLists
     var deviceLists = getParameterByName('device_list');
@@ -246,7 +246,7 @@ $(document).ready(function () {
                 title: '泰和美商城',
                 desc: '去商城逛逛吧',
                 link: 'http://wap.koudaitong.com/v2/showcase/homepage?alias=9c8qy9px',
-                imgUrl: 'http://' + document.domain + '/img/share.jpg'
+                imgUrl: 'http://' + document.domain + '/img/webshare.jpg'
             };
             shareTimeline(content, hideGuide);
             shareQQ(content, hideGuide);

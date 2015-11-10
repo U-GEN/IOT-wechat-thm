@@ -26,7 +26,23 @@ $(document).ready(function () {
     var count = true;//控制设定温度只接收第一次下发数据的开关。
     var client;//mqtt clinet
     var connect = false;//mqtt 连接标识
-
+	
+	//优睡ID选择器
+    var TFSF = $("#timeFirst span:first");
+	var TFSL = $("#timeFirst span:last");
+	var TSSF = $("#timeSecond span:first");
+	var TSSL = $("#timeSecond span:last");
+	var TTSF = $("#timeThird span:first");
+	var TTSL = $("#timeThird span:last");
+	var TFS = $("#temperatureFirst span");
+	var TSS = $("#temperatureSecond span");
+	var TTS = $("#temperatureThird span");
+	
+	var esInfo1 = {"TIM1": "60", "TEMP1": "37"};
+    var esInfo2 = {"TIM2": "180", "TEMP2": "36"};
+    var esInfo3 = {"TIM3": "320", "TEMP3": "35"};
+    temperatureFineSleepMode(esInfo1.TIM1,esInfo1.TEMP1,esInfo2.TIM2,esInfo2.TEMP2,esInfo3.TIM3,esInfo3.TEMP3);
+    
     // 得到设备ID
     var device_id = getParameterByName('device_id');
     // 得到别名
@@ -170,7 +186,7 @@ $(document).ready(function () {
             info[_data.name] = _data.value;
         });
         if (info) {
-            displayInfo(info);
+            displayInfo(info, 'cloud');
         }
     };
 
@@ -181,7 +197,9 @@ $(document).ready(function () {
     }
 
     /* 主控页面数据填充 */
-    function displayInfo(info) {
+    function displayInfo(info, type) {
+
+        // 设备权限
         if (_.has(info, 'deviceControl') && info.deviceControl == 0) {
             var role = getDeviceUser(device_id, requestHeader, userName);
             if (role == 'share') {
@@ -243,20 +261,50 @@ $(document).ready(function () {
             var lt = formatMinutes(info.LT);
             $("#lt").text("剩余运行时间：" + lt);
         }
+        // 精细睡眠
+        if (_.has(info, "ES")) {
+            console.log(((info.ES == '1') ? "精睡开启" : "精睡关闭"));
+            var intES = parseInt(info.ES);
+            onOffSwitch(intES,onFinesleep);
+            onFinesleep.data("finesleep", intES);
+            if (info.ES == "1") {
+                $(".switch").attr('checked', "true");
+                $("#outBtn").attr("disabled",false);
+            } else {
+                $(".switch").attr('checked', false);
+                $("#outBtn").attr("disabled",true);
+            }
+            if (type == 'cloud') {
+
+                if (_.has(info, 'esInfo1')) {
+                    esInfo1 = JSON.parse(info.esInfo1);
+                }
+                if (_.has(info, 'esInfo2')) {
+                    esInfo2 = JSON.parse(info.esInfo2);
+                }
+                if (_.has(info, 'esInfo3')) {
+                    esInfo3 = JSON.parse(info.esInfo3);
+                }
+                //初始化优睡弹出框
+            }
+			temperatureFineSleepMode(esInfo1.TIM1,esInfo1.TEMP1,esInfo2.TIM2,esInfo2.TEMP2,esInfo3.TIM3,esInfo3.TEMP3);
+        }
+
         //错误报警
         if (_.has(info, "ERR")) {
-            var msg = ["设备正常", "水泵或电磁阀故障", "温度传感器故障", "水位低", "水温超65度", "水温低于5度"];
+            var msg = errMsg;
             var intERR = parseInt(info.ERR);
             if (intERR == 0) {
                 $("#err").text(msg[info.ERR]);
             } else {
                 $("#err").html('<span></span>' + msg[intERR]);
             }
-
         }
         temperatureChange();
     }
 
+
+	
     /* 设置电源开关 */
     function setPow() {
         onOffPower.on("click", function () {
@@ -321,7 +369,7 @@ $(document).ready(function () {
         $('#finalTime').change(function () {
 //			var showTime = onOffTime.data("time");//定时时间（小时）
 //          showTime = $("#finalTime").children('option:selected').val().split('小')[0];
-            var showTime = $("#finalTime").get(0).selectedIndex
+            var showTime = $("#finalTime").get(0).selectedIndex;
             if (showTime == "0") {
                 modalInitializationTwo("确定取消定时?");
             } else {
@@ -352,6 +400,20 @@ $(document).ready(function () {
             client.publish(topic, commond);
             onOffSwitch(state, onOffSleep);
         });
+    }
+
+    /* 设置精细睡眠模式 */
+    function setFineSleepMode(esInfo1,esInfo2,esInfo3) {
+        var state = onFinesleep.data("finesleep");
+        if(esInfo1!=undefined&&esInfo2!=undefined&&esInfo3!=undefined){
+	        setDeviceProperties(requestHeader, device_id, 'esInfo1', JSON.stringify(esInfo1));
+	        setDeviceProperties(requestHeader, device_id, 'esInfo2', JSON.stringify(esInfo2));
+	        setDeviceProperties(requestHeader, device_id, 'esInfo3', JSON.stringify(esInfo3));
+        }
+        var topic = device_id + '/in/';
+        command = _.extend({"ES": state.toString()}, esInfo1, esInfo2, esInfo3);
+        console.log(command);
+        client.publish(topic, JSON.stringify(command));
     }
 
     /* 设置防冻模式 */
@@ -438,5 +500,176 @@ $(document).ready(function () {
 
         });
     }
+    //点击优睡 显示模态框 
+    $(".onOff_finesleep").click(function(){
+        $("#finesleepModal").modal('show');
+        //生成iscroll
+        myScroll = new IScroll('#wrapper',{
+            click: false,
+            preventDefaultException: {tagName: /.*/}//不加词句将无法切换状态
+        }); 
+        
+        //设置优睡弹出框中三个时间的值显示。
+		setFineSleepTitle();
+        
+        
+    });
+    
+    $('#collapseOne').on({
+    	'shown.bs.collapse':function(){
+	    	$('#collapseTitleTwo').hide();
+	    	$('#collapseTitleThree').hide();
+	        setTimeout(function(){
+	            myScroll.refresh();
+	        },200);
+	    },
+	    'hidden.bs.collapse':function(){
+	    	$('#collapseTitleTwo').show();
+	    	$('#collapseTitleThree').show();
+	    }
+    });
 
+    
+    $('#collapseTwo').on({
+    	'shown.bs.collapse':function(){
+	    	$('#collapseTitleOne').slideUp("slow");
+		    $('#collapseTitleThree').hide();
+	        setTimeout(function(){
+	            myScroll.refresh();
+	        },200);
+    	},
+    	'hidden.bs.collapse':function(){
+	    	$('#collapseTitleOne').slideDown("slow");
+		    $('#collapseTitleThree').show();
+	    }
+    });
+
+    
+    $('#collapseThree').on({
+    	'shown.bs.collapse':function(){
+    		$('#collapseTitleOne').slideUp("slow");
+		    $('#collapseTitleTwo').slideUp("slow");
+	        setTimeout(function(){
+	            myScroll.refresh();
+	        },200);
+	    },
+   	 	'hidden.bs.collapse':function(){
+   	 		$('#collapseTitleOne').slideDown("slow");
+		    $('#collapseTitleTwo').slideDown("slow");
+	    }
+    });
+    
+    //优睡参数发送按钮
+    $("#outBtn").on('click',function(){
+    	if($(".switch").get(0).checked){
+			setSort(true);
+			onOffSwitch("1",onFinesleep);
+    	}
+    });
+    
+	//2秒后提示消失
+	var setStateTitle;
+    function stateTitle(){
+    	clearTimeout(setStateTitle);
+	    setStateTitle=setTimeout(function(){
+    		$("#stateTitle").html("").css('color','#f46652');
+    	},2000);
+    }
+    //优睡开关，关时发送“0”
+    var switchChange=$(".switch").on("change", function () {
+    	var intES = "0";
+    	if(!$(".switch").get(0).checked){
+    		intES="0";
+    		onFinesleep.data("finesleep", intES);
+    		setSort(false);	
+    		onOffSwitch(intES,onFinesleep);
+    		$("#outBtn").attr("disabled",true);
+    	}else{
+    		intES="1";
+    		onFinesleep.data("finesleep", intES);
+    		$("#stateTitle").html("按“确定”发送").css('color','#f46652');
+			stateTitle();
+    		$("#outBtn").attr("disabled",false);
+    	}
+    });
+    
+    //排序并发送优睡参数
+    function setSort(switchChecked){
+    	var TIM1 = (parseInt(TFSF.text())*60+parseInt(TFSL.text()));
+        var TIM2 = (parseInt(TSSF.text())*60+parseInt(TSSL.text()));
+        var TIM3 = (parseInt(TTSF.text())*60+parseInt(TTSL.text()));
+        var TEMP1 = TFS.text();
+        var TEMP2 = TSS.text();
+        var TEMP3 = TTS.text();
+		//排序
+        var sortBy = [{"time": TIM1, "temp": TEMP1},{"time": TIM2, "temp": TEMP2},{"time": TIM3, "temp": TEMP3}];
+       	sortBy =  _.sortBy(sortBy, 'time');
+        var esInfo1 = {"TIM1": (sortBy[0].time).toString(), "TEMP1": sortBy[0].temp};
+        var esInfo2 = {"TIM2": (sortBy[1].time).toString(), "TEMP2": sortBy[1].temp};
+        var esInfo3 = {"TIM3": (sortBy[2].time).toString(), "TEMP3": sortBy[2].temp};
+		temperatureFineSleepMode(esInfo1.TIM1,esInfo1.TEMP1,esInfo2.TIM2,esInfo2.TEMP2,esInfo3.TIM3,esInfo3.TEMP3);
+        setFineSleepTitle();
+        if(switchChecked){
+        	setFineSleepMode(esInfo1,esInfo2,esInfo3);
+        	$("#stateTitle").html("已发送").css('color','#f46652');
+        	stateTitle();
+        	
+        }else{
+        	setFineSleepMode();
+        	$("#stateTitle").html("已关闭").css('color','#8fb9df');
+        	stateTitle();
+        }
+    }
+    //设置优睡弹出框中三个时间的值显示。
+    function setFineSleepTitle(){
+    	//温度 slider
+		selectSleepTemperature($("#sliderOne"),TFS);
+		selectSleepTemperature($("#sliderTwo"),TSS);
+		selectSleepTemperature($("#sliderThree"),TTS);
+        //时间选择
+		selectSleepTime($('#select_hour_one'),TFSF);
+		selectSleepTime($('#select_minute_one'),TFSL);
+		selectSleepTime($('#select_hour_two'),TSSF);
+		selectSleepTime($('#select_minute_two'),TSSL);
+		selectSleepTime($('#select_hour_three'),TTSF);
+		selectSleepTime($('#select_minute_three'),TTSL);
+    }
+    //选择优睡温度
+    function selectSleepTemperature(sele,seleSpan){
+    	sele.slider({
+            min: 10,
+            max: 60,
+            value: parseInt(seleSpan.text()),
+            tooltip: 'always'
+        }).on("change", function(slideEvt) {
+            seleSpan.text(slideEvt.value.newValue);
+        });
+        
+    }
+    //选择优睡时间
+    function selectSleepTime(sele,seleSpan){
+        sele.get(0).selectedIndex=parseInt(seleSpan.text());
+        sele.mobiscroll().select({
+            theme: 'mobiscroll',
+            lang: 'zh',
+            display: 'inline',
+            minWidth: [95],
+            maxWidth: [100],
+            height: [25]
+        }).on('change',function(){
+        	seleSpan.text(sele.get(0).selectedIndex);
+        });  
+    }
+    //初始化优睡弹出框
+    function temperatureFineSleepMode(TIM1,TEMP1,TIM2,TEMP2,TIM3,TEMP3){
+    	TFSF.text(parseInt(TIM1 / 60));
+    	TFSL.text(parseInt(TIM1 * 60 % 3600 / 60));
+    	TSSF.text(parseInt(TIM2 / 60));
+    	TSSL.text(parseInt(TIM2 * 60 % 3600 / 60));
+    	TTSF.text(parseInt(TIM3 / 60));
+    	TTSL.text(parseInt(TIM3 * 60 % 3600 / 60));
+		TFS.text(TEMP1);
+		TSS.text(TEMP2);
+		TTS.text(TEMP3);
+    }
 })

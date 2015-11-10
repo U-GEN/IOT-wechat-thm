@@ -6,8 +6,8 @@ var appId = 'f31b460a-8a8d-4ffc-97c1-054a8c4b27cf';
 var appKey = 'b7d892afa90fa5be97e424e0c6d70a2e';
 var devAccessToken = 'f60459b2-9542-4980-8fbc-c6f8737aecf1';
 // 测试环境
-// var appId = '97256c69-6723-43fb-87dc-167eaf9dc501';
-// var appKey = 'f98d773200d3c8e15a52f972656dd4df';
+//var appId = '97256c69-6723-43fb-87dc-167eaf9dc501';
+//var appKey = 'f98d773200d3c8e15a52f972656dd4df';
 
 //自动刷新列表间隔时间
 var reloadInterval = 2000;
@@ -19,3 +19,4 @@ var maxReloadTimers = 5;
 var loadingTime = 20000;
 //用于调温按钮X秒内无操作则上发数据
 var setTimer = 2000;
+var errMsg = ["无故障", "水泵或电磁阀故障", "温度传感器A故障", "水位低", "温度传感器B故障", "水温低于5度","加热管的故障"];

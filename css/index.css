@@ -1,13 +1,11 @@
 @font-face {
   font-family: 'iconfont';
-  src: url('//at.alicdn.com/t/font_1445415139_5233579.eot');
-  src: url('//at.alicdn.com/t/font_1445415139_5233579.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1445415139_5233579.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1445415139_5233579.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1445415139_5233579.svg#iconfont') format('svg');
+  src: url('../font/iconfont.ttf') format('truetype');
   
-  /* IE9*/
-  /* iOS 4.1- */
+  /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
 }
 @font-face {
-  font-family: myFont;
+  font-family: 'myFont';
   src: url('../font/number.TTF') format('truetype');
 }
 /* loading */
@@ -155,38 +153,39 @@
   right: 0;
   margin: auto;
   width: 280px;
-  height: 100px;
+  height: 105px;
 }
-.modal-dialog p {
+.modal-dialog .modal-content {
   color: #000000;
-  font-size: 16px;
+  font-size: 18px;
+  border: 0;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.75);
+}
+.modal-dialog .modal-content p {
   margin-bottom: 0;
 }
-.modal-dialog p:nth-child(1) {
-  padding: 15px 20px;
+.modal-dialog .modal-content .btn-group-justified {
+  padding-top: 0;
 }
-.modal-dialog .btn-group-justified {
-  border-top: 1px solid #dadada;
-}
-.modal-dialog .btn-group-justified .btn {
+.modal-dialog .modal-content .btn-group-justified .btn {
   color: #000000;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   -webkit-border-top-left-radius: 0;
   -webkit-border-top-right-radius: 0;
 }
-.modal-dialog .btn-group-justified .btn:nth-child(2) {
+.modal-dialog .modal-content .btn-group-justified .btn:nth-child(2) {
   border-left-color: #dadada;
 }
-.modal-dialog .btn-group-justified .btn:active {
+.modal-dialog .modal-content .btn-group-justified .btn:active {
   background-color: #e7eaed;
   box-shadow: none;
   -webkit-box-shadow: none;
 }
-.modal-dialog .btn-group-justified .btn:focus {
-  outline: 0;
-}
 /* /确定modal */
+/* switch */
+/* /switch */
 html,
 body {
   width: 100%;
@@ -205,7 +204,11 @@ body {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
-  -moz-osx-font-smoothing: grayscale;
+}
+input[type=checkbox]:focus,
+.btn:active:focus,
+.btn:focus {
+  outline: 0;
 }
 .container-fluid {
   padding: 0 0 40px;
@@ -352,7 +355,6 @@ body {
 .modal-permission .modal-dialog p label {
   margin-bottom: 0;
   display: block;
-  font-size: 18px;
 }
 /* /权限modal */
 /* shareModal */
@@ -362,12 +364,11 @@ body {
   -webkit-background-size: 210px 185px;
 }
 /* /shareModal */
-/* switch */
 .switch {
   width: 47px;
   height: 30px;
   position: relative;
-  border: 2px solid #dddddd;
+  border: 2px solid #dcdcdd;
   background-color: #ffffff;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -377,7 +378,6 @@ body {
   -webkit-border-top-right-radius: 20px;
   -webkit-border-bottom-left-radius: 20px;
   -webkit-border-bottom-right-radius: 20px;
-  background-clip: padding-box;
   -webkit-appearance: none;
   outline: none;
   -webkit-transition: ease-in-out 0.2s;
@@ -385,7 +385,7 @@ body {
   transition-property: background-color, border;
   -webkit-transition-property: background-color, border;
   float: right;
-  top: -5px;
+  top: -6px;
 }
 .switch:before {
   content: '';
@@ -404,7 +404,6 @@ body {
   -webkit-border-bottom-left-radius: 16px;
   -webkit-border-bottom-right-radius: 16px;
   background-color: #ffffff;
-  background-clip: padding-box;
   transform: translate(0px, 0px);
   -webkit-transform: translate(0px, 0px);
   box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.5);
@@ -422,7 +421,6 @@ body {
   transform: translate(16px, 0px);
   -webkit-transform: translate(16px, 0px);
 }
-/* /switch */
 /*设备list 无内容*/
 .noDevice {
   width: 300px;
@@ -438,22 +436,4 @@ body {
   left: 50%;
   margin: -60px 0 0 -150px;
   display: none;
-}
-/*权限蒙版*/
-.role{
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1040;
-  display: none;
-  background-color: rgba(0, 0, 0, 0.3);
-}
-.role div{
-    top: 110px;
-    position: relative;
-    float: right;
-    color: #fff;
-    margin-right: 20px;
 }

@@ -267,13 +267,6 @@ $(document).ready(function () {
             var intES = parseInt(info.ES);
             onOffSwitch(intES,onFinesleep);
             onFinesleep.data("finesleep", intES);
-            if (info.ES == "1") {
-                $(".switch").attr('checked', "true");
-                $("#outBtn").attr("disabled",false);
-            } else {
-                $(".switch").attr('checked', false);
-                $("#outBtn").attr("disabled",true);
-            }
             if (type == 'cloud') {
 
                 if (_.has(info, 'esInfo1')) {
@@ -287,7 +280,17 @@ $(document).ready(function () {
                 }
                 //初始化优睡弹出框
             }
-			temperatureFineSleepMode(esInfo1.TIM1,esInfo1.TEMP1,esInfo2.TIM2,esInfo2.TEMP2,esInfo3.TIM3,esInfo3.TEMP3);
+            var finesleepDisplay = $("#finesleepModal").css('display');
+            if(finesleepDisplay == "none"){
+            	if (info.ES == "1") {
+	                $(".switch").attr('checked', "true");
+	                $("#outBtn").attr("disabled",false);
+	            } else {
+	                $(".switch").attr('checked', false);
+	                $("#outBtn").attr("disabled",true);
+	            }
+				temperatureFineSleepMode(esInfo1.TIM1,esInfo1.TEMP1,esInfo2.TIM2,esInfo2.TEMP2,esInfo3.TIM3,esInfo3.TEMP3);
+            }
         }
 
         //错误报警

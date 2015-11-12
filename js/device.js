@@ -92,6 +92,8 @@ $(document).ready(function () {
     setTmpRight();
     // 设置定时模式
     setTimeMode();
+    // 优睡模态框的事件
+    greateFineSleepModel();
 
 
     // 连接MQTT服务
@@ -196,28 +198,25 @@ $(document).ready(function () {
             if (_.has(info, 'esInfo3')) {
                 esInfo3 = JSON.parse(info.esInfo3);
             }
-            temperatureFineSleepMode(esInfo1.TIM1,esInfo1.TEMP1,esInfo2.TIM2,esInfo2.TEMP2,esInfo3.TIM3,esInfo3.TEMP3);
+//          var finesleepDisplay = $("#finesleepModal").css('display');
+//          console.log(finesleepDisplay);
+//          if(finesleepDisplay == "none"){
+            	if (info.ES == "1") {
+	                $(".switch").prop({checked:true});//使用attr操纵checked会有问题
+//	                $("#outBtn").attr("disabled",false);
+	            } else if(info.ES == "0") {
+	                $(".switch").prop({checked:false});
+//	                $("#outBtn").attr("disabled",true);
+	            }
+				temperatureFineSleepMode(esInfo1.TIM1,esInfo1.TEMP1,esInfo2.TIM2,esInfo2.TEMP2,esInfo3.TIM3,esInfo3.TEMP3);
+//          }
+//          temperatureFineSleepMode(esInfo1.TIM1,esInfo1.TEMP1,esInfo2.TIM2,esInfo2.TEMP2,esInfo3.TIM3,esInfo3.TEMP3);
         }else{
 	        if (info) {
 	            displayInfo(info);
 	        }
         }
     };
-//  /* 云端获取预约时间*/
-//	function getESInfo(){
-//		
-//		var deviceInfo = getDeviceProperties(requestHeader, device_id);
-//		console.log(_.key(deviceInfo));
-//      var esInfo1 = {"TIM1": "60", "TEMP1": "37"};
-//  	var esInfo2 = {"TIM2": "180", "TEMP2": "36"};
-//  	var esInfo3 = {"TIM3": "320", "TEMP3": "35"};
-//  	
-//		esInfo1 = JSON.parse(deviceInfo['esInfo1'].value);
-//		esInfo2 = JSON.parse(deviceInfo['esInfo2'].value);
-//		esInfo3 = JSON.parse(deviceInfo['esInfo3'].value);
-//	
-//		temperatureFineSleepMode(esInfo1.TIM1,esInfo1.TEMP1,esInfo2.TIM2,esInfo2.TEMP2,esInfo3.TIM3,esInfo3.TEMP3);
-//	}
     /* 设备离线样式 （上半部分显示成灰色） */
     function displayOffline() {
         $("#err").html('<span></span>' + "设备已离线");
@@ -290,13 +289,15 @@ $(document).ready(function () {
             $("#lt").text("剩余运行时间：" + lt);
         }
         
-        var finesleepDisplay = $("#finesleepModal").css('display');
         // 精细睡眠
         if (_.has(info, "ES")) {
             console.log(((info.ES == '1') ? "精睡开启" : "精睡关闭"));
             var intES = parseInt(info.ES);
-            onOffSwitch(intES,onFinesleep);
-            onFinesleep.data("finesleep", intES);
+//          var finesleepDisplay = $("#finesleepModal").css('display');
+//          if(finesleepDisplay == "none"){
+	            onOffSwitch(intES,onFinesleep);
+	            onFinesleep.data("finesleep", intES);
+//          }
 //          if (type == 'cloud') {
 //
 //              if (_.has(info, 'esInfo1')) {
@@ -311,16 +312,17 @@ $(document).ready(function () {
 //              //初始化优睡弹出框
 //          }
             
-            if(finesleepDisplay == "none"){
-            	if (info.ES == "1") {
-	                $(".switch").prop({checked:true});//使用attr操纵checked会有问题
-//	                $("#outBtn").attr("disabled",false);
-	            } else if(info.ES == "0") {
-	                $(".switch").prop({checked:false});
-//	                $("#outBtn").attr("disabled",true);
-	            }
-//				temperatureFineSleepMode(esInfo1.TIM1,esInfo1.TEMP1,esInfo2.TIM2,esInfo2.TEMP2,esInfo3.TIM3,esInfo3.TEMP3);
-            }
+//     	 	var finesleepDisplay = $("#finesleepModal").css('display');
+//          if(finesleepDisplay == "none"){
+//          	if (info.ES == "1") {
+//	                $(".switch").prop({checked:true});//使用attr操纵checked会有问题
+////	                $("#outBtn").attr("disabled",false);
+//	            } else if(info.ES == "0") {
+//	                $(".switch").prop({checked:false});
+////	                $("#outBtn").attr("disabled",true);
+//	            }
+////				temperatureFineSleepMode(esInfo1.TIM1,esInfo1.TEMP1,esInfo2.TIM2,esInfo2.TEMP2,esInfo3.TIM3,esInfo3.TEMP3);
+//          }
         }
 
         //错误报警
@@ -437,14 +439,16 @@ $(document).ready(function () {
 
     /* 设置精细睡眠模式 */
     function setFineSleepMode(esInfo1,esInfo2,esInfo3) {
-        var state = onFinesleep.data("finesleep");
-        if(esInfo1!=undefined&&esInfo2!=undefined&&esInfo3!=undefined){
-	        setDeviceProperties(requestHeader, device_id, 'esInfo1', JSON.stringify(esInfo1));
-	        setDeviceProperties(requestHeader, device_id, 'esInfo2', JSON.stringify(esInfo2));
-	        setDeviceProperties(requestHeader, device_id, 'esInfo3', JSON.stringify(esInfo3));
-        }
+    	var state='0';
+    	if($(".switch").prop('checked')){
+    		state='1';
+    	}
+        setDeviceProperties(requestHeader, device_id, 'esInfo1', JSON.stringify(esInfo1));
+        setDeviceProperties(requestHeader, device_id, 'esInfo2', JSON.stringify(esInfo2));
+        setDeviceProperties(requestHeader, device_id, 'esInfo3', JSON.stringify(esInfo3));
+        setDeviceProperties(requestHeader, device_id, 'ES', state);
         var topic = device_id + '/in/';
-        command = _.extend({"ES": state.toString()}, esInfo1, esInfo2, esInfo3);
+        command = _.extend({"ES": state}, esInfo1, esInfo2, esInfo3);
         console.log(command);
         client.publish(topic, JSON.stringify(command));
     }
@@ -533,75 +537,101 @@ $(document).ready(function () {
 
         });
     }
-    //点击优睡 显示模态框 
-    $(".onOff_finesleep").click(function(){
-        $("#finesleepModal").modal('show');
-        getDeviceInfo(device_id,true);//从云端获取预约时间
-        //生成iscroll
-        myScroll = new IScroll('#wrapper',{
-            click: false,
-            preventDefaultException: {tagName: /.*/}//不加词句将无法切换状态
-        }); 
-        //设置优睡弹出框中三个时间的值显示。
-		setFineSleepTitle();
-    });
     
-    /* 当前时间的下拉菜单处于可见状态时隐藏其他时间*/
-    $('#collapseOne').on({
-    	'shown.bs.collapse':function(){
-	    	$('#collapseTitleTwo').hide();
-	    	$('#collapseTitleThree').hide();
-	        setTimeout(function(){
-	            myScroll.refresh();
-	        },200);
-	    },
-	    'hidden.bs.collapse':function(){
-	    	$('#collapseTitleTwo').show();
-	    	$('#collapseTitleThree').show();
-	    }
-    });
-
-    
-    $('#collapseTwo').on({
-    	'shown.bs.collapse':function(){
-	    	$('#collapseTitleOne').slideUp("slow");
-		    $('#collapseTitleThree').hide();
-	        setTimeout(function(){
-	            myScroll.refresh();
-	        },200);
-    	},
-    	'hidden.bs.collapse':function(){
-	    	$('#collapseTitleOne').slideDown("slow");
-		    $('#collapseTitleThree').show();
-	    }
-    });
-
-    
-    $('#collapseThree').on({
-    	'shown.bs.collapse':function(){
-    		$('#collapseTitleOne').slideUp("slow");
-		    $('#collapseTitleTwo').slideUp("slow");
-	        setTimeout(function(){
-	            myScroll.refresh();
-	        },200);
-	    },
-   	 	'hidden.bs.collapse':function(){
-   	 		$('#collapseTitleOne').slideDown("slow");
-		    $('#collapseTitleTwo').slideDown("slow");
-	    }
-    });
-    
-    //优睡参数发送按钮
-    $("#outBtn").on('click',function(){
-    	if($(".switch").get(0).checked){
-			setSort();
-			onOffSwitch("1",onFinesleep);
-    	}else{
-    		setSort();	
-    		onOffSwitch('0',onFinesleep);
-    	}
-    	$("#finesleepModal").modal('hide');
-    });
+    function greateFineSleepModel(){
+	    //点击优睡 显示模态框 
+	    $(".onOff_finesleep").click(function(){
+	        $("#finesleepModal").modal('show');
+	        getDeviceInfo(device_id,true);//从云端获取预约时间
+	        //生成iscroll
+	        myScroll = new IScroll('#wrapper',{
+	            click: false,
+	            vScroll:false,
+	            preventDefaultException: {tagName: /.*/}//不加词句将无法切换状态
+	        }); 
+	        //设置优睡弹出框中三个时间的值显示。
+			setFineSleepTitle();
+	    });
+	    
+	    /* 当前时间的下拉菜单处于可见状态时隐藏其他时间*/
+	    $('#collapseOne').on({
+	    	'shown.bs.collapse':function(){
+		    	$('#collapseTitleTwo').hide();
+		    	$('#collapseTitleThree').hide();
+		    	$("#modalFooterBtn").hide();
+//		        setTimeout(function(){
+//		            myScroll.refresh();
+//		        },200);
+		    },
+		    'hidden.bs.collapse':function(){
+		    	$('#collapseTitleTwo').show();
+		    	$('#collapseTitleThree').show();
+		    	$("#modalFooterBtn").show();
+		    }
+	    });
+	
+	    
+	    $('#collapseTwo').on({
+	    	'shown.bs.collapse':function(){
+		    	$('#collapseTitleOne').slideUp("slow");
+			    $('#collapseTitleThree').hide();
+			    $("#modalFooterBtn").hide();
+//		        setTimeout(function(){
+//		            myScroll.refresh();
+//		        },200);
+	    	},
+	    	'hidden.bs.collapse':function(){
+		    	$('#collapseTitleOne').slideDown("slow");
+			    $('#collapseTitleThree').show();
+			    $("#modalFooterBtn").show();
+		    }
+	    });
+	
+	    
+	    $('#collapseThree').on({
+	    	'shown.bs.collapse':function(){
+	    		$('#collapseTitleOne').slideUp("slow");
+			    $('#collapseTitleTwo').slideUp("slow");
+			    $("#modalFooterBtn").hide();
+//		        setTimeout(function(){
+//		            myScroll.refresh();
+//		        },200);
+		    },
+	   	 	'hidden.bs.collapse':function(){
+	   	 		$('#collapseTitleOne').slideDown("slow");
+			    $('#collapseTitleTwo').slideDown("slow");
+			    $("#modalFooterBtn").show();
+		    }
+	    });
+	    //优睡参数发送
+		$("#outBtn").on('click',function(){
+			if($(".switch").get(0).checked){
+				setSort();
+				onOffSwitch("1",onFinesleep);
+			}else{
+				setSort();	
+				onOffSwitch('0',onFinesleep);
+			}
+			$("#finesleepModal").modal('hide');
+		});	
+		
+		//优睡开关
+		$(".switch").on("change", function () {
+	    	var intES = "0";
+	    	if(!$(".switch").get(0).checked){
+	    		onFinesleep.data("finesleep", intES);
+	    		$("#stateTitle").html("按“确定”发送").css('color','#8fb9df');
+	    		stateTitle();
+	//  		$("#outBtn").attr("disabled",true);
+	    	}else{
+	    		intES="1";
+	    		onFinesleep.data("finesleep", intES);
+	    		$("#stateTitle").html("按“确定”发送").css('color','#f46652');
+				stateTitle();
+	//  		$("#outBtn").attr("disabled",false);
+	    	}
+	    });
+    }
     
 	//2秒后提示消失
 	var setStateTitle;
@@ -611,22 +641,6 @@ $(document).ready(function () {
     		$("#stateTitle").html("").css('color','#f46652');
     	},2000);
     }
-    //优睡开关，关时发送“0”
-    var switchChange=$(".switch").on("change", function () {
-    	var intES = "0";
-    	if(!$(".switch").get(0).checked){
-    		onFinesleep.data("finesleep", intES);
-    		$("#stateTitle").html("按“确定”发送").css('color','#8fb9df');
-    		stateTitle();
-//  		$("#outBtn").attr("disabled",true);
-    	}else{
-    		intES="1";
-    		onFinesleep.data("finesleep", intES);
-    		$("#stateTitle").html("按“确定”发送").css('color','#f46652');
-			stateTitle();
-//  		$("#outBtn").attr("disabled",false);
-    	}
-    });
     
     //排序并发送优睡参数
     function setSort(switchChecked){
@@ -644,17 +658,9 @@ $(document).ready(function () {
         var esInfo3 = {"TIM3": (sortBy[2].time).toString(), "TEMP3": sortBy[2].temp};
 		temperatureFineSleepMode(esInfo1.TIM1,esInfo1.TEMP1,esInfo2.TIM2,esInfo2.TEMP2,esInfo3.TIM3,esInfo3.TEMP3);
         setFineSleepTitle();
-//      if(switchChecked){
-        	setFineSleepMode(esInfo1,esInfo2,esInfo3);
-//      	$("#stateTitle").html("已发送").css('color','#f46652');
-//      	stateTitle();
-//      	
-//      }else{
-//      	setFineSleepMode(esInfo1,esInfo2,esInfo3);
-//      	$("#stateTitle").html("已关闭").css('color','#8fb9df');
-//      	stateTitle();
-//      }
+        setFineSleepMode(esInfo1,esInfo2,esInfo3);
     }
+    
     //设置优睡弹出框中三个时间的值显示。
     function setFineSleepTitle(){
     	//温度 slider

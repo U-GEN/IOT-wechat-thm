@@ -161,7 +161,7 @@ $(document).ready(function () {
                     //设备离线
                     displayOffline();
                 } else {
-                    getDeviceInfo(access_token, device_id);
+                    getDeviceInfo(device_id);
                 }
             } else {
                 try {

@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
     <link rel="stylesheet" type="text/css" href="css/mobiscroll.animation.css"/>
-    <link rel="stylesheet" type="text/css" href="css/mobiscroll.frame.css?version=0.0.1"/>
+    <link rel="stylesheet" type="text/css" href="css/mobiscroll.frame.css"/>
     <link rel="stylesheet" type="text/css" href="css/mobiscroll.scroller.css"/>
     <link rel="stylesheet" type="text/css" href="css/device.css?version=0.0.5">
     <script type="text/javascript" src="http://api.easylink.io/assets/js/mqttws31.js"></script>
@@ -28,7 +28,7 @@
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script type="text/javascript" src="js/config.js?version=0.0.5"></script>
     <script type="text/javascript" src="js/public.js?version=0.0.5"></script>
-    <script type="text/javascript" src="js/device.js?version=0.0.3"></script>
+    <script type="text/javascript" src="js/device.js?version=0.0.5"></script>
 </head>
 <body ontouchstart="">
 
@@ -63,7 +63,7 @@
                 <span></span>
             </p>
             <p>定时</p> 
-            <select id="finalTime">
+            <!--<select id="finalTime">
             	<option>0小时</option>
                 <option>1小时</option>
                 <option>2小时</option>
@@ -77,7 +77,7 @@
                 <option>10小时</option>
                 <option>11小时</option>
                 <option>12小时</option>
-            </select>           
+            </select>           -->
         </li>
         <!-- 睡眠开关 -->
         <li class="btn-group">
@@ -185,7 +185,44 @@
     </ul>
 </div>
 <!-- /loading -->
-
+<!-- 预约定时modal -->
+<div class="modal modal-finalTime fade" id="finalTimeModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="wrapper">
+                <div id="scroller">
+                	<div class="modal-header">
+		                <h4 class="modal-title">智能定时</h4>
+		            </div>
+		            <div class="panel-group" id="accordion">
+		                <!-- 设定1 -->
+                        <select id="finalTime">
+                            <option>0小时</option>
+                            <option>1小时</option>
+                            <option>2小时</option>
+                            <option>3小时</option>
+                            <option>4小时</option>
+                            <option>5小时</option>
+                            <option>6小时</option>
+                            <option>7小时</option>
+                            <option>8小时</option>
+                            <option>9小时</option>
+                            <option>10小时</option>
+                            <option>11小时</option>
+                            <option>12小时</option>
+                        </select>  
+		                <!-- /设定1 -->
+		            </div>
+                    <p id="confirmFooter" class="modal-footer finalTimeBtn">
+                        <button id="finalTimeButton" type="button" class="btn">确定</button>
+                        <button type="button" class="btn" data-dismiss="modal">取消</button>
+                    </p>            		
+        		</div>
+        	</div>
+        </div>
+    </div>
+</div>
+<!-- /预约定时modal -->
 <!-- 优质睡眠modal -->
 <div class="modal modal-finesleep fade" id="finesleepModal">
     <div class="modal-dialog">
@@ -193,7 +230,7 @@
             <div id="wrapper">
                 <div id="scroller">
 		            <div class="modal-header">
-		                <input class="switch" type="checkbox">
+		                <input class="switch" type="checkbox" checked="checked">
 		                <h4 class="modal-title">优质睡眠</h4>
 		                <h5 id="stateTitle" class="state-title"></h5>
 		            </div>
@@ -523,7 +560,7 @@
 		                </div>
 		                <!-- /设定3 -->
 		            </div>
-                    <p class="modal-footer">
+                    <p id="modalFooterBtn" class="modal-footer">
                         <button id="outBtn" type="button" class="btn">确定</button>
                         <button type="button" class="btn" data-dismiss="modal">取消</button>
                     </p>            		

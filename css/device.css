@@ -165,6 +165,11 @@
 .modal-dialog .modal-content p {
   margin-bottom: 0;
 }
+
+.modal-dialog .finalTimeBtn{
+	position: fixed;
+  top: 150px;
+}
 .modal-dialog .modal-content .btn-group-justified {
   padding-top: 0;
 }
@@ -613,6 +618,66 @@ input[type=checkbox]:focus,
   color: #ffffff;
   margin-right: 20px;
 }
+
+/* 预约定时modal*/
+.modal-finalTime .modal-dialog {
+  height: 230px;
+}
+.modal-finalTime .dw-i{
+	font-size: 18px;
+}
+/*.modal-finalTime .dw-ltr{
+	border: 1px solid #b8b8b8;
+}*/
+.modal-finalTime .mbsc-mobiscroll .dwwr{
+	float: none;
+}
+.modal-finalTime .modal-dialog .finalTimeBtn{
+	position: absolute;
+	top: 150px;
+}
+.modal-finalTime .modal-dialog .modal-content {
+  height: 100%;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -webkit-border-top-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+}
+.modal-finalTime .modal-dialog .modal-content .modal-header {
+  padding: 25px 25px 15px;
+  border-bottom: 0;
+  color: #f46652;
+}
+.modal-finalTime .modal-dialog .modal-content .modal-footer {
+  border-top: 0;
+}
+.modal-finalTime .modal-dialog .modal-content .modal-footer .btn {
+  color: #666666;
+  background-color: #f5f5f5;
+  border: 2px solid #e6e6e6;
+  padding: 5px 26px;
+  margin: 0 18px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  -webkit-border-top-left-radius: 20px;
+  -webkit-border-top-right-radius: 20px;
+  -webkit-border-bottom-left-radius: 20px;
+  -webkit-border-bottom-right-radius: 20px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.75);
+}
+.modal-finalTime .modal-dialog .modal-content .modal-footer .btn:active {
+  color: #ffffff;
+  background-color: #f46652;
+  border-color: #f46652;
+}
+/* /预约定时modal*/
 /* 优质睡眠modal */
 .modal-finesleep .modal-dialog {
   height: 330px;
@@ -911,5 +976,5 @@ input[type=checkbox]:focus,
 .state-title{
     top: 20px;
     left: 109px;
-    position: fixed;
+    position: absolute;
 }

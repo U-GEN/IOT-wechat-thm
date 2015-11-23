@@ -2,6 +2,7 @@
  * Created by CJLIU on 2015/9/20.
  */
 $(document).ready(function () {
+    // 是否可以hide loading 标记 （条件收到CT 并且微信config 注册成功）
     var wxRes = false;
     //微信jssdk配置 正式需打开
     var signInfo = getWechatSignInfo();
@@ -24,8 +25,6 @@ $(document).ready(function () {
                 } else {
                     wxRes = true;
                 }
-                // 标记 可以去除loading
-                //$(".loading").hide();
                 var content = {
                     title: '泰和美商城',
                     desc: '去商城逛逛吧',
@@ -85,55 +84,65 @@ $(document).ready(function () {
     var userName = getUserName(access_token, requestHeader);
     // 如果设备ID为空
     if (device_id == null) return;
-
+    // 测试环境注释
     $(".loading").show();
     setTimeout(function () {
         if ($(".loading").is(":visible")) {
             modalInitializationOne("连接未成功，请重试...");
         }
     }, loadingTime);
-
     var onOffPower = $(".onOff_Power");
     var onOffSleep = $(".onOff_sleep");
     var onOffAntifreeze = $(".onOff_antifreeze");
     var onOffTime = $(".onOff_time");
     var onFinesleep = $(".onOff_finesleep");
-    var role = getDeviceUser(device_id, requestHeader, userName, 1);
-    var owner = _.find(role, function (_role) {
-        return _role.role == 'owner'
+    var url = 'index.html?access_token=' + access_token + '&device_list=[]';//列表页面url
+    // 得到设备的所有用户
+    var users = getDeviceUser(device_id, requestHeader, userName, 1);
+    // 得到设备主人信息
+    var owner = _.find(users, function (user) {
+        return user.role == 'owner'
     });
-    if (!owner) {
-//      console.log(alias+'('+device_id.split('/')[1]+')已被主人删除!');
-        // console.log('index.html?access_token='+access_token+'&device_list=[]');
-        if (wxRes) {
+    // 如果设备没有主人，当前用户不是主人
+    if (!owner || owner.username != userName) {
+        // 获得用户属性
+        var userProperty = getDeviceProperties(requestHeader, device_id, userName);
+        //获得设备密码
+        var password = getDeviceProperties(requestHeader, device_id, 'password');
+        // 没有用户属性 或者用户属性为null  弹出密码框
+        if (!userProperty || userProperty == 'null') {
+            // 隐藏loading, 否则输入密码慢的话，可能会出现连接失败提示。
+            // 等密码输入正确后，如果wxRes为false的话，重新显示loading并计时。
             $(".loading").hide();
-        } else {
-            wxRes = true;
-        }
-        // 弹出只有确定按钮的模态框
-        modalInitializationOne(alias + '(' + device_id.split('/')[1] + ')已被主人删除!');
-        $("#confirmButton").on('click', function () {
-            setTimeout(function () {
-                //按确定之后 调用删除设备接口
-                getWxDeviceTicket(wxDeviceId, function (err, ticket) {
-                    if (!!err) return;
-                    unbindDevice(requestHeader, device_id, ticket, function (err, res) {
-
-                        if (!err && res.result == "success") {
-                            listFref('移除设备成功');
-                        } else {
-                            listFref('移除设备失败');
-                        }
-
+            // 弹出密码框
+            inputPwd();
+            // 用户属性为0， 删除设备
+        } else if (userProperty == '0') {
+            // 弹出只有确定按钮的模态框
+            modalInitializationOne(alias + '(' + device_id.split('/')[1] + ')已被主人删除!');
+            $("#confirmButton").on('click', function () {
+                setTimeout(function () {
+                    // 设置用户属性为null，
+                    // （本来应该在移除成功后设置，但是移除成功后 设备与用户解绑，接口调用无权限，解决方法，此处设置属性，移除失败的话再将属性改回去）
+                    setDeviceProperties(requestHeader, device_id, userName, 'null');
+                    //按确定之后 调用删除设备接口
+                    getWxDeviceTicket(wxDeviceId, function (err, ticket) {
+                        if (!!err) return;
+                        unbindDevice(requestHeader, device_id, ticket, function (err, res) {
+                            if (!err && res.result == "success") {
+                                listFref('移除设备成功');
+                            } else {
+                                // 属性改回
+                                setDeviceProperties(requestHeader, device_id, userName, '0');
+                                listFref('移除设备失败');
+                            }
+                        });
                     });
-                });
-            }, 1000);
-        });
-
-        return;
+                }, 1000);
+            });
+            return;
+        }
     }
-
-
     // 初始化温度调节面板
     initializationPanel();
     // 从云端得到设备历史数据
@@ -154,7 +163,6 @@ $(document).ready(function () {
     setTimeMode();
     // 优睡模态框的事件
     greateFineSleepModel();
-
 
     // 连接MQTT服务
     function ez_connect(device_id) {
@@ -275,6 +283,52 @@ $(document).ready(function () {
             }
         }
     };
+    /* 输入密码弹出框*/
+    function inputPwd() {
+        //模态框显示
+        $("#inputPassWordModal").modal("show");
+
+        var count = 0;
+        $("#pwdCancel").on('click', function () {
+            window.location.href = url;
+        });
+        $("#confirm").on("click", function () {
+            var modifyContent = $("#modifyContent").val();
+            console.log('modifyContent:', modifyContent);
+            if (!modifyContent) {
+                modalInitializationOne('密码不能为空');
+            } else {
+                if (modifyContent != password) {
+                    count += 1;
+                    if (count < 3) {
+                        modalInitializationOne('密码错误');
+                    } else {
+                        modalInitializationOne('输入失败3次，将回到列表页面');
+                        $("#confirmButton").on('click', function () {
+                            //跳转到列表页面
+                            window.location.href = url;
+                        });
+                    }
+                } else {
+                    if (!wxRes) {
+                        $(".loading").show();
+                        setTimeout(function () {
+                            if ($(".loading").is(":visible")) {
+                                modalInitializationOne("连接未成功，请重试...");
+                            }
+                        }, loadingTime);
+                    }
+                    // 密码正确，用户属性设置为1
+                    setDeviceProperties(requestHeader, device_id, userName, '1');
+                    //模态框隐藏
+                    $("#inputPassWordModal").modal("hide");
+                }
+                //清除输入框内容
+                $("#modifyContent").val('');
+            }
+        });
+    }
+
     /* 设备离线样式 （上半部分显示成灰色） */
     function displayOffline() {
         $("#err").html('<span></span>' + "设备已离线");
@@ -752,7 +806,6 @@ $(document).ready(function () {
         modalInitializationOne(title);
         $("#confirmButton").on('click', function () {
             //跳转到列表页面
-            var url = 'index.html?access_token=' + access_token + '&device_list=[]';
             window.location.href = url;
         });
     }

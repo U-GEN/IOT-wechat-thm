@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="css/mobiscroll.animation.css"/>
     <link rel="stylesheet" type="text/css" href="css/mobiscroll.frame.css"/>
     <link rel="stylesheet" type="text/css" href="css/mobiscroll.scroller.css"/>
-    <link rel="stylesheet" type="text/css" href="css/device.css?version=0.0.5">
+    <link rel="stylesheet" type="text/css" href="css/device.css?version=0.1.3">
     <script type="text/javascript" src="http://api.easylink.io/assets/js/mqttws31.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.md5.js"></script>
@@ -26,9 +26,9 @@
     <script type="text/javascript" src="js/mobiscroll.scroller.js"></script>
     <script type="text/javascript" src="js/mobiscroll.select.js"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-    <script type="text/javascript" src="js/config.js?version=0.0.5"></script>
-    <script type="text/javascript" src="js/public.js?version=0.0.5"></script>
-    <script type="text/javascript" src="js/device.js?version=0.0.5"></script>
+    <script type="text/javascript" src="js/config.js?version=0.1.3"></script>
+    <script type="text/javascript" src="js/public.js?version=0.1.3"></script>
+    <script type="text/javascript" src="js/device.js?version=0.1.3"></script>
 </head>
 <body ontouchstart="">
 
@@ -63,21 +63,6 @@
                 <span></span>
             </p>
             <p>定时</p> 
-            <!--<select id="finalTime">
-            	<option>0小时</option>
-                <option>1小时</option>
-                <option>2小时</option>
-                <option>3小时</option>
-                <option>4小时</option>
-                <option>5小时</option>
-                <option>6小时</option>
-                <option>7小时</option>
-                <option>8小时</option>
-                <option>9小时</option>
-                <option>10小时</option>
-                <option>11小时</option>
-                <option>12小时</option>
-            </select>           -->
         </li>
         <!-- 睡眠开关 -->
         <li class="btn-group">
@@ -132,6 +117,26 @@
     <div id="mask" class="mask"></div>
 </div>
 
+<!--输入密码modal-->
+<div class="modal modal-modifyName fade" id="inputPassWordModal">
+	<div class="ban-close">
+	</div>
+    <div class="modal-dialog">        
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">输入设备密码</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control" id="modifyContent" placeholder="分享页面提示的设备密码">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cancel" data-dismiss="modal" id="pwdCancel">取消</button>
+                <button type="button" class="btn btn-confirm" id="confirm">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/输入密码modal-->
 <!-- 确定modal -->
 <div class="modal fade" id="confirmModal">
     <div class="modal-dialog">
@@ -145,7 +150,6 @@
     </div>
 </div>
 <!-- /确定modal -->
-
 <!--无权限时的蒙版-->
 <div class="role">
 	<div class="">
@@ -192,7 +196,7 @@
             <div id="wrapper">
                 <div id="scroller">
                 	<div class="modal-header">
-		                <h4 class="modal-title">智能定时</h4>
+		                <h4 class="modal-title">定时关机</h4>
 		            </div>
 		            <div class="panel-group" id="accordion">
 		                <!-- 设定1 -->

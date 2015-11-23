@@ -1,4 +1,7 @@
 window.onload = function(){
+	var password = getParameterByName('pwd');
+	// password = 123456;
+	$("#pwdSpan").html(password);
 	//获得二维码URL
 	var ticket =  getParameterByName('ticket');
 	if(ticket == null){

@@ -978,3 +978,34 @@ input[type=checkbox]:focus,
     left: 109px;
     position: absolute;
 }
+
+/* 输入密码modal */
+/*.modal-modifyName{
+	z-index: 1050;
+}*/
+.modal-modifyName .modal-dialog {
+  height: 188px;
+}
+.modal-modifyName .modal-dialog .btn-cancel {
+  background-color: #ffffff;
+  border-color: #dadada;
+}
+.modal-modifyName .modal-dialog .btn-cancel:active {
+  background-color: #e1e1e1;
+  border-color: #b9b9b9;
+}
+.modal-modifyName .modal-dialog .btn-confirm {
+  color: #ffffff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+.modal-modifyName .modal-dialog .btn-confirm:active {
+  background-color: #286090;
+  border-color: #204d74;
+}
+/* /输入密码modal */
+
+.ban-close{
+	height: 100%;
+	width: 100%;
+}

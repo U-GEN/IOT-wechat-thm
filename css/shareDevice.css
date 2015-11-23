@@ -232,7 +232,10 @@ body {
   position: absolute;
   top: 0;
   right: 0;
+        /*margin-top: -145px;
+    margin-left: inherit;*/
   width: 50%;
+  z-index: 1;
 }
 .bindDevice ul li:nth-child(2) p {
   margin-bottom: 0;
@@ -245,4 +248,19 @@ body {
   -webkit-background-size: auto 100%;
   background-position: center right;
   margin-bottom: 5px;
+}
+.bindDevice .li-shareImg{
+	    position: absolute;
+	z-index: 3;
+}
+.password-label{
+	position: relative;
+	top: 20%;
+}
+.pwd{
+}
+#pwdSpan{
+	/*text-align: center;*/
+	color: #f46652;
+	font-size: 30px;
 }

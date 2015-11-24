@@ -254,9 +254,9 @@ $(document).ready(function () {
             info[_data.name] = _data.value;
         });
         if (getESInfo) {
-            var esInfo1 = {"TIM1": "60", "TEMP1": "37"};
-            var esInfo2 = {"TIM2": "180", "TEMP2": "36"};
-            var esInfo3 = {"TIM3": "320", "TEMP3": "35"};
+            var esInfo1 = {"TIM1": "60", "TEMP1": "34"};
+            var esInfo2 = {"TIM2": "120", "TEMP2": "33"};
+            var esInfo3 = {"TIM3": "360", "TEMP3": "34"};
 
             if (_.has(info, 'esInfo1')) {
                 esInfo1 = JSON.parse(info.esInfo1);

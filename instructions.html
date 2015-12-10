@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+  <title>使用说明</title>
+    function getParameterByName(name) {
+      var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+      return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    }
+    var access_token = getParameterByName('access_token');
+    alert(access_token);
+    var device_list = [];
+    
+    var deviceLists = getParameterByName('device_list');
+    var ll = deviceLists;
+    if ( deviceLists !== null ){
+      try {
+        deviceLists = JSON.parse(deviceLists);
+        
+        for ( var i in deviceLists ) {
+          var device = deviceLists[i];
+          alert(device);
+          if ( device[0] === null ) continue;
+          var product_id = device[0].split('/')[0];
+          var alias = device[3] ? device[3] : device[0];
+          device_list.push({'alias': alias, 'device_id': device[0], 'product_id': product_id, 'time': new Date(parseInt(device[1])*1000).toLocaleString(), 'state': device[2]});
+        }
+      } catch(e) {
+        alert(e);
+      }
+    }
+    var devices;
+    angular.module('ionicApp', ['ionic'])
+    .controller('MyCtrl', function($scope, $ionicPopup, $ionicListDelegate, $http) {
+      $scope.items = device_list;
+      $scope.access_token = access_token;
+      $scope.lists = ll;
+      alert(devices);
+      $scope.listss = devices;
+      $scope.data = {
+        showDelete: false
+      };
+      $scope.listCanSwipe = true;
+      $scope.showPopup = function(item) {
+        var index = $scope.items.indexOf(item);
+        $scope.data = {}
+
+          // An elaborate, custom popup
+          var myPopup = $ionicPopup.show({
+            template: '<input type="text" ng-model="data.alias">',
+            title: '',
+            subTitle: '修改名称',
+            scope: $scope,
+            buttons: [
+            { text: 'Cancel' },
+            {
+              text: '<b>Save</b>',
+              type: 'button-positive',
+              onTap: function(e) {
+                if (!$scope.data.alias) {
+                  e.preventDefault();
+                } else {
+                  $http.post(
+                    'http://api.easylink.io/v1/device/modify',
+                    {
+                      device_id : item.device_id,
+                      alias     : $scope.data.alias
+                    }, {
+                      headers : {
+                        'AUTHORIZATION' : "token " + access_token
+                      }
+                    } 
+                    ).success(function(data) {
+                      $scope.items[index].alias = $scope.data.alias;
+                      $ionicListDelegate.closeOptionButtons();
+
+                    }).error(function(data){
+                      alert(data.error.message);
+                      return; 
+                    });  
+                  }
+                }
+              }
+              ]
+            });
+};
+
+$scope.reloadPage = function() {
+ $http.post(
+   'http://api.easylink.io/v1/device/devices',
+   null,{
+     headers : {
+       'AUTHORIZATION' : "token " + access_token
+     }
+   }
+   ).success(function(data) {
+    $scope.items = [];
+devices=data;
+    for ( var i in data ) {
+      var device = data[i];
+      if ( device === null ) continue;
+      var product_id = device.id.split('/')[0];
+      var alias = device.alias ? device.alias : device.id;
+      $scope.items.push({'alias': alias, 'device_id': device.id, 'product_id': product_id, 'time': device.created, 'state': device.online});
+    }
+  }).error(function(data) {
+   alert(data.error.message);
+   return;
+ });
+};
+});
+</script>
+</head>
+<body >
+  敬请期待
+</body>
+</html>

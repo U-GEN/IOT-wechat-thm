@@ -2,45 +2,67 @@
 @image_path: "../img";
 
 
+
 //font-family
-@font-face{
-	font-family: myFont;
-	src: url('../font/number.TTF')  format('truetype');
+@font-face {
+	font-family: 'iconfont';
+	src: url('../font/iconfont.ttf') format('truetype'); /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
 }
 
-@f_family: "微软雅黑";
-@f_family1: myFont;
+@font-face{
+	font-family: 'myFont';
+	src: url('../font/number.TTF') format('truetype');
+}
 
-//body
-@body-font-family: @f_family;
+@f_family: 'myFont';
 
 //device
-@temperature-now-number-font-family: @f_family1;
-@temperatureTargetPanel-number-font-family: @f_family1;
+@temperature-now-number-font-family: @f_family;
+@temperatureTargetPanel-number-font-family: @f_family;
+
 
 
 //colors
 @c_white:#ffffff;
 @c_black:#000000;
+@c_black1:#333333;
 @c_red:#f46652;
 @c_red1:#f34f36;
 @c_red2:#c1272d;
 @c_red3:#fae1d1;
 @c_red4:#e69377;
-@c_red5:#FFBDBD;
+@c_red5:#FFB9B9;
+@c_red6:#f29b87;
+@c_red7:#FD1a00;
+@c_red8:#FA8A73;
+@c_red9:#faa383;
+@c_red10:#f6745e;
+@c_red11:#ef3128;
 @c_blue:#8fb9df;
+@c_blue1:#337ab7;
+@c_blue2:#2e6da4;
+@c_blue3:#286090;
+@c_blue4:#204d74;
+@c_blue5:#ACCBE7;
+@c_green:#4cd964;
+@c_yellow:#FEE0AF;
 @c_gray:#f5f5f5;
 @c_gray1:#808080;
-@c_gray2:#CDCBCC;
-@c_gray3:#e7eaed;
-@c_gray4:#E1E1E1;
-@c_gray5:#DADADA;
-@c_gray6:#B9B9B9;
-@c_gray7:#666666;
-@c_gray8:#999999;
-@c_gray9:#5d5d5d;
+@c_gray2:#e7eaed;
+@c_gray3:#E1E1E1;
+@c_gray4:#DADADA;
+@c_gray5:#B9B9B9;
+@c_gray6:#666666;
+@c_gray7:#999999;
+@c_gray8:#dcdcdd;
+@c_gray9:#e6e6e6;
+@c_gray10:#d9d9d9;
+@c_gray11:#D0D0D0;
 @opacity:transparent;
 @black_opacity:rgba(0,0,0,0.5);
+@black_opacity1:rgba(0,0,0,0.75);
+@black_opacity2:rgba(0,0,0,0.3);
+@gray_opacity:rgba(159,159,160,0.75);
 
 //body
 @body-bg-color: @c_gray;
@@ -49,43 +71,119 @@
 @jumbotron-text-color: @c_white;
 @jumbotron-bg-color: @c_red;
 @moreThan-tmpTarget-bg-color: @c_blue;
+@offline-state-bg-color: @c_gray7;
+@btn-group-color: @c_gray1;
+@powerSwitch-offState-color: @c_gray5;
 @temperatureTargetBox-text-color: @c_gray1;
 @temperatureTargetPanel-gradient-startColor: @c_white;
-@temperatureTargetPanel-gradient-endColor: @c_gray4;
-@temperatureTargetPanel-shadow: @c_gray5;
+@temperatureTargetPanel-gradient-endColor: @c_gray3;
+@temperatureTargetPanel-shadow: @c_gray4;
 @temperatureTargetPanel-text-color: @c_red;
 @temperatureTargetProgressbar-gradient-startColor: @opacity;
-@temperatureTargetProgressbar-gradient-endColor: @c_gray3;
+@temperatureTargetProgressbar-gradient-endColor: @c_gray2;
 @temperatureTargetProgressbar-round-bg: @c_red1;
 @temperatureTargetProgressbar-round-border: @c_red2;
-@time-input-border: @opacity;
-@time-input-shadow: @c_gray2;
+@mask-bg-color: @opacity;
 
 //index
-@list-row-border: @c_black;
-@list-row-bg: @c_white;
-@list-row-color: @c_gray8;
-@list-row-round-bg: @c_gray8;
-@list-row-btn-color: @c_gray9;
-@list-row-btn-gradient-startColor: @c_red3;
-@list-row-btn-gradient-endColor: @c_red4;
-@list-row-btn-border: @c_gray1;
-@list-row-btn-shadow: @c_gray8;
-@list-row-btn-active-shadow: @c_red5;
-@list-row-state-color: @c_gray1;
+@list-row-color: @c_gray7;
+@list-row-border-bg: @c_black;
+@list-row-btn-group-color: @c_black1;
+@list-row-btn-group-active-color: @c_blue;
+@list-row-btn-group-disabled-color: @c_gray5;
 @list-row-online-color: @c_red;
-@list-row-online-round-bg: @c_red;
-@list-row-online-state-color: @c_red;
+@list-row-online-bg: @c_gray3;
 
 //footer
 @footer-border-color: @c_gray1;
 @footer-gradient-startColor: @c_white;
-@footer-gradient-endColor: @c_gray6;
-@footer-link-color: @c_gray7;
+@footer-gradient-endColor: @c_gray5;
+@footer-link-color: @c_gray6;
 
 //loading
 @loading-bg-color: @black_opacity;
 @loading-round-bg: @c_white;
+
+//modal
+@modal-text-color: @c_black;
+@modal-shadow-color: @black_opacity1;
+@modal-btn-color: @c_black;
+@modal-btn-left-border: @c_gray4;
+@modal-btn-active-bg: @c_gray2;
+@modal-btn-cancel-bg: @c_white;
+@modal-btn-cancel-border: @c_gray4;
+@modal-btn-cancel-active-bg: @c_gray3;
+@modal-btn-cancel-active-border: @c_gray5;
+@modal-btn-confirm-color: @c_white;
+@modal-btn-confirm-bg: @c_blue1;
+@modal-btn-confirm-border: @c_blue2;
+@modal-btn-confirm-active-bg: @c_blue3;
+@modal-btn-confirm-active-border: @c_blue4;
+@modal-finesleep-header-color: @c_red;
+@modal-finesleep-btn-color: @c_gray6;
+@modal-finesleep-btn-bg: @c_gray;
+@modal-finesleep-btn-border: @c_gray9;
+@modal-finesleep-btn-shadow: @black_opacity1;
+@modal-finesleep-btn-active-color: @c_white;
+@modal-finesleep-btn-active-bg: @c_red;
+@modal-finesleep-btn-active-border: @c_red;
+
+//panel
+@panel-bg-color: @c_gray9;
+@panel-text-color: @c_gray6;
+@panel-row-left-bg: @c_gray;
+@panel-row-left-border: @c_gray4;
+@panel-row-right-bg: @c_red;
+@panel-row-right-border: @panel-row-right-bg;
+@panel-row-right-shadow: @gray_opacity;
+@panel-row-right-botttom-arrow: @c_red6;
+@panel-row-right-top-arrow: @c_gray9;
+@slider-bg-color: @c_white;
+@slider-inset-shadow: @c_gray10;
+@slider-shadow-color: @c_white;
+@slider-shadow-color1: @c_gray11;
+@slider-selection-inset-shadow: @c_red7;
+@slider-selection-gradient-startColor: @c_yellow;
+@slider-selection-gradient-endColor: @c_red8;
+@slider-handle-gradient-startColor: @c_red9;
+@slider-handle-gradient-centertColor: @c_red10;
+@slider-handle-gradient-endColor: @c_red11;
+@slider-handle-shadow: @black_opacity2;
+@selectTimeBox-bg-color: @c_white;
+
+//switch
+@modal-permission-switch-border: @c_gray8;
+@modal-permission-switch-bg: @c_white;
+@switch-round-bg: @c_white;
+@switch-round-shadow: @black_opacity;
+@modal-permission-switchOn-border: @c_green;
+@modal-permission-switchOn-bg: @c_green;
+@modal-finesleep-switch-border: @c_blue;
+@modal-finesleep-switch-bg: @c_blue5;
+@modal-finesleep-switchOn-border: @c_red7;
+@modal-finesleep-switchOn-bg: @c_red10;
+
+//noDevice
+@noDevice-text-color: @c_white;
+@noDevice-border-color: @c_white;
+@noDevice-bg-color: @c_red;
+@noDevice-shadow-color1: @noDevice-bg-color;
+@noDevice-shadow-color2: @black_opacity;
+
+//bindDevice
+@bindDevice-bg-color: @c_gray8;
+
+//role
+@role-bg-color: @black_opacity;
+@role-text-color: @c_white;
+
+//使用说明
+@topCont-p-color: @c_white;
+@topCont-p-bg: @black_opacity;
+@instruction-row-border: @c_gray11;
+@instruction-row-color: @c_black; 
+@instruction-row-active-bg: @c_gray3;
+
 
 
 //font-sizes
@@ -99,10 +197,26 @@
 @temperatureTargetPanel-number-font-size: @default_fps_size * 5;
 
 //index
-@list-row-title-font-size: @default_f_size + 8;
-@list-row-state-font-size: @default_f_size + 1;
+@list-row-icon-font-size: @default_f_size + 11;
+@list-row-deviceName-font-size: @default_f_size + 8;
+@list-row-btn-group-font-size: @default_f_size - 2;
+@list-row-btn-group-icon-font-size: @default_f_size + 6;
 
 //footer
 @footer-link-font-size: @default_f_size + 2;
+
+//modal
+@modal-text-font-size: @default_f_size + 4;
+
+//panel
+@panel-text-font-size: @default_f_size - 2;
+@selectTime-label-font-size: @default_f_size - 1;
+
+//noDevice
+@noDevice-text-font-size: @default_f_size + 6;
+
+//使用说明
+@topCont-p-font-size: @default_f_size + 4;
+@instruction-row-font-size: @default_f_size + 2;
 
 @f_w_bold:bold;

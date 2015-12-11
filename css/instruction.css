@@ -1,0 +1,258 @@
+@font-face {
+  font-family: 'iconfont';
+  src: url('../font/iconfont.ttf') format('truetype');
+  
+  /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+}
+@font-face {
+  font-family: 'myFont';
+  src: url('../font/number.TTF') format('truetype');
+}
+/* loading */
+.loading {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1040;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.loading ul {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 40px;
+  height: 40px;
+}
+.loading ul li {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.loading ul li:nth-child(1) p:nth-child(2) {
+  animation-delay: -0.9s;
+  -webkit-animation-delay: -0.9s;
+}
+.loading ul li:nth-child(1) p:nth-child(3) {
+  animation-delay: -0.6s;
+  -webkit-animation-delay: -0.6s;
+}
+.loading ul li:nth-child(1) p:nth-child(4) {
+  animation-delay: -0.3s;
+  -webkit-animation-delay: -0.3s;
+}
+.loading ul li:nth-child(2) {
+  transform: rotateZ(45deg);
+  -webkit-transform: rotateZ(45deg);
+}
+.loading ul li:nth-child(2) p:nth-child(1) {
+  animation-delay: -1.1s;
+  -webkit-animation-delay: -1.1s;
+}
+.loading ul li:nth-child(2) p:nth-child(2) {
+  animation-delay: -0.8s;
+  -webkit-animation-delay: -0.8s;
+}
+.loading ul li:nth-child(2) p:nth-child(3) {
+  animation-delay: -0.5s;
+  -webkit-animation-delay: -0.5s;
+}
+.loading ul li:nth-child(2) p:nth-child(4) {
+  animation-delay: -0.2s;
+  -webkit-animation-delay: -0.2s;
+}
+.loading ul li:nth-child(3) {
+  transform: rotateZ(90deg);
+  -webkit-transform: rotateZ(90deg);
+}
+.loading ul li:nth-child(3) p:nth-child(1) {
+  animation-delay: -1s;
+  -webkit-animation-delay: -1s;
+}
+.loading ul li:nth-child(3) p:nth-child(2) {
+  animation-delay: -0.7s;
+  -webkit-animation-delay: -0.7s;
+}
+.loading ul li:nth-child(3) p:nth-child(3) {
+  animation-delay: -0.4s;
+  -webkit-animation-delay: -0.4s;
+}
+.loading ul li:nth-child(3) p:nth-child(4) {
+  animation-delay: -0.1s;
+  -webkit-animation-delay: -0.1s;
+}
+.loading ul li p {
+  width: 10px;
+  height: 10px;
+  margin-bottom: 0;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  -webkit-border-top-left-radius: 50%;
+  -webkit-border-top-right-radius: 50%;
+  -webkit-border-bottom-left-radius: 50%;
+  -webkit-border-bottom-right-radius: 50%;
+  position: absolute;
+  background-color: #ffffff;
+  animation: bouncedelay 1.2s infinite ease-in-out both;
+  -webkit-animation: bouncedelay 1.2s infinite ease-in-out both;
+}
+.loading ul li p:nth-child(1) {
+  top: 0;
+  left: 0;
+}
+.loading ul li p:nth-child(2) {
+  top: 0;
+  right: 0;
+}
+.loading ul li p:nth-child(3) {
+  bottom: 0;
+  right: 0;
+}
+.loading ul li p:nth-child(4) {
+  bottom: 0;
+  left: 0;
+}
+@keyframes bouncedelay {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+}
+@-webkit-keyframes bouncedelay {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+}
+/* /loading */
+/* 确定modal */
+.modal-dialog {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 280px;
+  height: 105px;
+}
+.modal-dialog .modal-content {
+  color: #000000;
+  font-size: 18px;
+  border: 0;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.75);
+}
+.modal-dialog .modal-content p {
+  margin-bottom: 0;
+}
+.modal-dialog .modal-content .btn-group-justified {
+  padding-top: 0;
+}
+.modal-dialog .modal-content .btn-group-justified .btn {
+  color: #000000;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -webkit-border-top-right-radius: 0;
+}
+.modal-dialog .modal-content .btn-group-justified .btn:nth-child(2) {
+  border-left-color: #dadada;
+}
+.modal-dialog .modal-content .btn-group-justified .btn:active {
+  background-color: #e7eaed;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+/* /确定modal */
+/* switch */
+/* /switch */
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+body {
+  user-select: none;
+  -webkit-user-select: none;
+  tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  background-color: #f5f5f5;
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+}
+input[type=checkbox]:focus,
+.btn:active:focus,
+.btn:focus {
+  outline: 0;
+}
+.topCont {
+  width: 100%;
+  position: relative;
+}
+.topCont img {
+  width: 100%;
+}
+.topCont p {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: #ffffff;
+  font-size: 18px;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  margin-bottom: 0;
+}
+.instructionList div {
+  width: 100%;
+  height: 100px;
+  border-bottom: 1px solid #d0d0d0;
+}
+.instructionList div ul {
+  display: table;
+  width: 100%;
+  height: 100%;
+  table-layout: fixed;
+  color: #000000;
+  font-size: 16px;
+  margin-bottom: 0;
+}
+.instructionList div ul li {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0 15px;
+}
+.instructionList div ul li:nth-child(2) {
+  width: 130px;
+}
+.instructionList div ul li:nth-child(2) img {
+  width: 100%;
+}
+.instructionList div:active {
+  background-color: #e1e1e1;
+}

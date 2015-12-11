@@ -210,6 +210,12 @@ input[type=checkbox]:focus,
 .btn:focus {
   outline: 0;
 }
+a:focus {
+  outline: 0;
+}
+a:hover {
+  text-decoration: none;
+}
 .topCont {
   width: 100%;
   position: relative;

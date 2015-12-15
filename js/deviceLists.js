@@ -80,7 +80,7 @@ $(document).ready(function () {
                 var bssid = _data.bssid;
                 var alias = !!_data.alias ? _data.alias : device_id.split('/')[0];
                 var wxDevice_id = _data.wx_device_id;
-                var url = 'device.html?device_id=' + device_id + '&access_token=' + access_token + '&wx_device_id=' + wxDevice_id + '&alias=' + alias;
+                var url = product_id+'.html?device_id=' + device_id + '&access_token=' + access_token + '&wx_device_id=' + wxDevice_id + '&alias=' + alias;
                 var state = _data.online;
                 //渲染设备列表
                 addDeviceLists(state, alias, url, device_id, bssid, wxDevice_id);
@@ -120,11 +120,11 @@ $(document).ready(function () {
                 var bssid = _data.bssid;
                 var alias = !!_data.alias ? _data.alias : device_id.split('/')[0];
                 var wxDevice_id = _data.wx_device_id;
-                var url = 'device.html?device_id=' + device_id + '&access_token=' + access_token + '&wx_device_id=' + wxDevice_id + '&alias=' + alias;
+                var url = product_id+'.html?device_id=' + device_id + '&access_token=' + access_token + '&wx_device_id=' + wxDevice_id + '&alias=' + alias;
                 var state = _data.online;
 
                 //渲染设备列表
-                reloadPageLists(state, alias, url, device_id);
+                reloadPageLists(state, alias, bssid, url, device_id);
             });
         })
     }
@@ -356,7 +356,7 @@ $(document).ready(function () {
         if (state == 0) {
             state = "离线";
             $(list).removeClass("row-online-state");
-            addDeviceListsData(list, state, alias, bssid, url, wxDeviceId);
+            addDeviceListsData(list, state, alias, bssid);
         } else {
             state = "在线";
             $(list).addClass("row-online-state");
@@ -366,18 +366,22 @@ $(document).ready(function () {
 
     function addDeviceListsData(divName, state, alias, bssid, url) {
         var equipmentName;
+        $(divName).off();//此处必须先初始化所有事件，否则在之后每次刷新状态进入此方法会出问题
         $(divName).on('click', function (e) {
             if ($(e.target).attr('id') == "alias" || $(e.target).attr('id') == "bssid") {
                 $(e.target).parents('.alert').addClass('row-online-state-bg');
                 equipmentName = $(e.target).parents('.alert').find('ul #alias').text();
-                console.log($(e.target));
                 setTimeout(function () {
                     $(e.target).parents('.alert').removeClass('row-online-state-bg');
                 }, 200);
-                setTimeout(function () {
-                    var equipmentUrl = url.split("alias=")[0];
-                    window.location.href = equipmentUrl + "alias=" + equipmentName;
-                }, 300);
+                console.log(equipmentName);
+                if(url != undefined){
+                    setTimeout(function () {
+                        var equipmentUrl = url.split("alias=")[0];
+                        window.location.href = equipmentUrl + "alias=" + equipmentName;
+                    }, 300);
+                }else{
+                }
             }
         });
         $(divName).find("#state").text(state);
@@ -391,17 +395,21 @@ $(document).ready(function () {
      * @param device_id
      * @param state
      * @param alias
+     * @param bssid
      * @param url
      */
-    function reloadPageLists(state, alias, url, device_id) {
+    function reloadPageLists(state, alias, bssid, url, device_id) {
         var deviceID = device_id.replace(/\//g, "\\\/");
         var list = $("#" + deviceID);
         if (state == 0) {
             state = "离线";
             $(list).removeClass("row-online-state");
+            addDeviceListsData(list, state, alias, bssid);
+            	
         } else {
             state = "在线";
             $(list).addClass("row-online-state");
+            addDeviceListsData(list, state, alias, bssid, url);
         }
         list.find("#state").text(state);
         list.find("#alias").text(alias);

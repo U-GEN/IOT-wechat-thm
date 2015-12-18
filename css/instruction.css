@@ -226,7 +226,7 @@ a:hover {
 .topCont p {
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: 0;	
   width: 100%;
   color: #ffffff;
   font-size: 18px;
@@ -236,7 +236,7 @@ a:hover {
 }
 .instructionList div {
   width: 100%;
-  height: 100px;
+  height: 90px;
   border-bottom: 1px solid #d0d0d0;
 }
 .instructionList div ul {
@@ -254,7 +254,7 @@ a:hover {
   padding: 0 15px;
 }
 .instructionList div ul li:nth-child(2) {
-  width: 130px;
+  width: 100px;
 }
 .instructionList div ul li:nth-child(2) img {
   width: 100%;

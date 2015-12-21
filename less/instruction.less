@@ -25,24 +25,29 @@
 .instructionList{
 	div{
 		width: 100%;
-		height: 90px;
+		height: 79px;
+		padding: 10px 0;
 		border-bottom: 1px solid @instruction-row-border;
 		ul{
-			display: table;
 			width: 100%;
 			height: 100%;
-			table-layout: fixed;
 			color: @instruction-row-color;
 			font-size: @instruction-row-font-size;
 			margin-bottom: 0;
+		  	display: box;
+  			display: -webkit-box;
+  			box-align:center;
+  			-webkit-box-align: center;	
 			li{
-				display: table-cell;
-				vertical-align: middle;
 				padding: 0 15px;
+				&:nth-child(1){
+					box-flex:1;
+					-webkit-box-flex:1;
+				}
 				&:nth-child(2){
-					width: 100px;
+					height:100%;
 					img{
-						width: 100%;
+						height:100%;
 					}
 				}
 			}

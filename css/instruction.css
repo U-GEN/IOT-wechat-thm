@@ -236,28 +236,35 @@ a:hover {
 }
 .instructionList div {
   width: 100%;
-  height: 90px;
+  height: 79px;
+  padding: 10px 0;
   border-bottom: 1px solid #d0d0d0;
 }
 .instructionList div ul {
-  display: table;
   width: 100%;
   height: 100%;
-  table-layout: fixed;
   color: #000000;
   font-size: 16px;
   margin-bottom: 0;
+  display: box;
+  display: -webkit-box;
+  box-align:center;
+  -webkit-box-align: center;
 }
 .instructionList div ul li {
-  display: table-cell;
-  vertical-align: middle;
   padding: 0 15px;
 }
+
+.instructionList div ul li:nth-child(1) {
+	box-flex:1;
+	-webkit-box-flex:1;
+}
+
 .instructionList div ul li:nth-child(2) {
-  width: 100px;
+  height:100%;
 }
 .instructionList div ul li:nth-child(2) img {
-  width: 100%;
+ height:100%;
 }
 .instructionList div:active {
   background-color: #e1e1e1;

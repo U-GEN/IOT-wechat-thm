@@ -257,8 +257,20 @@ input[type=checkbox]:focus,
   line-height: 24px;
   font-size: 22px;
 }
+.alert .rowRight li.rightPosition {
+  position: absolute;
+  top: 12px;
+  right: 15%;
+  font-weight: bold;
+}
+.alert .rowRight li.rightPosition span:nth-child(1) {
+  display: block;
+}
+.alert .rowRight li.rightPosition span:nth-child(2) {
+  display: none;
+}
 .alert .rowRight:after {
-  content: "离线";
+  /*content: "离线";*/
   font-weight: bold;
   position: absolute;
   top: 12px;
@@ -268,8 +280,14 @@ input[type=checkbox]:focus,
   color: #f46652;
   background-image: url("../img/red_arrow_icon.png");
 }
+.row-online-state .rowRightCont li.rightPosition span:nth-child(1) {
+  display: none;
+}
+.row-online-state .rowRightCont li.rightPosition span:nth-child(2) {
+  display: block;
+}
 .alert.row-online-state .rowRight:after {
-  content: "在线";
+  /*content: "在线";*/
 }
 .alert.row-online-state.row-online-state-bg {
   background-color: #e1e1e1;
@@ -282,6 +300,7 @@ input[type=checkbox]:focus,
 .btn-group-justified .btn-group {
   color: #333333;
   font-size: 12px;
+  text-align: center;
 }
 .btn-group-justified .btn-group p .iconfont {
   font-size: 20px;
@@ -358,10 +377,25 @@ input[type=checkbox]:focus,
 }
 /* /权限modal */
 /* shareModal */
-.modal-share {
-  background: url("../img/share.png") no-repeat 80% 15px;
+/*.modal-share {*/
+/*  background: url("../img/share.png") no-repeat 80% 15px;
   background-size: 210px 185px;
-  -webkit-background-size: 210px 185px;
+  -webkit-background-size: 210px 185px;*/
+.modal-share .modal-dialog {
+  position: relative;
+  width: auto;
+  height: auto;
+}
+.modal-share .modal-dialog .modal-content {
+  background: url("../img/shareArrow.png") no-repeat;
+  background-size: 30% auto;
+  -webkit-background-size: 30% auto;
+  background-position: 92% 12%;
+  padding-top: 28%;
+  color: #ffffff;
+  background-color: transparent;
+  box-shadow: none;
+  -webkit-box-shadow: none;
 }
 /* /shareModal */
 .switch {

@@ -2,10 +2,11 @@
  * Created by CJLIU on 2015/9/20.
  */
 $(document).ready(function () {
+    language('lang/');
     // 是否可以hide loading 标记 （条件收到CT 并且微信config 注册成功）
     var wxRes = false;
     //微信jssdk配置 正式需打开
-    var signInfo = getWechatSignInfo();
+    /*var signInfo = getWechatSignInfo();
     var wechatSign = getWechatSign(signInfo);
     wechatConfig(signInfo, wechatSign);
     wx.ready(function () {
@@ -37,7 +38,7 @@ $(document).ready(function () {
             }
         });
         openWXDeviceLib();
-    });
+    });*/
 
     var colors;//保存温度色码的数组
     var bars;//温度条件面板总div
@@ -54,15 +55,24 @@ $(document).ready(function () {
     var connect = false;//mqtt 连接标识
 
     //优睡ID选择器
-    var TFSF = $("#timeFirst span:first");
-    var TFSL = $("#timeFirst span:last");
+    // var TFSF = $("#timeFirst span:first");
+    // var TFSL = $("#timeFirst span:last");
+    // var TSSF = $("#timeSecond span:first");
+    // var TSSL = $("#timeSecond span:last");
+    // var TTSF = $("#timeThird span:first");
+    // var TTSL = $("#timeThird span:last");
+    // var TFS = $("#temperatureFirst span");
+    // var TSS = $("#temperatureSecond span");
+    // var TTS = $("#temperatureThird span");
+    var TFSF = $("#timeFirst span:first");  //
+    var TFSL = $("#timeFirst [data-i18n='HOUR']").next();
     var TSSF = $("#timeSecond span:first");
-    var TSSL = $("#timeSecond span:last");
+    var TSSL = $("#timeSecond [data-i18n='HOUR']").next();
     var TTSF = $("#timeThird span:first");
-    var TTSL = $("#timeThird span:last");
-    var TFS = $("#temperatureFirst span");
-    var TSS = $("#temperatureSecond span");
-    var TTS = $("#temperatureThird span");
+    var TTSL = $("#timeThird [data-i18n='HOUR']").next();
+    var TFS = $("#temperatureFirst span:last");
+    var TSS = $("#temperatureSecond span:last");
+    var TTS = $("#temperatureThird span:last");
 
     // 得到设备ID
     var device_id = getParameterByName('device_id');
@@ -85,10 +95,11 @@ $(document).ready(function () {
     // 如果设备ID为空
     if (device_id == null) return;
     // 测试环境注释
-    $(".loading").show();
+    // $(".loading").show();
     setTimeout(function () {
         if ($(".loading").is(":visible")) {
-            modalInitializationOne("连接未成功，请重试...");
+            // modalInitializationOne("连接未成功，请重试...");
+            modalInitializationOne("<span data-i18n='ERR_CON'>The connection is not successful, try again ...</span>");
         }
     }, loadingTime);
     var onOffPower = $(".onOff_Power");
@@ -119,7 +130,8 @@ $(document).ready(function () {
             // 用户属性为0， 删除设备
         } else if (userProperty == '0') {
             // 弹出只有确定按钮的模态框
-            modalInitializationOne(alias + '(' + device_id.split('/')[1] + ')已被主人删除!');
+            // modalInitializationOne(alias + '(' + device_id.split('/')[1] + ')已被主人删除!');
+            modalInitializationOne(alias + '(' + device_id.split('/')[1] + ')'+'<span data-i18n="DEL_FOR_OWNER">has delete</span>!');
             $("#confirmButton").on('click', function () {
                 setTimeout(function () {
                     // 设置用户属性为null，
@@ -130,11 +142,13 @@ $(document).ready(function () {
                         if (!!err) return;
                         unbindDevice(requestHeader, device_id, ticket, function (err, res) {
                             if (!err && res.result == "success") {
-                                listFref('移除设备成功');
+                                // listFref('移除设备成功');
+                                listFref("<span data-i18n='DEL_DEVICE_SUCCESS'>Remove device success</span>");
                             } else {
                                 // 属性改回
                                 setDeviceProperties(requestHeader, device_id, userName, '0');
-                                listFref('移除设备失败');
+                                // listFref('移除设备失败');
+                                listFref("<span data-i18n='DEL_DEVICE_FAIL'>Remove device failed</span>");
                             }
                         });
                     });
@@ -213,7 +227,8 @@ $(document).ready(function () {
                 }
                 if (reconnectNum > 100) {
                     clearInterval(connectTimer);
-                    modalInitializationOne("连接丢失，请重新连接...");
+                    // modalInitializationOne("连接丢失，请重新连接...");
+                    modalInitializationOne("<span data-i18n='CON_LOSS'>Connection is lost, please reconnect...</span>");
                     client = new Paho.MQTT.Client(wsbroker, wsport, "v1-web-" + parseInt(Math.random() * 1000000, 12));
                     mqttClientInit();
                 }
@@ -296,14 +311,17 @@ $(document).ready(function () {
             var modifyContent = $("#modifyContent").val();
             console.log('modifyContent:', modifyContent);
             if (!modifyContent) {
-                modalInitializationOne('密码不能为空');
+                // modalInitializationOne('密码不能为空');
+                 modalInitializationOne("<span data-i18n='PSW_NONULL'>Password can not be empty</span>");
             } else {
                 if (modifyContent != password) {
                     count += 1;
                     if (count < 3) {
-                        modalInitializationOne('密码错误');
+                        // modalInitializationOne('密码错误');
+                        modalInitializationOne("<span data-i18n='PSW_ERR'>Password error</span>");
                     } else {
-                        modalInitializationOne('输入失败3次，将回到列表页面');
+                        // modalInitializationOne('输入失败3次，将回到列表页面');
+                        modalInitializationOne("<span data-i18n='INPUT_FAIL'>Input failed 3 times, will return to the list page</span>");
                         $("#confirmButton").on('click', function () {
                             //跳转到列表页面
                             window.location.href = url;
@@ -314,7 +332,8 @@ $(document).ready(function () {
                         $(".loading").show();
                         setTimeout(function () {
                             if ($(".loading").is(":visible")) {
-                                modalInitializationOne("连接未成功，请重试...");
+                                // modalInitializationOne("连接未成功，请重试...");
+                                modalInitializationOne("<span data-i18n='ERR_CON'>The connection is not successful, try again ...</span>");
                             }
                         }, loadingTime);
                     }
@@ -404,8 +423,25 @@ $(document).ready(function () {
         }
         //剩余关机时间
         if (_.has(info, "LT")) {
-            var lt = formatMinutes(info.LT);
-            $("#lt").text("剩余运行时间：" + lt);
+            // var lt = formatMinutes(info.LT);
+            // $("#lt").text("剩余运行时间：" + lt);
+            $('#lt').children().show();
+            console.log('LT'+info.LT);
+            // 得到小时与分钟 lt[0]--小时；lt[1]--分钟
+            var lt = formatHoursMinutes(info.LT);
+            console.log('LT=============='+lt);
+            // 填充小时 和分钟
+            $('#lt [data-i18n="LT"]').next().text(lt[0]);
+            $('#lt [data-i18n="HOUR"]').next().text(lt[1]);
+            if (lt[0] == 0) { // 判断 如果小时=0的情况下
+                // 小时不显示
+                $('#lt [data-i18n="HOUR"]').hide();
+                $('#lt [data-i18n="LT"]').next().hide();
+            } else if (lt[1] == 0) { //判断 如果分钟=0的情况下
+                //分钟不显示
+                $('#lt [data-i18n="MINIUTE"]').hide();
+                $('#lt [data-i18n="HOUR"]').next().hide();
+            }
         }
 
         // 精细睡眠
@@ -420,11 +456,15 @@ $(document).ready(function () {
         if (_.has(info, "ERR")) {
             var msg = errMsg;
             var intERR = parseInt(info.ERR);
-            if (intERR == 0) {
-                $("#err").text(msg[info.ERR]);
-            } else {
-                $("#err").html('<span></span>' + msg[intERR]);
-            }
+            $('#err [data-i18n]').hide();
+            $('[data-i18n="ERR_' + intERR + '"]').show();
+            // var msg = errMsg;
+            // var intERR = parseInt(info.ERR);
+            // if (intERR == 0) {
+            //     $("#err").text(msg[info.ERR]);
+            // } else {
+            //     $("#err").html('<span></span>' + msg[intERR]);
+            // }
         }
         temperatureChange();
     }
@@ -706,12 +746,14 @@ $(document).ready(function () {
             var intES = "0";
             if (!$(".switch").get(0).checked) {
                 onFinesleep.data("finesleep", intES);
-                $("#stateTitle").html("按“确定”发送").css('color', '#8fb9df');
+                // $("#stateTitle").html("按“确定”发送").css('color', '#8fb9df');
+                $("#stateTitle").css({'display':'block','color':'#8fb9df'});
                 stateTitle();
             } else {
                 intES = "1";
                 onFinesleep.data("finesleep", intES);
-                $("#stateTitle").html("按“确定”发送").css('color', '#f46652');
+                // $("#stateTitle").html("按“确定”发送").css('color', '#f46652');
+                $("#stateTitle").css({'display':'block','color':'#f46652'});
                 stateTitle();
             }
         });
@@ -723,7 +765,8 @@ $(document).ready(function () {
     function stateTitle() {
         clearTimeout(setStateTitle);
         setStateTitle = setTimeout(function () {
-            $("#stateTitle").html("").css('color', '#f46652');
+            // $("#stateTitle").html("").css('color', '#f46652');
+            $("#stateTitle").hide();
         }, 2000);
     }
 

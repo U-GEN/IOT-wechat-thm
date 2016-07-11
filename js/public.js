@@ -538,6 +538,19 @@ function formatMinutes(value) {
     return result;
 }
 
+/**
+ * 格式化分钟至 x小时x分钟
+ * @param value
+ * @returns []
+ */
+function formatHoursMinutes(value) {
+    var minutes = parseInt(value);
+    var result = "";
+    var hours = parseInt(minutes / 60);
+    minutes = parseInt(minutes % 60);
+    return [hours, minutes];
+}
+
 function getRandomStr(len) {
     var text = "";
     var possible = "0123456789";
@@ -550,6 +563,7 @@ function getRandomStr(len) {
 /* 弹出框双选择初始化*/
 function modalInitializationTwo(confirmTxt) {
     $("#confirmTxt").html(confirmTxt);
+    language('../lang/');
     $("#cancelButton").show();
     $("#confirmButton").off();//移除所有绑定事件
     $("#confirmModal").modal('show');
@@ -557,10 +571,25 @@ function modalInitializationTwo(confirmTxt) {
 /* 弹出框单选择初始化*/
 function modalInitializationOne(confirmTxt) {
     $("#confirmTxt").html(confirmTxt);
+    language('../lang/');
     $("#cancelButton").hide();
     $("#confirmButton").off();//移除所有绑定事件
     $("#confirmModal").modal('show');
     $("#confirmButton").on('click', function () {
         $("#confirmModal").modal('hide');
+    });
+}
+/* 多语言 */
+function language(path) {
+    var lanList = ["en-us", "ko-kr", "zh-cn"];
+    var lan = navigator.language.toLowerCase();
+    var language = "en-us";
+    _.each(lanList, function(_item, i) {
+        if (_item.split("-")[0] == lan.split("-")[0]) {
+            language = _item;
+        }
+    });
+    i18n.init({ resGetPath: path + language + '.json', lowerCaseLng: true }, function(t) {
+        $("body").i18n();
     });
 }

@@ -2,8 +2,9 @@
  * Created by CJLIU on 2015/9/19.
  */
 $(document).ready(function () {
+    language('lang/');
     // 测试环境注释
-    $(".loading").show();
+    //$(".loading").show();
     //当前设备ID
     var thisDeviceId;
     // 得到请求的sign
@@ -20,35 +21,35 @@ $(document).ready(function () {
     var userName = getUserName(access_token, requestHeader);
 
     //微信jssdk配置 正式需打开
-    var signInfo = getWechatSignInfo();
-    var wechatSign = getWechatSign(signInfo);
-    wechatConfig(signInfo, wechatSign);
-    wx.ready(function () {
-      //禁止分享功能
-      //WeixinJSBridge.call('hideOptionMenu');
-      wx.checkJsApi({
-          jsApiList: [
-              'openWXDeviceLib',
-              'getWXDeviceTicket',
-              'onMenuShareAppMessage',
-              'onMenuShareTimeline',
-              'onMenuShareQQ'
-          ],
-          success: function (res) {
-              $(".loading").hide();
-              var content = {
-                  title: '泰和美商城',
-                  desc: '去商城逛逛吧',
-                  link: 'http://wap.koudaitong.com/v2/showcase/homepage?alias=9c8qy9px',
-                  imgUrl: 'http://' + document.domain + '/img/webshare.jpg'
-              }
-              shareAppMessage(content);
-              shareTimeline(content);
-              shareQQ(content)
-          }
-      });
-      openWXDeviceLib();
-    });
+    // var signInfo = getWechatSignInfo();
+    // var wechatSign = getWechatSign(signInfo);
+    // wechatConfig(signInfo, wechatSign);
+    // wx.ready(function () {
+    //   //禁止分享功能
+    //   //WeixinJSBridge.call('hideOptionMenu');
+    //   wx.checkJsApi({
+    //       jsApiList: [
+    //           'openWXDeviceLib',
+    //           'getWXDeviceTicket',
+    //           'onMenuShareAppMessage',
+    //           'onMenuShareTimeline',
+    //           'onMenuShareQQ'
+    //       ],
+    //       success: function (res) {
+    //           $(".loading").hide();
+    //           var content = {
+    //               title: '泰和美商城',
+    //               desc: '去商城逛逛吧',
+    //               link: 'http://wap.koudaitong.com/v2/showcase/homepage?alias=9c8qy9px',
+    //               imgUrl: 'http://' + document.domain + '/img/webshare.jpg'
+    //           }
+    //           shareAppMessage(content);
+    //           shareTimeline(content);
+    //           shareQQ(content)
+    //       }
+    //   });
+    //   openWXDeviceLib();
+    // });
 
     // 得到庆科返回的deviceLists
     var deviceLists = getParameterByName('device_list');
@@ -142,13 +143,16 @@ $(document).ready(function () {
             var modifyContent = $("#modifyContent").val();
             console.log('modifyContent:', modifyContent);
             if (!modifyContent) {
-                modalInitializationOne('写点什么吧');
+                // modalInitializationOne('写点什么吧');
+                modalInitializationOne("<span data-i18n='WRITE'>Write something about it</span>");
             } else if (getByteLen(modifyContent) > 16) {
-                modalInitializationOne('超过字数咯');
+                // modalInitializationOne('超过字数咯');
+                modalInitializationOne("<span data-i18n='MORE'>More than words</span>");
             } else {
                 modifyDeviceAlias(requestHeader, thisDeviceId, modifyContent, function (err) {
                     if (!!err) {
-                        modalInitializationOne('修改名称失败');
+                        // modalInitializationOne('修改名称失败');
+                        modalInitializationOne("<span data-i18n='ENAME_FAIL'>Failed to edit name</span>");
                         return;
                     }
                     thisDeviceId = thisDeviceId.replace(/\//g, "\\\/");
@@ -196,7 +200,8 @@ $(document).ready(function () {
     function onRemoveDevice() {
         $(".removeDevice").on("click", function () {
             thisDeviceId = $(this).parents('.alert')[0].id;
-            modalInitializationTwo('真的要移除设备吗？');
+            // modalInitializationTwo('真的要移除设备吗？');
+            modalInitializationTwo("<span data-i18n='DEL_DEVICE'>Do you really want to remove the device?</span>");
             $("#confirmButton").on('click', function () {
                 // 获取设备的用户
                 var users = getDeviceUser(thisDeviceId, requestHeader, userName, 1);
@@ -235,7 +240,8 @@ $(document).ready(function () {
                     if (!!err) return;
                     unbindDevice(requestHeader, thisDeviceId, ticket, function (err, res) {
                         if (!err && res.result == "success") {
-                            modalInitializationOne('移除设备成功');
+                            // modalInitializationOne('移除设备成功');
+                            modalInitializationOne("<span data-i18n='DEL_DEVICE_SUCCESS'>Remove device success</span>");
                             $("#" + deviceId).remove();
                         } else {
                             // 还原设置
@@ -254,7 +260,8 @@ $(document).ready(function () {
                                 console.log(oldProperty[userName]);
                                 setDeviceProperties(requestHeader, thisDeviceId, userName, oldProperty[userName]);
                             }
-                            modalInitializationOne('移除设备失败');
+                            // modalInitializationOne('移除设备失败');
+                            modalInitializationOne("<span data-i18n='DEL_DEVICE_FAIL'>Remove device failed</span>");
                         }
                     });
                 });
@@ -357,6 +364,7 @@ $(document).ready(function () {
             state = "离线";
             $(list).removeClass("row-online-state");
             addDeviceListsData(list, state, alias, bssid);
+            // addDeviceListsData(list, state, alias, bssid, url, wxDeviceId);
         } else {
             state = "在线";
             $(list).addClass("row-online-state");
@@ -405,6 +413,7 @@ $(document).ready(function () {
             state = "离线";
             $(list).removeClass("row-online-state");
             addDeviceListsData(list, state, alias, bssid);
+            // addDeviceListsData(list, state, alias, bssid, url);
             	
         } else {
             state = "在线";

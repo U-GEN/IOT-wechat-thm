@@ -235,9 +235,9 @@ input[type=checkbox]:focus,
   line-height: 75px;
 }
 .jumbotron ul li:nth-child(3) span {
-  width: 25px;
+  /*width: 25px;*/
   height: 25px;
-  background: url("../img/red_error_icon.png") no-repeat;
+  /*background: url("../img/red_error_icon.png") no-repeat;*/
   background-size: cover;
   -webkit-background-size: cover;
   display: inline-block;
@@ -694,9 +694,20 @@ input[type=checkbox]:focus,
   -webkit-border-bottom-right-radius: 0;
 }
 .modal-finesleep .modal-dialog .modal-content .modal-header {
-  padding: 25px 25px 15px;
+/*  padding: 25px 25px 15px;
+  border-bottom: 0;
+  color: #f46652;*/
+  padding: 25px;
   border-bottom: 0;
   color: #f46652;
+  position: relative;
+}
+.modal-finesleep .modal-dialog .modal-content .modal-header p {
+  position: absolute;
+  bottom: 10px;
+  left: 25px;
+  display: none;
+  font-size: 12px;
 }
 .modal-finesleep .modal-dialog .modal-content .modal-footer {
   border-top: 0;
@@ -789,6 +800,7 @@ input[type=checkbox]:focus,
 /* 优质睡眠modal折叠层 */
 .panel-group {
   padding: 0 10px;
+  position: relative;
 }
 .panel-group .panel {
   width: 100%;
@@ -962,6 +974,14 @@ input[type=checkbox]:focus,
 .selectTimeBox .selectTime p:nth-of-type(2) {
   right: 22px;
 }
+
+.modal-finalTime .panel-group p {
+    font-size: 13px;
+    position: absolute;
+    top: 30px;
+    left: 152px;
+}
+
 #select_hour_one_dummy,
 #select_minute_one_dummy,
 #select_hour_two_dummy,

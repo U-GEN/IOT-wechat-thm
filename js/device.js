@@ -6,7 +6,7 @@ $(document).ready(function () {
     // 是否可以hide loading 标记 （条件收到CT 并且微信config 注册成功）
     var wxRes = false;
     //微信jssdk配置 正式需打开
-    /*var signInfo = getWechatSignInfo();
+    var signInfo = getWechatSignInfo();
     var wechatSign = getWechatSign(signInfo);
     wechatConfig(signInfo, wechatSign);
     wx.ready(function () {
@@ -38,7 +38,7 @@ $(document).ready(function () {
             }
         });
         openWXDeviceLib();
-    });*/
+    });
 
     var colors;//保存温度色码的数组
     var bars;//温度条件面板总div
@@ -95,7 +95,7 @@ $(document).ready(function () {
     // 如果设备ID为空
     if (device_id == null) return;
     // 测试环境注释
-    // $(".loading").show();
+    $(".loading").show();
     setTimeout(function () {
         if ($(".loading").is(":visible")) {
             // modalInitializationOne("连接未成功，请重试...");

@@ -280,10 +280,10 @@ input[type=checkbox]:focus,
   color: #f46652;
   background-image: url("../img/red_arrow_icon.png");
 }
-.row-online-state .rowRightCont li.rightPosition span:nth-child(1) {
+.row-online-state .rowRight li.rightPosition span:nth-child(1) {
   display: none;
 }
-.row-online-state .rowRightCont li.rightPosition span:nth-child(2) {
+.row-online-state .rowRight li.rightPosition span:nth-child(2) {
   display: block;
 }
 .alert.row-online-state .rowRight:after {

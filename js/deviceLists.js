@@ -364,7 +364,7 @@ $(document).ready(function () {
             state = "离线";
             $(list).removeClass("row-online-state");
             addDeviceListsData(list, state, alias, bssid);
-            // addDeviceListsData(list, state, alias, bssid, url, wxDeviceId);
+                        // addDeviceListsData(list, state, alias, bssid, url, wxDeviceId);
         } else {
             state = "在线";
             $(list).addClass("row-online-state");
